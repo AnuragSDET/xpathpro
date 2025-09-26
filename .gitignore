@@ -39,3 +39,6 @@ next-env.d.ts
 # Sanity
 /studio/.sanity
 /studio/dist
+
+# Local documentation
+MEMORY_BANK.md
