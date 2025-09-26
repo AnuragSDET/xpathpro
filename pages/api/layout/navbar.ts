@@ -46,19 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const { settings } = req.body
 
-      // First try to create the table if it doesn't exist
-      const { error: createError } = await supabase.rpc('exec_sql', {
-        sql: `
-          CREATE TABLE IF NOT EXISTS layout_settings (
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            key VARCHAR(255) UNIQUE NOT NULL,
-            value JSONB NOT NULL,
-            updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-          );
-        `
-      })
-
-      // Now upsert the settings
+      // Try to upsert the settings directly
       const { error } = await supabase
         .from('layout_settings')
         .upsert({
@@ -68,6 +56,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }, { onConflict: 'key' })
 
       if (error) {
+        // If table doesn't exist, return specific error message
+        if (error.message.includes('relation "layout_settings" does not exist')) {
+          return res.status(500).json({ 
+            success: false, 
+            error: 'Database table not created. Please run the migration first by visiting /api/migrate or create the table manually in Supabase.' 
+          })
+        }
         return res.status(500).json({ success: false, error: error.message })
       }
 

@@ -65,7 +65,7 @@ export default function LayoutPage() {
       if (data.success) {
         setMessage('Settings saved successfully!')
       } else {
-        setMessage('Failed to save settings')
+        setMessage(`Failed to save settings: ${data.error || 'Unknown error'}`)
       }
     } catch (error) {
       setMessage('Error saving settings')
@@ -172,8 +172,22 @@ export default function LayoutPage() {
             <Button onClick={saveSettings} disabled={loading}>
               {loading ? 'Saving...' : 'Save Settings'}
             </Button>
+            <Button 
+              variant="outline" 
+              onClick={async () => {
+                try {
+                  const res = await fetch('/api/setup-layout-table', { method: 'POST' })
+                  const data = await res.json()
+                  setMessage(data.success ? 'Table setup complete!' : `Setup failed: ${data.error}`)
+                } catch (error) {
+                  setMessage('Setup failed: Network error')
+                }
+              }}
+            >
+              Setup Table
+            </Button>
             {message && (
-              <span className={message.includes('success') ? 'text-green-600' : 'text-red-600'}>
+              <span className={message.includes('success') || message.includes('complete') ? 'text-green-600' : 'text-red-600'}>
                 {message}
               </span>
             )}
