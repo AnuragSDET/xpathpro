@@ -1,0 +1,105 @@
+{
+  "categories": [
+    {
+      "_type": "category",
+      "title": "SDET Fundamentals",
+      "slug": { "current": "sdet-fundamentals" },
+      "description": "Core concepts and principles of Software Development Engineer in Test",
+      "color": "blue"
+    },
+    {
+      "_type": "category",
+      "title": "API Testing",
+      "slug": { "current": "api-testing" },
+      "description": "Learn to test REST APIs and web services",
+      "color": "green"
+    },
+    {
+      "_type": "category",
+      "title": "Test Automation",
+      "slug": { "current": "test-automation" },
+      "description": "Automated testing with various tools and frameworks",
+      "color": "purple"
+    }
+  ],
+  "courses": [
+    {
+      "_type": "course",
+      "title": "Introduction to SDET",
+      "slug": { "current": "intro-to-sdet" },
+      "description": "Learn the fundamentals of Software Development Engineer in Test role and responsibilities",
+      "featured": true,
+      "publishedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "_type": "course",
+      "title": "API Testing Fundamentals",
+      "slug": { "current": "api-testing-fundamentals" },
+      "description": "Master API testing with practical examples and real-world scenarios",
+      "featured": false,
+      "publishedAt": "2024-01-10T10:00:00Z"
+    },
+    {
+      "_type": "course",
+      "title": "Test Automation with Selenium",
+      "slug": { "current": "selenium-automation" },
+      "description": "Build robust automated test suites using Selenium WebDriver",
+      "featured": true,
+      "publishedAt": "2024-01-05T10:00:00Z"
+    }
+  ],
+  "lessons": [
+    {
+      "_type": "lesson",
+      "title": "What is SDET?",
+      "slug": { "current": "what-is-sdet" },
+      "excerpt": "Understanding the role and responsibilities of a Software Development Engineer in Test",
+      "duration": 15,
+      "order": 1,
+      "content": [
+        {
+          "_type": "block",
+          "style": "h2",
+          "children": [{ "_type": "span", "text": "Introduction to SDET" }]
+        },
+        {
+          "_type": "block",
+          "style": "normal",
+          "children": [
+            {
+              "_type": "span",
+              "text": "A Software Development Engineer in Test (SDET) is a professional who combines software development skills with testing expertise to ensure high-quality software products."
+            }
+          ]
+        }
+      ],
+      "publishedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "_type": "lesson",
+      "title": "SDET vs QA Engineer",
+      "slug": { "current": "sdet-vs-qa" },
+      "excerpt": "Key differences between SDET and traditional QA roles",
+      "duration": 12,
+      "order": 2,
+      "content": [
+        {
+          "_type": "block",
+          "style": "h2",
+          "children": [{ "_type": "span", "text": "SDET vs QA Engineer" }]
+        },
+        {
+          "_type": "block",
+          "style": "normal",
+          "children": [
+            {
+              "_type": "span",
+              "text": "While both roles focus on quality, SDETs have stronger programming skills and focus more on test automation and tooling development."
+            }
+          ]
+        }
+      ],
+      "publishedAt": "2024-01-15T11:00:00Z"
+    }
+  ]
+}

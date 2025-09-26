@@ -1,0 +1,17 @@
+{
+  "name": "xpath-pro-studio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "sanity dev --port 3333",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "sanity": "^3.20.1",
+    "@sanity/vision": "^3.20.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43"
+  }
+}
