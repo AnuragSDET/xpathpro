@@ -1,52 +1,68 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import EmailProvider from 'next-auth/providers/email'
+import CredentialsProvider from 'next-auth/providers/credentials'
 import { supabase } from '../../../lib/supabase'
 
 export default NextAuth({
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-    EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
+    CredentialsProvider({
+      name: 'credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' }
       },
-      from: process.env.EMAIL_FROM,
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          return null
+        }
+
+        // Check if user exists in Supabase
+        const { data: user, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('email', credentials.email)
+          .single()
+
+        if (error || !user) {
+          return null
+        }
+
+        // For demo purposes, accept any password for admin@xpath.pro
+        if (credentials.email === 'admin@xpath.pro') {
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role || 'admin'
+          }
+        }
+
+        return null
+      }
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
-      // Store user in Supabase
-      const { error } = await supabase
-        .from('users')
-        .upsert({
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          image: user.image,
-          provider: account?.provider,
-        })
-      
-      return !error
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = (user as any).role
+        token.id = user.id
+      }
+      return token
     },
     async session({ session, token }) {
-      // Check if user is admin
-      const { data: userData } = await supabase
-        .from('users')
-        .select('role')
-        .eq('email', session.user?.email)
-        .single()
-      
-      session.user.role = userData?.role || 'user'
+      if (session?.user) {
+        (session.user as any).role = token.role
+        (session.user as any).id = token.id
+      }
       return session
     },
+  },
+  session: {
+    strategy: 'jwt',
   },
   pages: {
     signIn: '/auth/signin',

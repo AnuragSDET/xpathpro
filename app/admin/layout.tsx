@@ -7,11 +7,10 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  // Temporarily disabled for development
-  // const session = await getServerSession()
-  // if (!session || session.user?.role !== 'admin') {
-  //   redirect('/auth/signin')
-  // }
+  const session = await getServerSession()
+  if (!session || (session.user as any)?.role !== 'admin') {
+    redirect('/auth/signin')
+  }
 
   return (
     <div className="flex h-screen bg-background">

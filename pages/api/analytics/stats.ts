@@ -3,7 +3,7 @@ import { supabase } from '../../../lib/supabase'
 import { requireAdmin } from '../../../lib/auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const authResult = await requireAdmin(req)
+  const authResult = await requireAdmin(req, res)
   if (authResult.error) {
     return res.status(authResult.status).json({ error: authResult.error })
   }
