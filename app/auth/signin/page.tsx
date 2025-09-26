@@ -25,9 +25,13 @@ export default function SignIn() {
       
       if (result?.ok) {
         window.location.href = '/admin'
+      } else {
+        alert('Login failed. Please check your credentials.')
+        console.error('Sign in failed:', result?.error)
       }
     } catch (error) {
       console.error('Sign in error:', error)
+      alert('Login error. Please try again.')
     } finally {
       setLoading(false)
     }
