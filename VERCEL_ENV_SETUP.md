@@ -28,6 +28,6 @@ DATABASE_URL=postgresql://postgres:gaKbot-8dunsi-tedsaz@db.mrevcgruyqculsioiefq.
 The admin layout is failing because NextAuth can't initialize without NEXTAUTH_SECRET and database connection variables.
 
 ## After Adding Variables:
-- Admin login will work: admin@xpath.pro + any password
+- Admin login will work: admin@xpath.pro + password: password
 - Database connections will be established
 - All API endpoints will function properly

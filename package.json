@@ -9,6 +9,7 @@
     "lint": "next lint",
     "studio": "cd studio && npm run dev",
     "setup-db": "node scripts/setup-database.js",
+    "setup-supabase": "node scripts/setup-supabase.js",
     "test-api": "node scripts/test-api.js"
   },
   "dependencies": {

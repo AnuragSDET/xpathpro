@@ -1,20 +1,31 @@
-import { redirect } from 'next/navigation'
-import { getServerSession } from 'next-auth'
+'use client'
+
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import AdminSidebar from '../../components/admin/AdminSidebar'
 
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  try {
-    const session = await getServerSession()
+  const { data: session, status } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (status === 'loading') return
     if (!session || session.user?.role !== 'admin') {
-      redirect('/auth/signin')
+      router.push('/auth/signin')
     }
-  } catch (error) {
-    console.error('Admin auth error:', error)
-    redirect('/auth/signin')
+  }, [session, status, router])
+
+  if (status === 'loading') {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>
+  }
+
+  if (!session || session.user?.role !== 'admin') {
+    return null
   }
 
   return (

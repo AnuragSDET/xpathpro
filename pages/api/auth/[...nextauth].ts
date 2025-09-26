@@ -27,8 +27,8 @@ export default NextAuth({
           return null
         }
 
-        // For demo purposes, accept any password for admin@xpath.pro
-        if (credentials.email === 'admin@xpath.pro') {
+        // Check password for admin@xpath.pro
+        if (credentials.email === 'admin@xpath.pro' && credentials.password === 'password') {
           return {
             id: user.id,
             email: user.email,
