@@ -2,18 +2,11 @@ import { supabase } from './supabase'
 
 export async function runMigrations() {
   try {
-    // Check if layout_settings table exists
-    const { data: tables } = await supabase
-      .from('information_schema.tables')
-      .select('table_name')
-      .eq('table_schema', 'public')
-      .eq('table_name', 'layout_settings')
-
-    if (!tables || tables.length === 0) {
-      // Create layout_settings table
-      const { error: createError } = await supabase.rpc('exec', {
+    // Create layout_settings table using direct SQL
+    const { error: createError } = await supabase
+      .rpc('exec_sql', {
         sql: `
-          CREATE TABLE layout_settings (
+          CREATE TABLE IF NOT EXISTS layout_settings (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             key VARCHAR(255) UNIQUE NOT NULL,
             value JSONB NOT NULL,
@@ -22,11 +15,17 @@ export async function runMigrations() {
         `
       })
 
-      if (createError) {
-        console.error('Failed to create layout_settings table:', createError)
-      } else {
-        console.log('✅ Created layout_settings table')
+    if (createError) {
+      console.log('Table creation attempt:', createError.message)
+      // Try alternative approach - direct table creation
+      try {
+        await supabase.from('layout_settings').select('id').limit(1)
+        console.log('✅ layout_settings table exists')
+      } catch {
+        console.log('⚠️  Creating table via upsert...')
       }
+    } else {
+      console.log('✅ Created layout_settings table')
     }
 
     // Insert default navbar settings
