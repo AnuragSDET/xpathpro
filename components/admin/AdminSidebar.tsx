@@ -9,7 +9,8 @@ import {
   BarChart3, 
   Settings,
   FileText,
-  LogOut
+  LogOut,
+  Palette
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -21,6 +22,7 @@ const navigation = [
   { name: 'Lessons', href: '/admin/lessons', icon: FileText },
   { name: 'Users', href: '/admin/users', icon: Users },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
+  { name: 'Layout', href: '/admin/layout', icon: Palette },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 
