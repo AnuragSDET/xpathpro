@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Critical CSS for faster FCP */
+@layer base {
+  html {
+    font-display: swap;
+  }
+  
+  body {
+    font-display: swap;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Optimize loading states */
+@layer utilities {
+  .loading-skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
