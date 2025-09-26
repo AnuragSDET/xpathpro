@@ -3,12 +3,15 @@ import { supabase } from '../../../lib/supabase'
 import { requireAuth } from '../../../lib/auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const authResult = await requireAuth(req)
+  const authResult = await requireAuth(req, res)
   if (authResult.error) {
     return res.status(authResult.status).json({ error: authResult.error })
   }
 
-  const userId = authResult.session.user.id
+  const userId = authResult.session?.user?.id
+  if (!userId) {
+    return res.status(401).json({ error: 'User ID not found' })
+  }
 
   if (req.method === 'GET') {
     try {

@@ -12,8 +12,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const courses = await client.fetch(`
         *[_type == "course" && (
-          title match $query + "*" ||
-          description match $query + "*"
+          title match $q + "*" ||
+          description match $q + "*"
         )] {
           _id,
           title,
@@ -21,12 +21,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           description,
           category->{title, color}
         }
-      `, { query: q })
+      `, { q })
 
       const lessons = await client.fetch(`
         *[_type == "lesson" && (
-          title match $query + "*" ||
-          excerpt match $query + "*"
+          title match $q + "*" ||
+          excerpt match $q + "*"
         )] {
           _id,
           title,
@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             slug
           }
         }
-      `, { query: q })
+      `, { q })
 
       res.status(200).json({
         courses,
