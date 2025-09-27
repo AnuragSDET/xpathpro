@@ -114,7 +114,7 @@ export default function NewCoursePage() {
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="title">Course Title</Label>
+                  <Label htmlFor="title">Course Title *</Label>
                   <Input
                     id="title"
                     name="title"
@@ -141,7 +141,7 @@ export default function NewCoursePage() {
               </div>
 
               <div>
-                <Label htmlFor="description">Course Description</Label>
+                <Label htmlFor="description">Course Description *</Label>
                 <Textarea
                   id="description"
                   name="description"
@@ -154,7 +154,7 @@ export default function NewCoursePage() {
               </div>
 
               <div>
-                <Label htmlFor="duration">Estimated Duration (hours)</Label>
+                <Label htmlFor="duration">Estimated Duration (hours) *</Label>
                 <Input
                   id="duration"
                   name="duration"
@@ -179,7 +179,7 @@ export default function NewCoursePage() {
               </div>
 
               <div>
-                <Label htmlFor="learningObjectives">Learning Objectives (comma-separated)</Label>
+                <Label htmlFor="learningObjectives">Learning Objectives (comma-separated) *</Label>
                 <Textarea
                   id="learningObjectives"
                   name="learningObjectives"

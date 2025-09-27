@@ -119,7 +119,7 @@ export default function NewLessonPage() {
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="title">Lesson Title</Label>
+                <Label htmlFor="title">Lesson Title *</Label>
                 <Input
                   id="title"
                   name="title"
@@ -130,7 +130,7 @@ export default function NewLessonPage() {
                 />
               </div>
               <div>
-                <Label htmlFor="courseId">Course</Label>
+                <Label htmlFor="courseId">Course *</Label>
                 <select
                   id="courseId"
                   name="courseId"
@@ -150,7 +150,7 @@ export default function NewLessonPage() {
             </div>
 
             <div>
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Description *</Label>
               <Textarea
                 id="description"
                 name="description"
@@ -163,7 +163,7 @@ export default function NewLessonPage() {
             </div>
 
             <div>
-              <Label htmlFor="content">Lesson Content</Label>
+              <Label htmlFor="content">Lesson Content *</Label>
               <Textarea
                 id="content"
                 name="content"
@@ -177,7 +177,7 @@ export default function NewLessonPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="order">Lesson Order</Label>
+                <Label htmlFor="order">Lesson Order *</Label>
                 <Input
                   id="order"
                   name="order"
@@ -190,7 +190,7 @@ export default function NewLessonPage() {
                 />
               </div>
               <div>
-                <Label htmlFor="duration">Duration (minutes)</Label>
+                <Label htmlFor="duration">Duration (minutes) *</Label>
                 <Input
                   id="duration"
                   name="duration"

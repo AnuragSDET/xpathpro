@@ -88,7 +88,7 @@ export default function NewCategoryPage() {
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="title">Category Title</Label>
+                <Label htmlFor="title">Category Title *</Label>
                 <Input
                   id="title"
                   name="title"
@@ -99,7 +99,7 @@ export default function NewCategoryPage() {
                 />
               </div>
               <div>
-                <Label htmlFor="order">Display Order</Label>
+                <Label htmlFor="order">Display Order *</Label>
                 <Input
                   id="order"
                   name="order"
@@ -114,7 +114,7 @@ export default function NewCategoryPage() {
             </div>
 
             <div>
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Description *</Label>
               <Textarea
                 id="description"
                 name="description"
