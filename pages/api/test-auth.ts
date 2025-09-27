@@ -23,6 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       hasPasswordHash: !!user.password_hash
     })
   } catch (error) {
-    res.json({ error: 'Test failed', details: error.message })
+    res.json({ error: 'Test failed', details: error instanceof Error ? error.message : 'Unknown error' })
   }
 }
