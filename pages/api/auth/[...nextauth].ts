@@ -23,7 +23,6 @@ export const authOptions: NextAuthOptions = {
             .from('users')
             .select('id, email, name, role, password_hash, status')
             .eq('email', credentials.email)
-            .eq('status', 'active')
             .single()
 
           if (error || !user) {
