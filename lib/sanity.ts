@@ -4,7 +4,16 @@ import imageUrlBuilder from '@sanity/image-url'
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '6q840ft7',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  useCdn: process.env.NODE_ENV === 'production',
+  useCdn: false,
+  apiVersion: '2023-12-01',
+  token: process.env.SANITY_API_TOKEN,
+})
+
+// Client with write permissions for server-side operations
+export const writeClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '6q840ft7',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  useCdn: false,
   apiVersion: '2023-12-01',
   token: process.env.SANITY_API_TOKEN,
 })

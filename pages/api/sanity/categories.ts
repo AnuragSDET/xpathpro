@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { client } from '../../../lib/sanity'
+import { writeClient, client } from '../../../lib/sanity'
 import { requireAdmin } from '../../../lib/auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         featured: false
       }
 
-      const result = await client.create(category)
+      const result = await writeClient.create(category)
       
       return res.status(201).json({ 
         success: true, 

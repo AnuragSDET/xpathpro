@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { client } from '../../../lib/sanity'
+import { writeClient } from '../../../lib/sanity'
 import { requireAdmin } from '../../../lib/auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         publishedAt: new Date().toISOString()
       }
 
-      const result = await client.create(course)
+      const result = await writeClient.create(course)
       
       return res.status(201).json({ 
         success: true, 
