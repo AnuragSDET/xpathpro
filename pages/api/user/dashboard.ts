@@ -1,74 +1,51 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]';
-import { supabase } from '@/lib/supabase';
+import { NextApiRequest, NextApiResponse } from 'next'
+import { supabase } from '../../../lib/supabase'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Method not allowed' })
   }
 
   try {
-    const session = await getServerSession(req, res, authOptions);
-    if (!session?.user?.email) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    // Get user from database
-    const { data: user } = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', session.user.email)
-      .single();
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
+    // Get courses from Sanity
+    const coursesRes = await fetch(`${process.env.NEXTAUTH_URL}/api/sanity/courses`)
+    const coursesData = await coursesRes.json()
+    const totalCourses = coursesData.success ? coursesData.courses.length : 0
 
     // Get user progress
-    const { data: progress } = await supabase
+    const { data: userProgress, error: progressError } = await supabase
       .from('user_progress')
       .select('*')
-      .eq('user_id', user.id);
 
-    // Get user subscription
-    const { data: subscription } = await supabase
-      .from('user_subscriptions')
-      .select('plan')
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .single();
+    if (progressError) {
+      console.error('Progress error:', progressError)
+    }
 
-    // Calculate stats
-    const totalCourses = 5; // Mock data - replace with actual course count
-    const totalLessons = 25; // Mock data - replace with actual lesson count
-    const completedLessons = progress?.filter(p => p.completed).length || 0;
-    const completedCourses = 2; // Mock data - calculate based on completed lessons per course
-    const studyTime = 12; // Mock data - calculate from analytics
+    const completedCourses = userProgress?.filter(p => p.status === 'completed').length || 0
+    const totalLessons = 50 // Placeholder
+    const completedLessons = userProgress?.length || 0
+    const studyTime = Math.floor(completedLessons * 2.5) // Estimate 2.5 hours per lesson
 
     // Mock recent progress data
     const recentProgress = [
-      { title: 'SDET Fundamentals', progress: 75 },
-      { title: 'Test Automation', progress: 45 },
-      { title: 'API Testing', progress: 20 }
-    ];
+      { title: 'SDET Fundamentals', progress: 85 },
+      { title: 'Test Automation', progress: 60 },
+      { title: 'API Testing', progress: 40 }
+    ]
 
-    const dashboardData = {
+    const data = {
       totalCourses,
       completedCourses,
       totalLessons,
       completedLessons,
       studyTime,
       recentProgress,
-      subscription: subscription?.plan || 'free'
-    };
+      subscription: 'free'
+    }
 
-    res.status(200).json({
-      success: true,
-      data: dashboardData
-    });
+    res.json({ success: true, data })
   } catch (error) {
-    console.error('Dashboard API error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Dashboard API error:', error)
+    res.status(500).json({ success: false, error: 'Failed to fetch dashboard data' })
   }
 }
