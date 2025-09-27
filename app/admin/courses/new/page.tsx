@@ -29,7 +29,7 @@ export default function NewCoursePage() {
     try {
       // For now, just redirect to Sanity Studio
       // In the future, this could create the course via API
-      window.open('http://localhost:3333/desk/course', '_blank')
+      window.open('https://xpathpro.sanity.studio/desk/course', '_blank')
       router.push('/admin/courses')
     } catch (error) {
       console.error('Error creating course:', error)
@@ -170,12 +170,12 @@ export default function NewCoursePage() {
               </p>
               <div className="flex gap-4">
                 <Button variant="outline" asChild>
-                  <Link href="http://localhost:3333" target="_blank">
+                  <Link href="https://xpathpro.sanity.studio" target="_blank">
                     Open Sanity Studio
                   </Link>
                 </Button>
                 <Button variant="outline" asChild>
-                  <Link href="http://localhost:3333/desk/course" target="_blank">
+                  <Link href="https://xpathpro.sanity.studio/desk/course" target="_blank">
                     Create Course Directly
                   </Link>
                 </Button>
