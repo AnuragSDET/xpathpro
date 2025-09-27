@@ -83,31 +83,32 @@ export default function CoursesList() {
 
   if (loading) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="text-center">Loading courses...</div>
-        </CardContent>
-      </Card>
+      <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+        <div className="animate-pulse space-y-4">
+          <div className="h-6 bg-slate-700/50 rounded w-1/3"></div>
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-20 bg-slate-700/50 rounded"></div>
+          ))}
+        </div>
+      </div>
     )
   }
 
   if (error) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="text-center text-red-600">
-            Error: {error}
-            <Button 
-              onClick={fetchCourses} 
-              variant="outline" 
-              size="sm" 
-              className="ml-4"
-            >
-              Retry
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+        <div className="text-center text-red-400">
+          Error: {error}
+          <Button 
+            onClick={fetchCourses} 
+            variant="outline" 
+            size="sm" 
+            className="ml-4 bg-slate-800/50 border-slate-600 text-slate-300"
+          >
+            Retry
+          </Button>
+        </div>
+      </div>
     )
   }
 
@@ -118,7 +119,7 @@ export default function CoursesList() {
           <h2 className="text-2xl font-bold text-white">All Courses</h2>
           <p className="text-gray-300">Manage your course content</p>
         </div>
-        <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700" asChild>
+        <Button className="bg-blue-600 hover:bg-blue-700" asChild>
           <Link href="/admin/courses/new">
             <Plus className="h-4 w-4 mr-2" />
             New Course
@@ -134,7 +135,7 @@ export default function CoursesList() {
               <p className="text-gray-300">
                 Create your first course to get started with content management.
               </p>
-              <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700" asChild>
+              <Button className="bg-blue-600 hover:bg-blue-700" asChild>
                 <Link href="/admin/courses/new">
                   <Plus className="h-4 w-4 mr-2" />
                   Create First Course
@@ -181,13 +182,13 @@ export default function CoursesList() {
                     <span>Created {new Date(course._createdAt).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
+                    <Button variant="outline" size="sm" className="bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/50" asChild>
                       <Link href={`https://xpathpro.sanity.studio/desk/course;${course._id}`} target="_blank">
                         <Eye className="h-4 w-4 mr-2" />
                         View in Studio
                       </Link>
                     </Button>
-                    <Button variant="outline" size="sm" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
+                    <Button variant="outline" size="sm" className="bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/50" asChild>
                       <Link href={`https://xpathpro.sanity.studio/desk/course;${course._id}`} target="_blank">
                         <Edit className="h-4 w-4 mr-2" />
                         Edit
@@ -197,7 +198,7 @@ export default function CoursesList() {
                       variant="outline" 
                       size="sm"
                       onClick={() => deleteCourse(course._id, course.title)}
-                      className="bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30 hover:text-red-300"
+                      className="bg-red-900/20 border-red-700 text-red-400 hover:bg-red-900/40"
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
                       Delete

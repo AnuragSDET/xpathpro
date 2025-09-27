@@ -46,20 +46,18 @@ export default function DashboardStats() {
       {stats.map((stat, index) => (
         <div key={stat.name} className="relative group">
           <div className={`absolute -inset-1 bg-gradient-to-r ${gradients[index]} opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl`} />
-          <Card className="relative bg-gray-900/50 backdrop-blur-xl border border-white/10 hover:border-cyan-400/30 transition-all duration-500">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-300">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-blue-500/50 transition-all duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-medium text-slate-400">
                 {stat.name}
-              </CardTitle>
-              <stat.icon className={`h-8 w-8 ${iconColors[index]}`} />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-              <p className="text-sm text-gray-400">
-                {stat.change}
-              </p>
-            </CardContent>
-          </Card>
+              </h3>
+              <stat.icon className={`h-6 w-6 ${iconColors[index]}`} />
+            </div>
+            <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
+            <p className="text-sm text-slate-400">
+              {stat.change}
+            </p>
+          </div>
         </div>
       ))}
     </div>
