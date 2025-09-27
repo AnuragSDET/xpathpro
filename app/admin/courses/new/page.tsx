@@ -91,24 +91,24 @@ export default function NewCoursePage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="sm" asChild>
+        <Button variant="outline" size="sm" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
           <Link href="/admin/courses">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Courses
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Create New Course</h1>
-          <p className="text-muted-foreground mt-1">Add a new course to your curriculum</p>
+          <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Create New Course</h1>
+          <p className="text-gray-300 mt-2 text-lg">Add a new course to your curriculum</p>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <Card>
+        <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
           <CardHeader>
-            <CardTitle>Course Information</CardTitle>
+            <CardTitle className="text-white text-xl">Course Information</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -279,13 +279,13 @@ export default function NewCoursePage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
           <CardHeader>
-            <CardTitle>Course Management</CardTitle>
+            <CardTitle className="text-white text-xl">Course Management</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-300">
                 Fill out the form above to create a new course. All course data will be saved automatically.
               </p>
               <div className="flex gap-4">

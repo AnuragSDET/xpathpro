@@ -8,11 +8,11 @@ export const metadata = {
 
 export default function AnalyticsPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
-          <p className="text-gray-600 mt-1">Track website performance and user engagement</p>
+          <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Analytics Dashboard</h1>
+          <p className="text-gray-300 mt-2 text-lg">Track website performance and user engagement</p>
         </div>
       </div>
 

@@ -112,13 +112,13 @@ export default function CoursesList() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">All Courses</h2>
-          <p className="text-muted-foreground">Manage your course content</p>
+          <h2 className="text-2xl font-bold text-white">All Courses</h2>
+          <p className="text-gray-300">Manage your course content</p>
         </div>
-        <Button asChild>
+        <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700" asChild>
           <Link href="/admin/courses/new">
             <Plus className="h-4 w-4 mr-2" />
             New Course
@@ -127,14 +127,14 @@ export default function CoursesList() {
       </div>
 
       {courses.length === 0 ? (
-        <Card>
+        <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
           <CardContent className="p-12 text-center">
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold">No courses yet</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-lg font-semibold text-white">No courses yet</h3>
+              <p className="text-gray-300">
                 Create your first course to get started with content management.
               </p>
-              <Button asChild>
+              <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700" asChild>
                 <Link href="/admin/courses/new">
                   <Plus className="h-4 w-4 mr-2" />
                   Create First Course
@@ -146,12 +146,12 @@ export default function CoursesList() {
       ) : (
         <div className="grid gap-6">
           {courses.map((course) => (
-            <Card key={course._id}>
+            <Card key={course._id} className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="space-y-2">
-                    <CardTitle className="text-xl">{course.title}</CardTitle>
-                    <p className="text-muted-foreground line-clamp-2">
+                    <CardTitle className="text-xl text-white">{course.title}</CardTitle>
+                    <p className="text-gray-300 line-clamp-2">
                       {course.description}
                     </p>
                   </div>
@@ -174,20 +174,20 @@ export default function CoursesList() {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-6 text-sm text-gray-400">
                     <span>{course.duration} hours</span>
                     <span>{course.prerequisites?.length || 0} prerequisites</span>
                     <span>{course.learningObjectives?.length || 0} objectives</span>
                     <span>Created {new Date(course._createdAt).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" asChild>
+                    <Button variant="outline" size="sm" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
                       <Link href={`https://xpathpro.sanity.studio/desk/course;${course._id}`} target="_blank">
                         <Eye className="h-4 w-4 mr-2" />
                         View in Studio
                       </Link>
                     </Button>
-                    <Button variant="outline" size="sm" asChild>
+                    <Button variant="outline" size="sm" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
                       <Link href={`https://xpathpro.sanity.studio/desk/course;${course._id}`} target="_blank">
                         <Edit className="h-4 w-4 mr-2" />
                         Edit
@@ -197,7 +197,7 @@ export default function CoursesList() {
                       variant="outline" 
                       size="sm"
                       onClick={() => deleteCourse(course._id, course.title)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      className="bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30 hover:text-red-300"
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
                       Delete

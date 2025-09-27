@@ -113,13 +113,13 @@ export default function CategoriesList() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Categories</h1>
-          <p className="text-muted-foreground mt-1">Organize your courses by category</p>
+          <h1 className="text-2xl font-bold text-white">All Categories</h1>
+          <p className="text-gray-300">Organize your courses by category</p>
         </div>
-        <Button asChild>
+        <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700" asChild>
           <Link href="/admin/categories/new">
             <Plus className="h-4 w-4 mr-2" />
             New Category
@@ -128,15 +128,15 @@ export default function CategoriesList() {
       </div>
 
       {categories.length === 0 ? (
-        <Card>
+        <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
           <CardContent className="p-12 text-center">
             <div className="space-y-4">
-              <Tag className="h-12 w-12 mx-auto text-muted-foreground" />
-              <h3 className="text-lg font-semibold">No categories yet</h3>
-              <p className="text-muted-foreground">
+              <Tag className="h-12 w-12 mx-auto text-gray-400" />
+              <h3 className="text-lg font-semibold text-white">No categories yet</h3>
+              <p className="text-gray-300">
                 Create your first category to organize your courses.
               </p>
-              <Button asChild>
+              <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700" asChild>
                 <Link href="/admin/categories/new">
                   <Plus className="h-4 w-4 mr-2" />
                   Create First Category
@@ -146,19 +146,19 @@ export default function CategoriesList() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
-            <Card key={category._id}>
+            <Card key={category._id} className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="space-y-2">
-                    <CardTitle className="text-lg flex items-center gap-2">
+                    <CardTitle className="text-lg flex items-center gap-2 text-white">
                       <Badge className={getColorClass(category.color)}>
                         {category.icon}
                       </Badge>
                       {category.title}
                     </CardTitle>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
+                    <p className="text-sm text-gray-300 line-clamp-2">
                       {category.description}
                     </p>
                   </div>
@@ -171,18 +171,18 @@ export default function CategoriesList() {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-4 text-sm text-gray-400">
                     <span>Order: {category.order}</span>
                     <span>Created {new Date(category._createdAt).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" asChild>
+                    <Button variant="outline" size="sm" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
                       <Link href={`https://xpathpro.sanity.studio/desk/category;${category._id}`} target="_blank">
                         <Eye className="h-4 w-4 mr-1" />
                         View
                       </Link>
                     </Button>
-                    <Button variant="outline" size="sm" asChild>
+                    <Button variant="outline" size="sm" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
                       <Link href={`https://xpathpro.sanity.studio/desk/category;${category._id}`} target="_blank">
                         <Edit className="h-4 w-4 mr-1" />
                         Edit
@@ -192,7 +192,7 @@ export default function CategoriesList() {
                       variant="outline" 
                       size="sm"
                       onClick={() => deleteCategory(category._id, category.title)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      className="bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30 hover:text-red-300"
                     >
                       <Trash2 className="h-4 w-4 mr-1" />
                       Delete

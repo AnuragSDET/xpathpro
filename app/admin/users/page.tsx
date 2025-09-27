@@ -8,11 +8,11 @@ export const metadata = {
 
 export default function UsersPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Users</h1>
-          <p className="text-gray-600 mt-1">Manage user accounts and permissions</p>
+          <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Users Management</h1>
+          <p className="text-gray-300 mt-2 text-lg">Manage user accounts and permissions</p>
         </div>
       </div>
 
