@@ -1,38 +1,17 @@
 'use client'
 
-import { useState } from 'react'
-import { Shield, User, Crown } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Shield, User, Crown, RefreshCw } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
-// Mock data - replace with actual API call
-const mockUsers = [
-  {
-    id: 1,
-    name: 'John Doe',
-    email: 'john@example.com',
-    role: 'user',
-    joinedAt: '2024-01-15',
-    coursesCompleted: 3,
-    status: 'active',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
-    role: 'admin',
-    joinedAt: '2024-01-10',
-    coursesCompleted: 8,
-    status: 'active',
-  },
-  {
-    id: 3,
-    name: 'Mike Johnson',
-    email: 'mike@example.com',
-    role: 'user',
-    joinedAt: '2024-01-05',
-    coursesCompleted: 1,
-    status: 'inactive',
-  },
-]
+interface User {
+  id: string
+  name: string
+  email: string
+  role: string
+  created_at: string
+  status: string
+}
 
 const getRoleIcon = (role: string) => {
   switch (role) {
@@ -46,76 +25,128 @@ const getRoleIcon = (role: string) => {
 }
 
 export default function UsersList() {
-  const [users] = useState(mockUsers)
+  const [users, setUsers] = useState<User[]>([])
+  const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('/api/admin/users')
+      const data = await response.json()
+      
+      if (data.success) {
+        setUsers(data.users)
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error)
+    } finally {
+      setLoading(false)
+      setRefreshing(false)
+    }
+  }
+
+  const handleRefresh = () => {
+    setRefreshing(true)
+    fetchUsers()
+  }
+
+  if (loading) {
+    return (
+      <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+        <div className="animate-pulse space-y-4">
+          <div className="h-6 bg-slate-700/50 rounded w-1/4"></div>
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="h-16 bg-slate-700/50 rounded"></div>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-lg">
-      <div className="px-6 py-4 border-b border-white/10">
-        <h3 className="text-lg font-medium text-white">All Users</h3>
+    <div className="bg-white/5 border border-white/10 rounded-xl">
+      <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+        <h3 className="text-lg font-medium text-white">All Users ({users.length})</h3>
+        <Button
+          onClick={handleRefresh}
+          disabled={refreshing}
+          variant="outline"
+          size="sm"
+          className="bg-slate-800 border-slate-600 text-slate-300 hover:bg-slate-700"
+        >
+          <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+          Refresh
+        </Button>
       </div>
       
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-white/10">
-          <thead className="bg-gray-800/50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                User
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                Role
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                Courses Completed
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                Joined
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-transparent divide-y divide-white/10">
-            {users.map((user) => (
-              <tr key={user.id} className="hover:bg-gray-800/30 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div>
-                    <div className="text-sm font-medium text-white">
-                      {user.name}
-                    </div>
-                    <div className="text-sm text-gray-400">
-                      {user.email}
-                    </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
-                    {getRoleIcon(user.role)}
-                    <span className="ml-2 text-sm text-gray-300 capitalize">
-                      {user.role}
-                    </span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {user.coursesCompleted}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    user.status === 'active'
-                      ? 'bg-green-500/20 text-green-400'
-                      : 'bg-gray-500/20 text-gray-400'
-                  }`}>
-                    {user.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                  {new Date(user.joinedAt).toLocaleDateString()}
-                </td>
+      {users.length === 0 ? (
+        <div className="px-6 py-12 text-center">
+          <User className="h-12 w-12 mx-auto text-slate-400 mb-4" />
+          <h3 className="text-lg font-medium text-white mb-2">No users found</h3>
+          <p className="text-slate-400">Users will appear here when they register on the website.</p>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-white/10">
+            <thead className="bg-white/5">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                  User
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                  Role
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                  Joined
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="bg-transparent divide-y divide-white/10">
+              {users.map((user) => (
+                <tr key={user.id} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div>
+                      <div className="text-sm font-medium text-white">
+                        {user.name || 'Unknown User'}
+                      </div>
+                      <div className="text-sm text-slate-400">
+                        {user.email}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      {getRoleIcon(user.role)}
+                      <span className="ml-2 text-sm text-slate-300 capitalize">
+                        {user.role}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      user.status === 'active'
+                        ? 'bg-green-500/20 text-green-400'
+                        : 'bg-gray-500/20 text-gray-400'
+                    }`}>
+                      {user.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
+                    {new Date(user.created_at).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   )
 }
