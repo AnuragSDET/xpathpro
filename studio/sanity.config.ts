@@ -8,7 +8,7 @@ export default defineConfig({
   name: 'xpath-pro-studio',
   title: 'xPath Pro SDET Course Studio',
 
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'xpath-pro',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || '6q840ft7',
   dataset: 'production',
 
   plugins: [

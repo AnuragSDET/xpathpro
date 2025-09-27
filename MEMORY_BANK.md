@@ -189,6 +189,14 @@
    - Adjusted homepage padding to account for conditional navbar
    - **Admin panel now displays without navbar interference**
    - Navbar still shows on public pages like homepage
+28. ✅ **Fix 404 error for New Course button**
+   - Created /admin/courses/new page with course creation form
+   - Added Textarea UI component for form inputs
+   - Integrated with Sanity Studio for content management
+   - Added quick start section with direct Sanity Studio links
+   - Form includes all necessary course fields (title, description, difficulty, etc.)
+   - **New Course button now works properly**
+   - Build passes successfully with new route (13 pages)
 
 **🔄 AUTOMATIC MEMORY UPDATE PROTOCOL ESTABLISHED:**
 - **RULE**: Update MEMORY_BANK.md after every successful change/fix
