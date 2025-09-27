@@ -29,26 +29,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const hashedPassword = await bcrypt.hash(password, 12)
 
     // Create user
-    const { data: user, error } = await supabase
+    const { error } = await supabase
       .from('users')
-      .insert([
-        {
-          name,
-          email,
-          password: hashedPassword,
-          role: 'user',
-          status: 'active'
-        }
-      ])
-      .select()
-      .single()
+      .insert({
+        name,
+        email,
+        password: hashedPassword,
+        role: 'user',
+        status: 'active'
+      })
 
     if (error) {
-      return res.status(500).json({ error: 'Failed to create user' })
+      console.error('Supabase error:', error)
+      return res.status(500).json({ error: error.message || 'Failed to create user' })
     }
 
     res.status(201).json({ success: true, message: 'User created successfully' })
   } catch (error) {
+    console.error('Signup error:', error)
     res.status(500).json({ error: 'Internal server error' })
   }
 }
