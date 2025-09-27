@@ -6,7 +6,7 @@ export const client = createClient({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   useCdn: false,
   apiVersion: '2023-12-01',
-  token: process.env.SANITY_API_TOKEN,
+  token: process.env.SANITY_API_READ_TOKEN,
 })
 
 // Client with write permissions for server-side operations
@@ -15,7 +15,7 @@ export const writeClient = createClient({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   useCdn: false,
   apiVersion: '2023-12-01',
-  token: process.env.SANITY_API_TOKEN,
+  token: process.env.SANITY_API_WRITE_TOKEN,
 })
 
 const builder = imageUrlBuilder(client)

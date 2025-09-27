@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { writeClient } from '../../../lib/sanity'
+import { writeClient, client } from '../../../lib/sanity'
 import { requireAdmin } from '../../../lib/auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -44,6 +44,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  res.setHeader('Allow', ['POST'])
+  if (req.method === 'GET') {
+    try {
+      const courses = await client.fetch(`
+        *[_type == "course"] | order(_createdAt desc) {
+          _id,
+          title,
+          slug,
+          description,
+          difficulty,
+          duration,
+          prerequisites,
+          learningObjectives,
+          published,
+          featured,
+          _createdAt
+        }
+      `)
+      
+      return res.status(200).json({ success: true, courses })
+    } catch (error: any) {
+      console.error('Error fetching courses:', error)
+      return res.status(500).json({ 
+        success: false, 
+        error: error.message || 'Failed to fetch courses'
+      })
+    }
+  }
+
+  res.setHeader('Allow', ['GET', 'POST'])
   res.status(405).end(`Method ${req.method} Not Allowed`)
 }
