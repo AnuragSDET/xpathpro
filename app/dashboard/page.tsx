@@ -63,14 +63,14 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-20">
       <div className="flex">
         <DashboardSidebar 
           activeTab={activeTab} 
           setActiveTab={setActiveTab}
           userName={session?.user?.name || 'Student'}
         />
-        <main className="flex-1 ml-64 p-8">
+        <main className="flex-1 ml-64 p-8 pt-4">
           <div className="max-w-7xl mx-auto">
             {loading ? (
               <div className="flex items-center justify-center h-96">
