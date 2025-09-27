@@ -16,14 +16,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     console.log('Admin login attempt:', email)
     
+    // First check if users table exists
+    const { data: allUsers, error: listError } = await supabase
+      .from('users')
+      .select('email')
+      .limit(5)
+    
+    console.log('Users table check:', { count: allUsers?.length, error: listError })
+    
     const { data: user, error } = await supabase
       .from('users')
       .select('id, email, name, role, password, status')
       .eq('email', email)
       .single()
 
-    console.log('User found:', user ? 'Yes' : 'No', error)
-    console.log('User data:', { id: user?.id, email: user?.email, hasPassword: !!user?.password })
+    console.log('Query result:', { user, error })
+    console.log('User found:', user ? 'Yes' : 'No')
+    if (user) {
+      console.log('User data:', { id: user.id, email: user.email, hasPassword: !!user.password })
+    }
 
     if (error || !user) {
       return res.status(401).json({ error: 'User not found' })
