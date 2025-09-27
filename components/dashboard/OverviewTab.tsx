@@ -42,7 +42,7 @@ export default function OverviewTab({ userProgress }: OverviewTabProps) {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 to-blue-600 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-xl" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 to-blue-600 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl" />
           <div className="relative bg-white/5 border border-white/10 rounded-xl p-6 hover:border-blue-500/50 transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <BookOpen className="w-8 h-8 text-blue-400" />
@@ -53,7 +53,7 @@ export default function OverviewTab({ userProgress }: OverviewTabProps) {
         </div>
 
         <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-green-600 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-xl" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-green-600 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl" />
           <div className="relative bg-white/5 border border-white/10 rounded-xl p-6 hover:border-green-500/50 transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <Target className="w-8 h-8 text-green-400" />
@@ -64,7 +64,7 @@ export default function OverviewTab({ userProgress }: OverviewTabProps) {
         </div>
 
         <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-purple-600 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-xl" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-purple-600 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl" />
           <div className="relative bg-white/5 border border-white/10 rounded-xl p-6 hover:border-purple-500/50 transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <Clock className="w-8 h-8 text-purple-400" />
@@ -75,7 +75,7 @@ export default function OverviewTab({ userProgress }: OverviewTabProps) {
         </div>
 
         <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-yellow-600 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-xl" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-yellow-600 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl" />
           <div className="relative bg-white/5 border border-white/10 rounded-xl p-6 hover:border-yellow-500/50 transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <Trophy className="w-8 h-8 text-yellow-400" />
