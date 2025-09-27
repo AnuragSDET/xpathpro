@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import ImageUpload from '@/components/admin/ImageUpload'
-import AdminLayout from '@/components/admin/AdminLayout'
 import Link from 'next/link'
 
 interface Course {
@@ -98,8 +97,7 @@ export default function NewLessonPage() {
   }
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Button variant="outline" size="sm" asChild>
           <Link href="/admin/lessons">
@@ -286,7 +284,6 @@ export default function NewLessonPage() {
           </div>
         </CardContent>
       </Card>
-      </div>
-    </AdminLayout>
+    </div>
   )
 }
