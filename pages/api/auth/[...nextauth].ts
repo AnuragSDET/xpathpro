@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         // Check admin credentials
-        if (credentials.email === 'admin@xpath.pro' && credentials.password === 'password') {
+        if (credentials.email === 'admin@xpath.pro' && credentials.password === 'admin123') {
           // Get user from database
           const { data: user, error } = await supabase
             .from('users')
