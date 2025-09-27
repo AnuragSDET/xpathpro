@@ -54,7 +54,7 @@ export default function MentorshipSuccessPage() {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-green-400 rounded-full" />
-                <span className="text-slate-300">16 weekly 1-on-1 sessions</span>
+                <span className="text-slate-300">2-hour daily sessions (Mon-Thu)</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-green-400 rounded-full" />

@@ -23,6 +23,7 @@ const navigation = [
   { name: 'Categories', href: '/admin/categories', icon: FolderOpen },
   { name: 'Lessons', href: '/admin/lessons', icon: GraduationCap },
   { name: 'Users', href: '/admin/users', icon: Users },
+  { name: 'Mentorship', href: '/admin/mentorship', icon: Users },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
   { name: 'Layout', href: '/admin/layout', icon: Palette },
   { name: 'Settings', href: '/admin/settings', icon: Settings },

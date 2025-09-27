@@ -16,9 +16,9 @@ export default function MentorshipPage() {
       name: '4-Month Elite Program',
       price: 1299,
       duration: '4 months',
-      sessions: '16 sessions (4 per month)',
+      sessions: '2-hour daily sessions (Mon-Thu)',
       features: [
-        '1-on-1 weekly sessions (1 hour each)',
+        '2-hour daily sessions (Mon-Thu)',
         'Personalized learning roadmap',
         'Resume & LinkedIn optimization',
         'Mock interview preparation',

@@ -10,7 +10,7 @@ export default function BookingCalendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date())
 
   const timeSlots = [
-    '09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'
+    '09:00 AM - 11:00 AM', '11:00 AM - 01:00 PM', '02:00 PM - 04:00 PM', '04:00 PM - 06:00 PM'
   ]
 
   const getDaysInMonth = (date: Date) => {
@@ -45,7 +45,8 @@ export default function BookingCalendar() {
   const isDateAvailable = (day: number) => {
     const today = new Date()
     const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)
-    return date >= today && date.getDay() !== 0 && date.getDay() !== 6 // No weekends
+    const dayOfWeek = date.getDay()
+    return date >= today && dayOfWeek >= 1 && dayOfWeek <= 4 // Mon-Thu only
   }
 
   const nextMonth = () => {
