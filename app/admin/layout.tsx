@@ -1,8 +1,7 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import AdminSidebar from '../../components/admin/AdminSidebar'
 
 export default function AdminLayout({
@@ -10,21 +9,38 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { data: session, status } = useSession()
   const router = useRouter()
+  const pathname = usePathname()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (status === 'loading') return
-    if (!session || session.user?.role !== 'admin') {
-      router.push('/auth/signin')
+    // Skip auth check for signin page
+    if (pathname === '/admin/auth/signin') {
+      setLoading(false)
+      return
     }
-  }, [session, status, router])
 
-  if (status === 'loading') {
-    return <div className="flex items-center justify-center h-screen">Loading...</div>
+    // Check for admin session
+    const adminUser = localStorage.getItem('adminUser')
+    if (adminUser) {
+      setIsAuthenticated(true)
+    } else {
+      router.push('/admin/auth/signin')
+    }
+    setLoading(false)
+  }, [pathname, router])
+
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen text-white">Loading...</div>
   }
 
-  if (!session || session.user?.role !== 'admin') {
+  // Show signin page without sidebar
+  if (pathname === '/admin/auth/signin') {
+    return <>{children}</>
+  }
+
+  if (!isAuthenticated) {
     return null
   }
 
