@@ -105,15 +105,15 @@ export default function NewCoursePage() {
         </div>
       </div>
 
-      <div className="grid gap-6">
+      <div className="max-w-4xl mx-auto">
         <Card>
           <CardHeader>
             <CardTitle>Course Information</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="md:col-span-2">
                   <Label htmlFor="title">Course Title *</Label>
                   <Input
                     id="title"
@@ -125,7 +125,7 @@ export default function NewCoursePage() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="difficulty">Difficulty Level</Label>
+                  <Label htmlFor="difficulty">Difficulty *</Label>
                   <select
                     id="difficulty"
                     name="difficulty"
@@ -140,53 +140,97 @@ export default function NewCoursePage() {
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                  <Label htmlFor="duration">Duration (hrs) *</Label>
+                  <Input
+                    id="duration"
+                    name="duration"
+                    type="number"
+                    value={formData.duration}
+                    onChange={handleChange}
+                    placeholder="8"
+                    min="1"
+                    required
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <Label htmlFor="category">Category</Label>
+                  <select
+                    id="category"
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="">Select category</option>
+                    {categories.map((cat) => (
+                      <option key={cat._id} value={cat._id}>
+                        {cat.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex items-end">
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="featured"
+                      name="featured"
+                      checked={formData.featured}
+                      onChange={(e) => setFormData({...formData, featured: e.target.checked})}
+                      className="rounded border-gray-300"
+                    />
+                    <Label htmlFor="featured">Featured</Label>
+                  </div>
+                </div>
+              </div>
+
               <div>
-                <Label htmlFor="description">Course Description *</Label>
+                <Label htmlFor="description">Description *</Label>
                 <Textarea
                   id="description"
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
                   placeholder="Brief description of what students will learn..."
-                  rows={3}
+                  rows={2}
                   required
                 />
               </div>
 
-              <div>
-                <Label htmlFor="duration">Estimated Duration (hours) *</Label>
-                <Input
-                  id="duration"
-                  name="duration"
-                  type="number"
-                  value={formData.duration}
-                  onChange={handleChange}
-                  placeholder="e.g., 8"
-                  min="1"
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="prerequisites">Prerequisites</Label>
+                  <Input
+                    id="prerequisites"
+                    name="prerequisites"
+                    value={formData.prerequisites}
+                    onChange={handleChange}
+                    placeholder="Basic programming, SDLC knowledge"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="tags">Tags</Label>
+                  <Input
+                    id="tags"
+                    name="tags"
+                    value={formData.tags}
+                    onChange={handleChange}
+                    placeholder="testing, automation, sdet"
+                  />
+                </div>
               </div>
 
               <div>
-                <Label htmlFor="prerequisites">Prerequisites (comma-separated)</Label>
-                <Input
-                  id="prerequisites"
-                  name="prerequisites"
-                  value={formData.prerequisites}
-                  onChange={handleChange}
-                  placeholder="e.g., Basic programming knowledge, Understanding of SDLC"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="learningObjectives">Learning Objectives (comma-separated) *</Label>
+                <Label htmlFor="learningObjectives">Learning Objectives *</Label>
                 <Textarea
                   id="learningObjectives"
                   name="learningObjectives"
                   value={formData.learningObjectives}
                   onChange={handleChange}
-                  placeholder="e.g., Understand SDET role, Learn testing methodologies, Master test planning"
-                  rows={3}
+                  placeholder="Understand SDET role, Learn testing methodologies, Master test planning"
+                  rows={2}
                   required
                 />
               </div>
@@ -199,38 +243,8 @@ export default function NewCoursePage() {
                   value={formData.overview}
                   onChange={handleChange}
                   placeholder="Detailed overview of the course content and structure..."
-                  rows={4}
+                  rows={3}
                 />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="category">Category</Label>
-                  <select
-                    id="category"
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    <option value="">Select a category</option>
-                    {categories.map((cat) => (
-                      <option key={cat._id} value={cat._id}>
-                        {cat.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <Label htmlFor="tags">Tags (comma-separated)</Label>
-                  <Input
-                    id="tags"
-                    name="tags"
-                    value={formData.tags}
-                    onChange={handleChange}
-                    placeholder="testing, automation, sdet"
-                  />
-                </div>
               </div>
 
               <SimpleImageUpload
@@ -238,20 +252,6 @@ export default function NewCoursePage() {
                 onImageChange={(url) => setFormData({ ...formData, featuredImage: url })}
                 label="Featured Image"
               />
-
-              <div className="flex items-center gap-6">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="featured"
-                    name="featured"
-                    checked={formData.featured}
-                    onChange={(e) => setFormData({...formData, featured: e.target.checked})}
-                    className="rounded border-gray-300"
-                  />
-                  <Label htmlFor="featured">Featured Course</Label>
-                </div>
-              </div>
 
               <div className="flex gap-4">
                 <Button 

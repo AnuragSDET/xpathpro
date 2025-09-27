@@ -66,7 +66,7 @@ export default function NewCategoryPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-3xl mx-auto">
       <div className="flex items-center gap-4">
         <Button variant="outline" size="sm" asChild>
           <Link href="/admin/categories">
@@ -85,9 +85,9 @@ export default function NewCategoryPage() {
           <CardTitle>Category Information</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-2">
                 <Label htmlFor="title">Category Title *</Label>
                 <Input
                   id="title"
@@ -99,7 +99,7 @@ export default function NewCategoryPage() {
                 />
               </div>
               <div>
-                <Label htmlFor="order">Display Order *</Label>
+                <Label htmlFor="order">Order *</Label>
                 <Input
                   id="order"
                   name="order"
@@ -111,6 +111,19 @@ export default function NewCategoryPage() {
                   required
                 />
               </div>
+              <div className="flex items-end">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    name="featured"
+                    checked={formData.featured}
+                    onChange={(e) => setFormData({...formData, featured: e.target.checked})}
+                    className="rounded border-gray-300"
+                  />
+                  <Label htmlFor="featured">Featured</Label>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -121,7 +134,7 @@ export default function NewCategoryPage() {
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="Brief description of this category..."
-                rows={3}
+                rows={2}
                 required
               />
             </div>
@@ -160,18 +173,6 @@ export default function NewCategoryPage() {
                   <option value="teal">Teal</option>
                 </select>
               </div>
-            </div>
-
-            <div className="flex items-center space-x-2 mb-6">
-              <input
-                type="checkbox"
-                id="featured"
-                name="featured"
-                checked={formData.featured}
-                onChange={(e) => setFormData({...formData, featured: e.target.checked})}
-                className="rounded border-gray-300"
-              />
-              <Label htmlFor="featured">Featured Category</Label>
             </div>
 
             <div className="flex gap-4">

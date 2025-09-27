@@ -97,7 +97,7 @@ export default function NewLessonPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-4xl mx-auto">
       <div className="flex items-center gap-4">
         <Button variant="outline" size="sm" asChild>
           <Link href="/admin/lessons">
@@ -116,7 +116,7 @@ export default function NewLessonPage() {
           <CardTitle>Lesson Information</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="title">Lesson Title *</Label>
@@ -139,7 +139,7 @@ export default function NewLessonPage() {
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 >
-                  <option value="">Select a course</option>
+                  <option value="">Select course</option>
                   {courses.map((course) => (
                     <option key={course._id} value={course._id}>
                       {course.title}
@@ -149,35 +149,9 @@ export default function NewLessonPage() {
               </div>
             </div>
 
-            <div>
-              <Label htmlFor="description">Description *</Label>
-              <Textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Brief description of what students will learn in this lesson..."
-                rows={3}
-                required
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="content">Lesson Content *</Label>
-              <Textarea
-                id="content"
-                name="content"
-                value={formData.content}
-                onChange={handleChange}
-                placeholder="Main lesson content (supports markdown)..."
-                rows={8}
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
-                <Label htmlFor="order">Lesson Order *</Label>
+                <Label htmlFor="order">Order *</Label>
                 <Input
                   id="order"
                   name="order"
@@ -190,7 +164,7 @@ export default function NewLessonPage() {
                 />
               </div>
               <div>
-                <Label htmlFor="duration">Duration (minutes) *</Label>
+                <Label htmlFor="duration">Duration (min) *</Label>
                 <Input
                   id="duration"
                   name="duration"
@@ -203,16 +177,64 @@ export default function NewLessonPage() {
                 />
               </div>
               <div>
-                <SimpleImageUpload
-                  currentUrl={formData.videoUrl}
-                  onImageChange={(url) => setFormData({ ...formData, videoUrl: url })}
-                  label="Video/Thumbnail"
+                <Label htmlFor="tags">Tags</Label>
+                <Input
+                  id="tags"
+                  name="tags"
+                  value={formData.tags}
+                  onChange={handleChange}
+                  placeholder="testing, automation"
                 />
+              </div>
+              <div className="flex items-end">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    name="featured"
+                    checked={formData.featured}
+                    onChange={(e) => setFormData({...formData, featured: e.target.checked})}
+                    className="rounded border-gray-300"
+                  />
+                  <Label htmlFor="featured">Featured</Label>
+                </div>
               </div>
             </div>
 
             <div>
-              <Label htmlFor="resources">Resources (comma-separated URLs)</Label>
+              <Label htmlFor="description">Description *</Label>
+              <Textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Brief description of what students will learn..."
+                rows={2}
+                required
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="content">Lesson Content *</Label>
+              <Textarea
+                id="content"
+                name="content"
+                value={formData.content}
+                onChange={handleChange}
+                placeholder="Main lesson content (supports markdown)..."
+                rows={6}
+                required
+              />
+            </div>
+
+            <SimpleImageUpload
+              currentUrl={formData.videoUrl}
+              onImageChange={(url) => setFormData({ ...formData, videoUrl: url })}
+              label="Video/Thumbnail"
+            />
+
+            <div>
+              <Label htmlFor="resources">Resources (URLs)</Label>
               <Textarea
                 id="resources"
                 name="resources"
@@ -224,38 +246,15 @@ export default function NewLessonPage() {
             </div>
 
             <div>
-              <Label htmlFor="quiz">Quiz Questions (JSON format)</Label>
+              <Label htmlFor="quiz">Quiz Questions (JSON)</Label>
               <Textarea
                 id="quiz"
                 name="quiz"
                 value={formData.quiz}
                 onChange={handleChange}
                 placeholder='{"questions": [{"question": "What is SDET?", "options": ["A", "B", "C"], "correct": 0}]}'
-                rows={4}
+                rows={3}
               />
-            </div>
-
-            <div>
-              <Label htmlFor="tags">Tags (comma-separated)</Label>
-              <Input
-                id="tags"
-                name="tags"
-                value={formData.tags}
-                onChange={handleChange}
-                placeholder="testing, automation, basics"
-              />
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="featured"
-                name="featured"
-                checked={formData.featured}
-                onChange={(e) => setFormData({...formData, featured: e.target.checked})}
-                className="rounded border-gray-300"
-              />
-              <Label htmlFor="featured">Featured Lesson</Label>
             </div>
 
             <div className="flex gap-4">
