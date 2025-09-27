@@ -20,19 +20,21 @@ export default function DashboardStats() {
 
   const fetchStats = async () => {
     try {
-      const [coursesRes, usersRes] = await Promise.all([
+      const [coursesRes, usersRes, analyticsRes] = await Promise.all([
         fetch('/api/sanity/courses'),
-        fetch('/api/admin/users-count')
+        fetch('/api/admin/users-count'),
+        fetch('/api/admin/analytics')
       ])
       
       const coursesData = await coursesRes.json()
       const usersData = await usersRes.json()
+      const analyticsData = await analyticsRes.json()
       
       setStats({
         totalCourses: coursesData.success ? coursesData.courses.length : 0,
         activeUsers: usersData.success ? usersData.count : 0,
-        pageViews: Math.floor(Math.random() * 50000) + 10000,
-        courseCompletions: Math.floor(Math.random() * 200) + 50
+        pageViews: analyticsData.success ? analyticsData.pageViews : 0,
+        courseCompletions: analyticsData.success ? analyticsData.courseCompletions : 0
       })
     } catch (error) {
       console.error('Error fetching stats:', error)
