@@ -10,35 +10,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-      const { title, description, difficulty, duration, prerequisites, learningObjectives } = req.body
+      const { title, description, content, courseId, order, duration, videoUrl } = req.body
 
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
-      const course = {
-        _type: 'course',
+      const lesson = {
+        _type: 'lesson',
         title,
         slug: { current: slug },
         description,
-        difficulty,
-        duration: parseInt(duration) || 1,
-        prerequisites: prerequisites ? prerequisites.split(',').map((p: string) => p.trim()).filter(Boolean) : [],
-        learningObjectives: learningObjectives ? learningObjectives.split(',').map((o: string) => o.trim()).filter(Boolean) : ['Learn the basics'],
+        content,
+        course: {
+          _type: 'reference',
+          _ref: courseId
+        },
+        order: parseInt(order) || 1,
+        duration: parseInt(duration) || 5,
+        videoUrl: videoUrl || '',
         published: false,
         featured: false
       }
 
-      const result = await writeClient.create(course)
+      const result = await writeClient.create(lesson)
       
       return res.status(201).json({ 
         success: true, 
-        course: result,
-        message: 'Course created successfully'
+        lesson: result,
+        message: 'Lesson created successfully'
       })
     } catch (error: any) {
-      console.error('Error creating course:', error)
+      console.error('Error creating lesson:', error)
       return res.status(500).json({ 
         success: false, 
-        error: error.message || 'Failed to create course',
+        error: error.message || 'Failed to create lesson',
         details: error.toString()
       })
     }
@@ -46,28 +50,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'GET') {
     try {
-      const courses = await client.fetch(`
-        *[_type == "course"] | order(_createdAt desc) {
+      const lessons = await client.fetch(`
+        *[_type == "lesson"] | order(order asc) {
           _id,
           title,
           slug,
           description,
-          difficulty,
+          content,
+          course->{
+            _id,
+            title,
+            slug
+          },
+          order,
           duration,
-          prerequisites,
-          learningObjectives,
+          videoUrl,
           published,
           featured,
           _createdAt
         }
       `)
       
-      return res.status(200).json({ success: true, courses })
+      return res.status(200).json({ success: true, lessons })
     } catch (error: any) {
-      console.error('Error fetching courses:', error)
+      console.error('Error fetching lessons:', error)
       return res.status(500).json({ 
         success: false, 
-        error: error.message || 'Failed to fetch courses'
+        error: error.message || 'Failed to fetch lessons'
       })
     }
   }
@@ -79,36 +88,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-      const { _id, title, description, difficulty, duration, prerequisites, learningObjectives, published, featured } = req.body
+      const { _id, title, description, content, courseId, order, duration, videoUrl, published, featured } = req.body
 
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
-      const updatedCourse = {
+      const updatedLesson = {
         _id,
-        _type: 'course',
+        _type: 'lesson',
         title,
         slug: { current: slug },
         description,
-        difficulty,
-        duration: parseInt(duration) || 1,
-        prerequisites: prerequisites ? prerequisites.split(',').map((p: string) => p.trim()).filter(Boolean) : [],
-        learningObjectives: learningObjectives ? learningObjectives.split(',').map((o: string) => o.trim()).filter(Boolean) : ['Learn the basics'],
+        content,
+        course: {
+          _type: 'reference',
+          _ref: courseId
+        },
+        order: parseInt(order) || 1,
+        duration: parseInt(duration) || 5,
+        videoUrl: videoUrl || '',
         published: published || false,
         featured: featured || false
       }
 
-      const result = await writeClient.createOrReplace(updatedCourse)
+      const result = await writeClient.createOrReplace(updatedLesson)
       
       return res.status(200).json({ 
         success: true, 
-        course: result,
-        message: 'Course updated successfully'
+        lesson: result,
+        message: 'Lesson updated successfully'
       })
     } catch (error: any) {
-      console.error('Error updating course:', error)
+      console.error('Error updating lesson:', error)
       return res.status(500).json({ 
         success: false, 
-        error: error.message || 'Failed to update course',
+        error: error.message || 'Failed to update lesson',
         details: error.toString()
       })
     }
@@ -126,7 +139,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (!id) {
         return res.status(400).json({ 
           success: false, 
-          error: 'Course ID is required' 
+          error: 'Lesson ID is required' 
         })
       }
 
@@ -134,13 +147,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       
       return res.status(200).json({ 
         success: true, 
-        message: 'Course deleted successfully'
+        message: 'Lesson deleted successfully'
       })
     } catch (error: any) {
-      console.error('Error deleting course:', error)
+      console.error('Error deleting lesson:', error)
       return res.status(500).json({ 
         success: false, 
-        error: error.message || 'Failed to delete course',
+        error: error.message || 'Failed to delete lesson',
         details: error.toString()
       })
     }

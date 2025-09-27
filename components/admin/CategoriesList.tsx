@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Plus, Edit, Eye, Tag } from 'lucide-react'
+import { Plus, Edit, Eye, Tag, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -44,6 +44,29 @@ export default function CategoriesList() {
       console.error('Error fetching categories:', err)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const deleteCategory = async (categoryId: string, categoryTitle: string) => {
+    if (!confirm(`Are you sure you want to delete "${categoryTitle}"? This action cannot be undone.`)) {
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/sanity/categories?id=${categoryId}`, {
+        method: 'DELETE'
+      })
+      const data = await response.json()
+      
+      if (data.success) {
+        alert('Category deleted successfully!')
+        fetchCategories() // Refresh the list
+      } else {
+        alert('Error: ' + data.error)
+      }
+    } catch (err) {
+      alert('Failed to delete category')
+      console.error('Error deleting category:', err)
     }
   }
 
@@ -164,6 +187,15 @@ export default function CategoriesList() {
                         <Edit className="h-4 w-4 mr-1" />
                         Edit
                       </Link>
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => deleteCategory(category._id, category.title)}
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                    >
+                      <Trash2 className="h-4 w-4 mr-1" />
+                      Delete
                     </Button>
                   </div>
                 </div>
