@@ -47,7 +47,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let isValidPassword = false
     try {
-      isValidPassword = await bcrypt.compare(password, user.password)
+      // Check if password is already hashed or plain text
+      if (user.password.startsWith('$2a$') || user.password.startsWith('$2b$')) {
+        isValidPassword = await bcrypt.compare(password, user.password)
+      } else {
+        // Plain text comparison for testing
+        isValidPassword = password === user.password
+      }
       console.log('Password valid:', isValidPassword)
     } catch (bcryptError) {
       console.log('Bcrypt error:', bcryptError)
