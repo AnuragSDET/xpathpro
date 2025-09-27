@@ -102,8 +102,8 @@ export default function BookingCalendar() {
             className={`
               aspect-square flex items-center justify-center text-sm rounded-lg transition-all
               ${!day ? 'invisible' : ''}
-              ${!isDateAvailable(day) ? 'text-slate-600 cursor-not-allowed' : 'text-slate-300 hover:bg-white/10'}
-              ${selectedDate === formatDate(day) ? 'bg-purple-600 text-white' : ''}
+              ${!day || !isDateAvailable(day) ? 'text-slate-600 cursor-not-allowed' : 'text-slate-300 hover:bg-white/10'}
+              ${day && selectedDate === formatDate(day) ? 'bg-purple-600 text-white' : ''}
             `}
           >
             {day}
