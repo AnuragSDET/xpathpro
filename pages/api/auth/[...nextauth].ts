@@ -18,12 +18,15 @@ export const authOptions: NextAuthOptions = {
 
         // Check admin credentials
         if (credentials.email === 'admin@xpath.pro' && credentials.password === 'admin123') {
+          console.log('Admin credentials matched, checking database...')
           // Get user from database
           const { data: user, error } = await supabase
             .from('users')
             .select('*')
             .eq('email', credentials.email)
-            .single()
+            .maybeSingle()
+
+          console.log('Database query result:', { user, error })
 
           if (error) {
             console.error('Supabase error:', error)
@@ -31,13 +34,18 @@ export const authOptions: NextAuthOptions = {
           }
 
           if (user && user.role === 'admin') {
+            console.log('Admin user found, returning user object')
             return {
               id: user.id,
               email: user.email,
               name: user.name,
               role: user.role
             }
+          } else {
+            console.log('User not found or not admin:', user)
           }
+        } else {
+          console.log('Credentials do not match admin account')
         }
 
         return null
