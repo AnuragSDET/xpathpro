@@ -33,6 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log('Query result:', { user, error })
     console.log('User found:', user ? 'Yes' : 'No')
     if (user) {
+      console.log('Full user object:', JSON.stringify(user, null, 2))
       console.log('User data:', { id: user.id, email: user.email, hasPassword: !!user.password })
     }
 
