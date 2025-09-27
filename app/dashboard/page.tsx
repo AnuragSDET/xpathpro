@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { BookOpen, Clock, Trophy, Target, FileText, Star, MessageSquare } from 'lucide-react';
 import VideoMockInterview from '@/components/dashboard/VideoMockInterview';
+import ResumeBuilder from '@/components/dashboard/ResumeBuilder';
+import CoverLetterGenerator from '@/components/dashboard/CoverLetterGenerator';
 
 interface DashboardData {
   totalCourses: number;
@@ -24,6 +26,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('overview');
 
   useEffect(() => {
     if (status === 'loading') return;
@@ -135,12 +138,55 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Video Mock Interview Section */}
-        <div className="mb-12">
-          <VideoMockInterview userId={session?.user?.email || session?.user?.id || 'demo-user'} />
+        {/* Navigation Tabs */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setActiveTab('overview')}
+              className={`px-4 py-2 rounded-lg transition-colors ${
+                activeTab === 'overview'
+                  ? 'bg-cyan-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              Overview
+            </button>
+            <button
+              onClick={() => setActiveTab('video-interview')}
+              className={`px-4 py-2 rounded-lg transition-colors ${
+                activeTab === 'video-interview'
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              Video Mock Interview
+            </button>
+            <button
+              onClick={() => setActiveTab('resume-builder')}
+              className={`px-4 py-2 rounded-lg transition-colors ${
+                activeTab === 'resume-builder'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              Resume Builder Pro
+            </button>
+            <button
+              onClick={() => setActiveTab('cover-letter')}
+              className={`px-4 py-2 rounded-lg transition-colors ${
+                activeTab === 'cover-letter'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              Cover Letter AI
+            </button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* Tab Content */}
+        {activeTab === 'overview' && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Progress Overview */}
           <div className="lg:col-span-2">
             <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
@@ -206,7 +252,20 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </div>
-        </div>
+          </div>
+        )}
+        
+        {activeTab === 'video-interview' && (
+          <VideoMockInterview userId={session?.user?.email || session?.user?.id || 'demo-user'} />
+        )}
+        
+        {activeTab === 'resume-builder' && (
+          <ResumeBuilder />
+        )}
+        
+        {activeTab === 'cover-letter' && (
+          <CoverLetterGenerator />
+        )}
       </div>
     </div>
   );

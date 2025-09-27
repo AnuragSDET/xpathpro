@@ -98,6 +98,40 @@ CREATE TABLE IF NOT EXISTS mock_interviews (
   completed_at TIMESTAMP WITH TIME ZONE
 );
 
+-- User resumes
+CREATE TABLE IF NOT EXISTS user_resumes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  template_id VARCHAR(50) NOT NULL,
+  personal_info JSONB,
+  experience JSONB,
+  education JSONB,
+  skills JSONB,
+  projects JSONB,
+  certifications JSONB,
+  ats_score INTEGER,
+  ai_suggestions JSONB,
+  status VARCHAR(20) DEFAULT 'draft',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Cover letters
+CREATE TABLE IF NOT EXISTS cover_letters (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  resume_id UUID REFERENCES user_resumes(id) ON DELETE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  company_name VARCHAR(255),
+  job_title VARCHAR(255),
+  job_description TEXT,
+  content TEXT,
+  ai_generated BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_user_progress_user_id ON user_progress(user_id);
 CREATE INDEX IF NOT EXISTS idx_analytics_events_timestamp ON analytics_events(timestamp);
@@ -107,6 +141,9 @@ CREATE INDEX IF NOT EXISTS idx_user_notes_user_id ON user_notes(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_assessments_user_id ON user_assessments(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_subscriptions_user_id ON user_subscriptions(user_id);
 CREATE INDEX IF NOT EXISTS idx_mock_interviews_user_id ON mock_interviews(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_resumes_user_id ON user_resumes(user_id);
+CREATE INDEX IF NOT EXISTS idx_cover_letters_user_id ON cover_letters(user_id);
+CREATE INDEX IF NOT EXISTS idx_cover_letters_resume_id ON cover_letters(resume_id);
 
 -- Row Level Security (RLS)
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
@@ -117,6 +154,8 @@ ALTER TABLE user_notes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_assessments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_subscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE mock_interviews ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_resumes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cover_letters ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies
 CREATE POLICY "Users can view own profile" ON users FOR SELECT USING (auth.uid() = id);
@@ -142,3 +181,7 @@ CREATE POLICY "Admins can manage subscriptions" ON user_subscriptions FOR ALL US
 );
 
 CREATE POLICY "Users can manage own interviews" ON mock_interviews FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can manage own resumes" ON user_resumes FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can manage own cover letters" ON cover_letters FOR ALL USING (auth.uid() = user_id);
