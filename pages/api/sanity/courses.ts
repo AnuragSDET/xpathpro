@@ -20,12 +20,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         slug: { current: slug },
         description,
         difficulty,
-        duration: parseInt(duration),
-        prerequisites: prerequisites ? prerequisites.split(',').map((p: string) => p.trim()) : [],
-        learningObjectives: learningObjectives ? learningObjectives.split(',').map((o: string) => o.trim()) : [],
+        duration: parseInt(duration) || 1,
+        prerequisites: prerequisites ? prerequisites.split(',').map((p: string) => p.trim()).filter(Boolean) : [],
+        learningObjectives: learningObjectives ? learningObjectives.split(',').map((o: string) => o.trim()).filter(Boolean) : ['Learn the basics'],
         published: false,
-        featured: false,
-        publishedAt: new Date().toISOString()
+        featured: false
       }
 
       const result = await writeClient.create(course)
@@ -35,11 +34,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         course: result,
         message: 'Course created successfully'
       })
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating course:', error)
       return res.status(500).json({ 
         success: false, 
-        error: 'Failed to create course' 
+        error: error.message || 'Failed to create course',
+        details: error.toString()
       })
     }
   }
