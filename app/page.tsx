@@ -492,6 +492,100 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="relative py-32 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-6">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-gray-400">Everything you need to know about our mentorship program</p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            {[
+              {
+                q: "Do I need prior coding experience to join this program?",
+                a: "No. Our mentorship starts from the very basics, so even if you've never written a line of code before, you'll be able to follow along and learn step by step."
+              },
+              {
+                q: "What is QA Automation / SDET, and why is it the easiest way into IT?",
+                a: "QA Automation & SDET roles focus on testing and automation of software applications. They require less prior technical background compared to pure developer roles, making it the fastest and most accessible entry point into IT."
+              },
+              {
+                q: "How long is the program and what's the cost?",
+                a: "The mentorship runs for 4 months at $1299/month, giving you complete training + job support."
+              },
+              {
+                q: "What will I learn during the mentorship?",
+                a: "You'll learn basics of coding, automation frameworks, test scripting, API testing, database testing, interview preparation, and everything you need to become job-ready."
+              },
+              {
+                q: "Will you help me find a job after training?",
+                a: "Yes. Unlike many courses, we don't just train — we actively apply to companies on your behalf and support you through the hiring process."
+              },
+              {
+                q: "What's the average salary of a QA Automation Engineer / SDET?",
+                a: "Entry-level SDETs in the US can earn anywhere between $70,000 to $100,000 per year, and the skill demand is growing rapidly worldwide."
+              },
+              {
+                q: "Can I join if I'm from a non-IT background?",
+                a: "Absolutely! Many of our students come from finance, healthcare, retail, or even non-technical backgrounds. The program is designed for career changers."
+              },
+              {
+                q: "What if I can't keep up with the course?",
+                a: "Our mentorship includes 1-on-1 support sessions, doubt-clearing calls, and extra resources to ensure you don't fall behind."
+              },
+              {
+                q: "Is this program online or in-person?",
+                a: "It's 100% online, so you can join no matter where you live. You just need a laptop and internet connection."
+              },
+              {
+                q: "How soon can I expect results?",
+                a: "Most of our students finish training and land interviews within 4 months. Your effort + our mentorship = a clear path into IT."
+              },
+              {
+                q: "What if I don't get a job after 4 months?",
+                a: "Our commitment doesn't end after training — we continue supporting you with interview prep, resume updates, and fresh company applications until you succeed. Our goal is your career transformation, not just a course completion."
+              },
+              {
+                q: "How is your mentorship different from cheaper online courses?",
+                a: "Unlike generic courses, we offer personalized guidance, hands-on projects, real interview coaching, and actively apply to jobs on your behalf. It's a complete career-changing experience, not just video lessons."
+              },
+              {
+                q: "Is the investment really worth it?",
+                a: "Absolutely. Graduates often land roles with starting salaries that quickly cover their investment. A stable IT career sets you up for long-term financial growth and new opportunities."
+              },
+              {
+                q: "What if I'm working full-time or busy — can I manage the workload?",
+                a: "The program is designed to be flexible. Course materials and mentorship calls are accessible whenever you're free, so you can learn at your own pace and balance your current commitments."
+              },
+              {
+                q: "I've tried learning online before and found it too confusing. How do you make things easier?",
+                a: "We break everything down to simple, actionable steps and offer 1-on-1 mentor sessions whenever you need help. You're never alone — we help you overcome every technical hurdle."
+              },
+              {
+                q: "Are tech jobs safe from layoffs and recession?",
+                a: "The demand for automation and testing professionals remains high because every company strives for quality products. SDETs and QA engineers are considered vital, even in tough times."
+              },
+              {
+                q: "Will I get a certificate or proof of completion?",
+                a: "Yes. Upon successfully completing the program, you'll receive a recognized certificate and a portfolio of projects to showcase to employers."
+              },
+              {
+                q: "Can I cancel anytime if I'm not satisfied?",
+                a: "We're confident in our program, but if you feel it's not working for you, reach out anytime and we'll work to resolve your concerns. Your satisfaction is important to us."
+              }
+            ].map((faq, index) => (
+              <div key={index} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300">
+                <h3 className="text-lg font-bold text-white mb-4">{faq.q}</h3>
+                <p className="text-gray-300 leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="relative py-32 px-4">
         <div className="max-w-4xl mx-auto text-center">
