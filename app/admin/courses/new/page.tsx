@@ -27,12 +27,25 @@ export default function NewCoursePage() {
     setLoading(true)
 
     try {
-      // For now, just redirect to Sanity Studio
-      // In the future, this could create the course via API
-      window.open('https://xpathpro.sanity.studio/desk/course', '_blank')
-      router.push('/admin/courses')
+      const response = await fetch('/api/sanity/courses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        alert('Course created successfully!')
+        router.push('/admin/courses')
+      } else {
+        alert('Error: ' + result.error)
+      }
     } catch (error) {
       console.error('Error creating course:', error)
+      alert('Failed to create course')
     } finally {
       setLoading(false)
     }
@@ -149,7 +162,7 @@ export default function NewCoursePage() {
               <div className="flex gap-4">
                 <Button type="submit" disabled={loading}>
                   <Save className="h-4 w-4 mr-2" />
-                  {loading ? 'Creating...' : 'Create in Sanity Studio'}
+                  {loading ? 'Creating...' : 'Create Course'}
                 </Button>
                 <Button type="button" variant="outline" asChild>
                   <Link href="/admin/courses">Cancel</Link>
@@ -161,22 +174,22 @@ export default function NewCoursePage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Quick Start</CardTitle>
+            <CardTitle>Course Management</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                To create and manage course content, you'll use Sanity Studio - our content management system.
+                Fill out the form above to create a new course. All course data will be saved automatically.
               </p>
               <div className="flex gap-4">
                 <Button variant="outline" asChild>
-                  <Link href="https://xpathpro.sanity.studio" target="_blank">
-                    Open Sanity Studio
+                  <Link href="/admin/courses">
+                    View All Courses
                   </Link>
                 </Button>
                 <Button variant="outline" asChild>
-                  <Link href="https://xpathpro.sanity.studio/desk/course" target="_blank">
-                    Create Course Directly
+                  <Link href="https://xpathpro.sanity.studio" target="_blank">
+                    Advanced Editor
                   </Link>
                 </Button>
               </div>
