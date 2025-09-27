@@ -176,16 +176,17 @@ export default function Home() {
 
         {/* Advanced Cursor Effects */}
         <div 
-          className="fixed w-16 h-16 pointer-events-none z-50 transition-all duration-300 ease-out"
+          className="fixed w-24 h-24 pointer-events-none z-50 transition-all duration-300 ease-out"
           style={{
-            left: mousePos.x - 32,
-            top: mousePos.y - 32,
+            left: mousePos.x - 48,
+            top: mousePos.y - 48,
             transform: `scale(${mousePos.x > 0 ? 1 : 0})`,
-            opacity: mousePos.x > 0 ? 0.8 : 0
+            opacity: mousePos.x > 0 ? 0.9 : 0,
+            mixBlendMode: 'difference'
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/40 to-purple-400/40 rounded-full animate-ping" />
-          <div className="absolute inset-4 bg-gradient-to-r from-cyan-400/60 to-purple-400/60 rounded-full" />
+          <div className="absolute inset-0 bg-white rounded-full animate-ping" />
+          <div className="absolute inset-6 bg-white rounded-full" />
         </div>
 
       {/* Floating Action Elements */}
