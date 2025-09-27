@@ -54,26 +54,23 @@ export default function DashboardPage() {
     );
   }
 
-  if (!dashboardData) {
-    // Show default data if API fails
-    const defaultData = {
-      totalCourses: 12,
-      completedCourses: 3,
-      totalLessons: 48,
-      completedLessons: 15,
-      studyTime: 25,
-      recentProgress: [
-        { title: 'SDET Fundamentals', progress: 85 },
-        { title: 'Test Automation', progress: 60 },
-        { title: 'API Testing', progress: 40 }
-      ],
-      subscription: 'free'
-    };
-    setDashboardData(defaultData);
-  }
+  const defaultData = {
+    totalCourses: 12,
+    completedCourses: 3,
+    totalLessons: 48,
+    completedLessons: 15,
+    studyTime: 25,
+    recentProgress: [
+      { title: 'SDET Fundamentals', progress: 85 },
+      { title: 'Test Automation', progress: 60 },
+      { title: 'API Testing', progress: 40 }
+    ],
+    subscription: 'free'
+  };
 
-  const overallProgress = dashboardData.totalLessons > 0 
-    ? (dashboardData.completedLessons / dashboardData.totalLessons) * 100 
+  const data = dashboardData || defaultData;
+  const overallProgress = data.totalLessons > 0 
+    ? (data.completedLessons / data.totalLessons) * 100 
     : 0;
 
   return (
@@ -95,7 +92,7 @@ export default function DashboardPage() {
                   <div className="ml-4">
                     <p className="text-sm font-medium text-gray-400">Courses</p>
                     <p className="text-2xl font-bold text-white">
-                      {dashboardData.completedCourses}/{dashboardData.totalCourses}
+                      {data.completedCourses}/{data.totalCourses}
                     </p>
                   </div>
                 </div>
@@ -112,7 +109,7 @@ export default function DashboardPage() {
                   <div className="ml-4">
                     <p className="text-sm font-medium text-gray-400">Lessons</p>
                     <p className="text-2xl font-bold text-white">
-                      {dashboardData.completedLessons}/{dashboardData.totalLessons}
+                      {data.completedLessons}/{data.totalLessons}
                     </p>
                   </div>
                 </div>
@@ -128,7 +125,7 @@ export default function DashboardPage() {
                   <Clock className="h-8 w-8 text-purple-400" />
                   <div className="ml-4">
                     <p className="text-sm font-medium text-gray-400">Study Time</p>
-                    <p className="text-2xl font-bold text-white">{dashboardData.studyTime}h</p>
+                    <p className="text-2xl font-bold text-white">{data.studyTime}h</p>
                   </div>
                 </div>
               </CardContent>
@@ -216,7 +213,7 @@ export default function DashboardPage() {
                     <Progress value={overallProgress} className="h-3 bg-gray-800" />
                   </div>
                   
-                  {dashboardData.recentProgress.map((course: any, index: number) => (
+                  {data.recentProgress.map((course: any, index: number) => (
                     <div key={index} className="border-t border-white/10 pt-4">
                       <div className="flex justify-between items-center mb-2">
                         <h4 className="font-medium text-white">{course.title}</h4>
@@ -257,7 +254,7 @@ export default function DashboardPage() {
                   <Star className="h-4 w-4 mr-2" />
                   Resume Builder
                 </Button>
-                {dashboardData.subscription === 'free' && (
+                {data.subscription === 'free' && (
                   <Button className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold hover:scale-105 transition-transform duration-300">
                     ⚡ Upgrade to Pro
                   </Button>
