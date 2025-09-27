@@ -37,7 +37,7 @@ export default function DashboardPage() {
     ],
     subscription: 'free'
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
 
   useEffect(() => {
@@ -58,13 +58,7 @@ export default function DashboardPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading dashboard...</div>
-      </div>
-    );
-  }
+
 
   const data = dashboardData;
   const overallProgress = data.totalLessons > 0 
