@@ -14,20 +14,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    console.log('Admin login attempt:', email)
+    
     const { data: user, error } = await supabase
       .from('users')
       .select('id, email, name, role, password, status')
       .eq('email', email)
       .single()
 
+    console.log('User found:', user ? 'Yes' : 'No', error)
+
     if (error || !user) {
-      return res.status(401).json({ error: 'Invalid credentials' })
+      return res.status(401).json({ error: 'User not found' })
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password)
+    console.log('Password valid:', isValidPassword)
     
     if (!isValidPassword) {
-      return res.status(401).json({ error: 'Invalid credentials' })
+      return res.status(401).json({ error: 'Invalid password' })
     }
 
     res.json({ 
