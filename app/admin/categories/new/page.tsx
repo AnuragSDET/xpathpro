@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import AdminLayout from '@/components/admin/AdminLayout'
 import Link from 'next/link'
 
 export default function NewCategoryPage() {
@@ -66,7 +67,8 @@ export default function NewCategoryPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <AdminLayout>
+      <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Button variant="outline" size="sm" asChild>
           <Link href="/admin/categories">
@@ -199,6 +201,6 @@ export default function NewCategoryPage() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </AdminLayout>
   )
 }
