@@ -40,5 +40,28 @@ next-env.d.ts
 /studio/.sanity
 /studio/dist
 
-# Local documentation
+# Security - Never commit these
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Documentation and testing files (sensitive)
 MEMORY_BANK.md
+VERCEL_ENV_SETUP.md
+VERCEL_ENV_VARIABLES.md
+MANUAL_SUPABASE_SETUP.sql
+README-SETUP.md
+DEBUG_LOGIN.md
+scripts/create-layout-table.sql
+
+# Test and development files
+/scripts/test-*.js
+/scripts/setup-*.js
+*.test.js
+*.spec.js
+
+# Temporary files
+*.tmp
+*.temp
+*.log
