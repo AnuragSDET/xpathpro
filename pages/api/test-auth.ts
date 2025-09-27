@@ -8,7 +8,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .from('users')
       .select('id, email, name, role, password_hash, status')
       .eq('email', 'admin@xpath.pro')
-      .eq('status', 'active')
       .single()
 
     if (error || !user) {
