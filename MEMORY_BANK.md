@@ -309,6 +309,13 @@
    - Seamless integration with existing Sanity workflow
    - **Complete image upload solution working with Sanity CMS**
 
+44. ✅ **Add asterisks to mandatory fields in admin forms**
+   - Added asterisks (*) to required fields in course creation form
+   - Added asterisks (*) to required fields in category creation form
+   - Added asterisks (*) to required fields in lesson creation form
+   - Improved user experience by clearly indicating required fields
+   - **Enhanced form usability with clear field requirements**
+
 **🔄 NEW DEVELOPMENT RULE ESTABLISHED:**
 - **MANDATORY**: Test locally with `npm run build` before every deployment
 - **MANDATORY**: Update MEMORY_BANK.md after each completed task
