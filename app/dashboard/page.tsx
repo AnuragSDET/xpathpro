@@ -7,9 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { BookOpen, Clock, Trophy, Target, FileText, Star, MessageSquare } from 'lucide-react';
-import VideoMockInterview from '@/components/dashboard/VideoMockInterview';
-import ResumeBuilder from '@/components/dashboard/ResumeBuilder';
-import CoverLetterGenerator from '@/components/dashboard/CoverLetterGenerator';
+
 
 interface DashboardData {
   totalCourses: number;
@@ -258,15 +256,24 @@ export default function DashboardPage() {
         )}
         
         {activeTab === 'video-interview' && (
-          <VideoMockInterview userId={session?.user?.email || session?.user?.id || 'demo-user'} />
+          <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">Video Mock Interview</h2>
+            <p className="text-slate-400">Coming soon...</p>
+          </div>
         )}
         
         {activeTab === 'resume-builder' && (
-          <ResumeBuilder />
+          <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">Resume Builder Pro</h2>
+            <p className="text-slate-400">Coming soon...</p>
+          </div>
         )}
         
         {activeTab === 'cover-letter' && (
-          <CoverLetterGenerator />
+          <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">Cover Letter AI</h2>
+            <p className="text-slate-400">Coming soon...</p>
+          </div>
         )}
       </div>
     </div>
