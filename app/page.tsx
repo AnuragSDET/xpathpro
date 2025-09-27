@@ -36,15 +36,15 @@ export default function Home() {
 
       {/* Floating Particles */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-60 animate-float"
+            className="absolute w-1.5 h-1.5 bg-gradient-to-r from-blue-300/40 to-purple-300/40 rounded-full animate-float-gentle"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`
+              animationDelay: `${Math.random() * 8}s`,
+              animationDuration: `${6 + Math.random() * 4}s`
             }}
           />
         ))}
@@ -131,11 +131,12 @@ export default function Home() {
 
         {/* Interactive Elements */}
         <div 
-          className="absolute w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full pointer-events-none opacity-80 transition-all duration-100 ease-out z-50"
+          className="absolute w-4 h-4 bg-gradient-to-r from-blue-400/60 to-purple-400/60 rounded-full pointer-events-none transition-all duration-200 ease-out z-50"
           style={{
-            left: mousePos.x - 12,
-            top: mousePos.y - 12,
-            transform: `scale(${mousePos.x > 0 ? 1.2 : 1})`
+            left: mousePos.x - 8,
+            top: mousePos.y - 8,
+            transform: `scale(${mousePos.x > 0 ? 1 : 0.8})`,
+            opacity: mousePos.x > 0 ? 0.7 : 0
           }}
         />
       </section>
