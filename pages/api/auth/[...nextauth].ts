@@ -2,6 +2,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { supabase } from '../../../lib/supabase'
+import bcrypt from 'bcryptjs'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,17 +17,36 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        // Check admin credentials
-        if (credentials.email === 'admin@xpath.pro' && credentials.password === 'admin123') {
-          return {
-            id: 'admin-1',
-            email: 'admin@xpath.pro',
-            name: 'Admin User',
-            role: 'admin'
-          }
-        }
+        try {
+          // Query user from database
+          const { data: user, error } = await supabase
+            .from('users')
+            .select('id, email, name, role, password_hash, status')
+            .eq('email', credentials.email)
+            .eq('status', 'active')
+            .single()
 
-        return null
+          if (error || !user) {
+            return null
+          }
+
+          // Verify password
+          const isValidPassword = await bcrypt.compare(credentials.password, user.password_hash)
+          
+          if (!isValidPassword) {
+            return null
+          }
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role
+          }
+        } catch (error) {
+          console.error('Auth error:', error)
+          return null
+        }
       }
     }),
     GoogleProvider({

@@ -121,6 +121,7 @@ export default function NewCoursePage() {
                     value={formData.title}
                     onChange={handleChange}
                     placeholder="e.g., Introduction to SDET"
+                    className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                     required
                   />
                 </div>
@@ -131,7 +132,7 @@ export default function NewCoursePage() {
                     name="difficulty"
                     value={formData.difficulty}
                     onChange={handleChange}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex h-10 w-full rounded-md border border-white/10 bg-gray-800/50 text-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
@@ -150,6 +151,7 @@ export default function NewCoursePage() {
                     value={formData.duration}
                     onChange={handleChange}
                     placeholder="8"
+                    className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                     min="1"
                     required
                   />
@@ -161,7 +163,7 @@ export default function NewCoursePage() {
                     name="category"
                     value={formData.category}
                     onChange={handleChange}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex h-10 w-full rounded-md border border-white/10 bg-gray-800/50 text-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <option value="">Select category</option>
                     {categories.map((cat) => (
@@ -194,6 +196,7 @@ export default function NewCoursePage() {
                   value={formData.description}
                   onChange={handleChange}
                   placeholder="Brief description of what students will learn..."
+                  className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                   rows={2}
                   required
                 />
@@ -208,6 +211,7 @@ export default function NewCoursePage() {
                     value={formData.prerequisites}
                     onChange={handleChange}
                     placeholder="Basic programming, SDLC knowledge"
+                    className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                   />
                 </div>
                 <div>
@@ -218,6 +222,7 @@ export default function NewCoursePage() {
                     value={formData.tags}
                     onChange={handleChange}
                     placeholder="testing, automation, sdet"
+                    className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                   />
                 </div>
               </div>
@@ -230,6 +235,7 @@ export default function NewCoursePage() {
                   value={formData.learningObjectives}
                   onChange={handleChange}
                   placeholder="Understand SDET role, Learn testing methodologies, Master test planning"
+                  className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                   rows={2}
                   required
                 />
@@ -243,6 +249,7 @@ export default function NewCoursePage() {
                   value={formData.overview}
                   onChange={handleChange}
                   placeholder="Detailed overview of the course content and structure..."
+                  className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                   rows={3}
                 />
               </div>
@@ -259,6 +266,7 @@ export default function NewCoursePage() {
                   disabled={loading}
                   onClick={(e) => handleSubmit(e, 'draft')}
                   variant="outline"
+                  className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white"
                 >
                   <Save className="h-4 w-4 mr-2" />
                   {loading && saveType === 'draft' ? 'Saving...' : 'Save as Draft'}
@@ -267,11 +275,12 @@ export default function NewCoursePage() {
                   type="button" 
                   disabled={loading}
                   onClick={(e) => handleSubmit(e, 'publish')}
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
                 >
                   <Save className="h-4 w-4 mr-2" />
                   {loading && saveType === 'publish' ? 'Publishing...' : 'Publish Course'}
                 </Button>
-                <Button type="button" variant="outline" asChild>
+                <Button type="button" variant="outline" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
                   <Link href="/admin/courses">Cancel</Link>
                 </Button>
               </div>
@@ -289,12 +298,12 @@ export default function NewCoursePage() {
                 Fill out the form above to create a new course. All course data will be saved automatically.
               </p>
               <div className="flex gap-4">
-                <Button variant="outline" asChild>
+                <Button variant="outline" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
                   <Link href="/admin/courses">
                     View All Courses
                   </Link>
                 </Button>
-                <Button variant="outline" asChild>
+                <Button variant="outline" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
                   <Link href="https://xpathpro.sanity.studio" target="_blank">
                     Advanced Editor
                   </Link>

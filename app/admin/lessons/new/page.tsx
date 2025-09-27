@@ -97,24 +97,25 @@ export default function NewLessonPage() {
   }
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
+    <div className="space-y-8">
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="sm" asChild>
+        <Button variant="outline" size="sm" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
           <Link href="/admin/lessons">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Lessons
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Create New Lesson</h1>
-          <p className="text-muted-foreground mt-1">Add a new lesson to a course</p>
+          <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Create New Lesson</h1>
+          <p className="text-gray-300 mt-2 text-lg">Add a new lesson to a course</p>
         </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Lesson Information</CardTitle>
-        </CardHeader>
+      <div className="max-w-4xl mx-auto">
+        <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
+          <CardHeader>
+            <CardTitle className="text-white text-xl">Lesson Information</CardTitle>
+          </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -126,6 +127,7 @@ export default function NewLessonPage() {
                   value={formData.title}
                   onChange={handleChange}
                   placeholder="e.g., Introduction to Test Planning"
+                  className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                   required
                 />
               </div>
@@ -136,7 +138,7 @@ export default function NewLessonPage() {
                   name="courseId"
                   value={formData.courseId}
                   onChange={handleChange}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full rounded-md border border-white/10 bg-gray-800/50 text-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 >
                   <option value="">Select course</option>
@@ -159,6 +161,7 @@ export default function NewLessonPage() {
                   value={formData.order}
                   onChange={handleChange}
                   placeholder="1"
+                  className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                   min="1"
                   required
                 />
@@ -172,6 +175,7 @@ export default function NewLessonPage() {
                   value={formData.duration}
                   onChange={handleChange}
                   placeholder="10"
+                  className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                   min="1"
                   required
                 />
@@ -184,6 +188,7 @@ export default function NewLessonPage() {
                   value={formData.tags}
                   onChange={handleChange}
                   placeholder="testing, automation"
+                  className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                 />
               </div>
               <div className="flex items-end">
@@ -209,6 +214,7 @@ export default function NewLessonPage() {
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="Brief description of what students will learn..."
+                className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                 rows={2}
                 required
               />
@@ -222,6 +228,7 @@ export default function NewLessonPage() {
                 value={formData.content}
                 onChange={handleChange}
                 placeholder="Main lesson content (supports markdown)..."
+                className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                 rows={6}
                 required
               />
@@ -241,6 +248,7 @@ export default function NewLessonPage() {
                 value={formData.resources}
                 onChange={handleChange}
                 placeholder="https://example.com/resource1, https://example.com/resource2"
+                className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                 rows={2}
               />
             </div>
@@ -253,6 +261,7 @@ export default function NewLessonPage() {
                 value={formData.quiz}
                 onChange={handleChange}
                 placeholder='{"questions": [{"question": "What is SDET?", "options": ["A", "B", "C"], "correct": 0}]}'
+                className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
                 rows={3}
               />
             </div>
@@ -263,6 +272,7 @@ export default function NewLessonPage() {
                 disabled={loading}
                 onClick={(e) => handleSubmit(e, 'draft')}
                 variant="outline"
+                className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {loading && saveType === 'draft' ? 'Saving...' : 'Save as Draft'}
@@ -271,17 +281,19 @@ export default function NewLessonPage() {
                 type="button" 
                 disabled={loading}
                 onClick={(e) => handleSubmit(e, 'publish')}
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {loading && saveType === 'publish' ? 'Publishing...' : 'Publish Lesson'}
               </Button>
-              <Button type="button" variant="outline" asChild>
+              <Button type="button" variant="outline" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
                 <Link href="/admin/lessons">Cancel</Link>
               </Button>
             </div>
           </div>
         </CardContent>
-      </Card>
+        </Card>
+      </div>
     </div>
   )
 }
