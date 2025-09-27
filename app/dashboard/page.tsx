@@ -1,281 +1,87 @@
-'use client';
+'use client'
 
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { BookOpen, Clock, Trophy, Target, FileText, Star, MessageSquare } from 'lucide-react';
-
-
-interface DashboardData {
-  totalCourses: number;
-  completedCourses: number;
-  totalLessons: number;
-  completedLessons: number;
-  studyTime: number;
-  recentProgress: any[];
-  subscription: string;
-}
+import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import DashboardSidebar from '@/components/dashboard/DashboardSidebar'
+import OverviewTab from '@/components/dashboard/OverviewTab'
+import ProgressTab from '@/components/dashboard/ProgressTab'
+import NotesTab from '@/components/dashboard/NotesTab'
+import QuizTab from '@/components/dashboard/QuizTab'
+import CheatSheetTab from '@/components/dashboard/CheatSheetTab'
+import ResumeTab from '@/components/dashboard/ResumeTab'
+import CoverLetterTab from '@/components/dashboard/CoverLetterTab'
+import InterviewTab from '@/components/dashboard/InterviewTab'
+import SettingsTab from '@/components/dashboard/SettingsTab'
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const [dashboardData, setDashboardData] = useState<DashboardData>({
-    totalCourses: 12,
-    completedCourses: 3,
-    totalLessons: 48,
-    completedLessons: 15,
-    studyTime: 25,
-    recentProgress: [
-      { title: 'SDET Fundamentals', progress: 85 },
-      { title: 'Test Automation', progress: 60 },
-      { title: 'API Testing', progress: 40 }
-    ],
-    subscription: 'free'
-  });
-  const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
+  const { data: session } = useSession()
+  const [activeTab, setActiveTab] = useState('overview')
+  const [userProgress, setUserProgress] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchDashboardData();
-  }, []);
+    fetchUserProgress()
+  }, [])
 
-  const fetchDashboardData = async () => {
+  const fetchUserProgress = async () => {
     try {
-      const response = await fetch('/api/user/dashboard');
-      const data = await response.json();
+      const response = await fetch('/api/user/progress')
+      const data = await response.json()
       if (data.success) {
-        setDashboardData(data.data);
+        setUserProgress(data.progress)
       }
     } catch (error) {
-      console.error('Error fetching dashboard data:', error);
+      console.error('Error fetching progress:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
-
-
-  const data = dashboardData;
-  const overallProgress = data.totalLessons > 0 
-    ? (data.completedLessons / data.totalLessons) * 100 
-    : 0;
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'overview':
+        return <OverviewTab userProgress={userProgress} />
+      case 'progress':
+        return <ProgressTab userProgress={userProgress} />
+      case 'notes':
+        return <NotesTab />
+      case 'quiz':
+        return <QuizTab />
+      case 'cheatsheet':
+        return <CheatSheetTab />
+      case 'resume':
+        return <ResumeTab />
+      case 'cover-letter':
+        return <CoverLetterTab />
+      case 'interview':
+        return <InterviewTab />
+      case 'settings':
+        return <SettingsTab />
+      default:
+        return <OverviewTab userProgress={userProgress} />
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 pt-24 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-12">
-          <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-4">Welcome back, {session?.user?.name || 'Student'}!</h1>
-          <p className="text-gray-300 text-xl leading-relaxed">Continue your SDET learning journey and unlock your potential</p>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl" />
-            <Card className="relative bg-gray-900/50 backdrop-blur-xl border border-white/10 hover:border-cyan-400/30 transition-all duration-500">
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <BookOpen className="h-8 w-8 text-cyan-400" />
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-400">Courses</p>
-                    <p className="text-2xl font-bold text-white">
-                      {data.completedCourses}/{data.totalCourses}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="flex">
+        <DashboardSidebar 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+          userName={session?.user?.name || 'Student'}
+        />
+        <main className="flex-1 ml-64 p-8">
+          <div className="max-w-7xl mx-auto">
+            {loading ? (
+              <div className="flex items-center justify-center h-96">
+                <div className="text-white text-xl">Loading...</div>
+              </div>
+            ) : (
+              renderTabContent()
+            )}
           </div>
-
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-green-500 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl" />
-            <Card className="relative bg-gray-900/50 backdrop-blur-xl border border-white/10 hover:border-emerald-400/30 transition-all duration-500">
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <Target className="h-8 w-8 text-emerald-400" />
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-400">Lessons</p>
-                    <p className="text-2xl font-bold text-white">
-                      {data.completedLessons}/{data.totalLessons}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-pink-500 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl" />
-            <Card className="relative bg-gray-900/50 backdrop-blur-xl border border-white/10 hover:border-purple-400/30 transition-all duration-500">
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <Clock className="h-8 w-8 text-purple-400" />
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-400">Study Time</p>
-                    <p className="text-2xl font-bold text-white">{data.studyTime}h</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl" />
-            <Card className="relative bg-gray-900/50 backdrop-blur-xl border border-white/10 hover:border-yellow-400/30 transition-all duration-500">
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <Trophy className="h-8 w-8 text-yellow-400" />
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-400">Progress</p>
-                    <p className="text-2xl font-bold text-white">{Math.round(overallProgress)}%</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* Navigation Tabs */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setActiveTab('overview')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                activeTab === 'overview'
-                  ? 'bg-cyan-600 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              Overview
-            </button>
-            <button
-              onClick={() => setActiveTab('video-interview')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                activeTab === 'video-interview'
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              Video Mock Interview
-            </button>
-            <button
-              onClick={() => setActiveTab('resume-builder')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                activeTab === 'resume-builder'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              Resume Builder Pro
-            </button>
-            <button
-              onClick={() => setActiveTab('cover-letter')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                activeTab === 'cover-letter'
-                  ? 'bg-green-600 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              Cover Letter AI
-            </button>
-          </div>
-        </div>
-
-        {/* Tab Content */}
-        {activeTab === 'overview' && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Progress Overview */}
-          <div className="lg:col-span-2">
-            <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
-              <CardHeader>
-                <CardTitle className="text-white text-xl font-bold">Learning Progress</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between text-sm mb-2">
-                      <span className="text-gray-300">Overall Progress</span>
-                      <span className="text-cyan-400 font-bold">{Math.round(overallProgress)}%</span>
-                    </div>
-                    <Progress value={overallProgress} className="h-3 bg-gray-800" />
-                  </div>
-                  
-                  {data.recentProgress.map((course: any, index: number) => (
-                    <div key={index} className="border-t border-white/10 pt-4">
-                      <div className="flex justify-between items-center mb-2">
-                        <h4 className="font-medium text-white">{course.title}</h4>
-                        <span className="text-sm text-gray-400">{course.progress}%</span>
-                      </div>
-                      <Progress value={course.progress} className="h-2 bg-gray-800" />
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Quick Actions */}
-          <div>
-            <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
-              <CardHeader>
-                <CardTitle className="text-white text-xl font-bold">Quick Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button className="w-full justify-start bg-gray-800/50 border-white/10 text-gray-300 hover:text-white hover:bg-gray-700/50" variant="outline">
-                  <BookOpen className="h-4 w-4 mr-2" />
-                  Browse Courses
-                </Button>
-                <Button className="w-full justify-start bg-gray-800/50 border-white/10 text-gray-300 hover:text-white hover:bg-gray-700/50" variant="outline">
-                  <FileText className="h-4 w-4 mr-2" />
-                  My Notes
-                </Button>
-                <Button className="w-full justify-start bg-gray-800/50 border-white/10 text-gray-300 hover:text-white hover:bg-gray-700/50" variant="outline">
-                  <Target className="h-4 w-4 mr-2" />
-                  Take Assessment
-                </Button>
-                <Button className="w-full justify-start bg-gray-800/50 border-white/10 text-gray-300 hover:text-white hover:bg-gray-700/50" variant="outline">
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  AI Mock Interview
-                </Button>
-                <Button className="w-full justify-start bg-gray-800/50 border-white/10 text-gray-300 hover:text-white hover:bg-gray-700/50" variant="outline">
-                  <Star className="h-4 w-4 mr-2" />
-                  Resume Builder
-                </Button>
-                {data.subscription === 'free' && (
-                  <Button className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold hover:scale-105 transition-transform duration-300">
-                    ⚡ Upgrade to Pro
-                  </Button>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-          </div>
-        )}
-        
-        {activeTab === 'video-interview' && (
-          <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Video Mock Interview</h2>
-            <p className="text-slate-400">Coming soon...</p>
-          </div>
-        )}
-        
-        {activeTab === 'resume-builder' && (
-          <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Resume Builder Pro</h2>
-            <p className="text-slate-400">Coming soon...</p>
-          </div>
-        )}
-        
-        {activeTab === 'cover-letter' && (
-          <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Cover Letter AI</h2>
-            <p className="text-slate-400">Coming soon...</p>
-          </div>
-        )}
+        </main>
       </div>
     </div>
-  );
+  )
 }
