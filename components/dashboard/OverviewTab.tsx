@@ -10,14 +10,14 @@ interface OverviewTabProps {
 }
 
 export default function OverviewTab({ userProgress }: OverviewTabProps) {
-  const [stats, setStats] = useState({
-    coursesCompleted: 3,
-    totalCourses: 12,
-    lessonsCompleted: 15,
-    totalLessons: 48,
-    studyTime: 25,
-    overallProgress: 31
-  })
+  const stats = userProgress || {
+    coursesCompleted: 0,
+    totalCourses: 0,
+    lessonsCompleted: 0,
+    totalLessons: 0,
+    studyTime: 0,
+    overallProgress: 0
+  }
 
   const [nextLesson, setNextLesson] = useState({
     title: 'Introduction to Selenium WebDriver',
