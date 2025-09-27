@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { uploadImage } from '@/lib/imageUpload';
+import { supabase } from '@/lib/supabase';
 
 interface ImageUploadProps {
   currentUrl?: string;
@@ -37,9 +37,27 @@ export default function ImageUpload({
 
     setUploading(true);
     try {
-      const result = await uploadImage(file, folder);
-      setPreview(result.url);
-      onImageChange(result.url);
+      // Generate unique filename
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const filePath = `${folder}/${fileName}`;
+
+      // Upload to Supabase Storage
+      const { data, error } = await supabase.storage
+        .from('images')
+        .upload(filePath, file);
+
+      if (error) {
+        throw new Error(`Upload failed: ${error.message}`);
+      }
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('images')
+        .getPublicUrl(filePath);
+
+      setPreview(publicUrl);
+      onImageChange(publicUrl);
     } catch (error) {
       console.error('Upload error:', error);
       alert('Failed to upload image');
