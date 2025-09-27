@@ -150,9 +150,9 @@ function SidebarItem({ item, pathname, level = 0 }: SidebarItemProps) {
         <Button
           variant="ghost"
           className={cn(
-            "w-full justify-start text-left font-normal",
+            "w-full justify-start text-left font-normal text-gray-300 hover:text-white hover:bg-gray-800/50",
             level > 0 && "pl-8",
-            (isActive || hasActiveChild) && "bg-accent text-accent-foreground"
+            (isActive || hasActiveChild) && "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-white border border-cyan-400/30"
           )}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -183,10 +183,11 @@ function SidebarItem({ item, pathname, level = 0 }: SidebarItemProps) {
 
   return (
     <Button
-      variant={isActive ? "default" : "ghost"}
+      variant="ghost"
       className={cn(
-        "w-full justify-start text-left font-normal",
-        level > 0 && "pl-8"
+        "w-full justify-start text-left font-normal text-gray-300 hover:text-white hover:bg-gray-800/50",
+        level > 0 && "pl-8",
+        isActive && "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-white border border-cyan-400/30"
       )}
       asChild
     >
@@ -202,12 +203,12 @@ export default function AdminSidebar() {
   const pathname = usePathname() || ''
 
   return (
-    <div className="w-64 bg-card border-r flex flex-col h-full">
+    <div className="w-64 bg-gray-900/95 backdrop-blur-xl border-r border-white/10 flex flex-col h-full">
       <div className="p-6">
-        <h2 className="text-2xl font-bold">xPath Pro Admin</h2>
+        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">xPath Pro Admin</h2>
       </div>
       
-      <Separator />
+      <Separator className="bg-white/10" />
       
       <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
         {menuItems.map((item) => (
@@ -219,10 +220,10 @@ export default function AdminSidebar() {
         ))}
       </nav>
       
-      <div className="p-4 border-t">
+      <div className="p-4 border-t border-white/10">
         <Button
           variant="ghost"
-          className="w-full justify-start text-muted-foreground hover:text-foreground"
+          className="w-full justify-start text-gray-400 hover:text-white hover:bg-gray-800/50"
           onClick={() => console.log('Sign out')}
         >
           <LogOut className="mr-3 h-4 w-4" />
