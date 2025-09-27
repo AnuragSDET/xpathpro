@@ -79,144 +79,125 @@ export default function LessonsList() {
 
   if (loading) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="text-center">Loading lessons...</div>
-        </CardContent>
-      </Card>
+      <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+        <div className="animate-pulse space-y-4">
+          <div className="h-6 bg-slate-700/50 rounded w-1/3"></div>
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-20 bg-slate-700/50 rounded"></div>
+          ))}
+        </div>
+      </div>
     )
   }
 
   if (error) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="text-center text-red-600">
-            Error: {error}
-            <Button 
-              onClick={fetchLessons} 
-              variant="outline" 
-              size="sm" 
-              className="ml-4"
-            >
-              Retry
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+        <div className="text-center text-red-400">
+          Error: {error}
+          <Button 
+            onClick={fetchLessons} 
+            variant="outline" 
+            size="sm" 
+            className="ml-4 bg-slate-800/50 border-slate-600 text-slate-300"
+          >
+            Retry
+          </Button>
+        </div>
+      </div>
     )
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Lessons</h1>
-          <p className="text-muted-foreground mt-1">Manage course lessons and content</p>
-        </div>
-        <Button asChild>
-          <Link href="/admin/lessons/new">
-            <Plus className="h-4 w-4 mr-2" />
-            New Lesson
-          </Link>
-        </Button>
-      </div>
 
       {lessons.length === 0 ? (
-        <Card>
-          <CardContent className="p-12 text-center">
-            <div className="space-y-4">
-              <BookOpen className="h-12 w-12 mx-auto text-muted-foreground" />
-              <h3 className="text-lg font-semibold">No lessons yet</h3>
-              <p className="text-muted-foreground">
-                Create your first lesson to start building course content.
-              </p>
-              <Button asChild>
-                <Link href="/admin/lessons/new">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create First Lesson
-                </Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="bg-white/5 border border-white/10 rounded-xl p-12 text-center">
+          <div className="space-y-4">
+            <BookOpen className="h-12 w-12 mx-auto text-slate-400" />
+            <h3 className="text-lg font-semibold text-white">No lessons yet</h3>
+            <p className="text-slate-400">
+              Create your first lesson to start building course content.
+            </p>
+            <Button className="bg-blue-600 hover:bg-blue-700" asChild>
+              <Link href="/admin/lessons/new">
+                <Plus className="h-4 w-4 mr-2" />
+                Create First Lesson
+              </Link>
+            </Button>
+          </div>
+        </div>
       ) : (
-        <div className="grid gap-6">
+        <div className="grid gap-4">
           {lessons.map((lesson) => (
-            <Card key={lesson._id}>
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2">
-                    <CardTitle className="text-xl">{lesson.title}</CardTitle>
-                    <p className="text-muted-foreground line-clamp-2">
-                      {lesson.description}
-                    </p>
-                    {lesson.course && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <BookOpen className="h-4 w-4" />
-                        <span className="text-muted-foreground">Course:</span>
-                        <Badge variant="outline">{lesson.course.title}</Badge>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {lesson.published && (
-                      <Badge variant="outline" className="bg-green-50 text-green-700">
-                        Published
-                      </Badge>
-                    )}
-                    {lesson.featured && (
-                      <Badge variant="outline" className="bg-blue-50 text-blue-700">
-                        Featured
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      <span>{lesson.duration} min</span>
+            <div key={lesson._id} className="bg-white/5 border border-white/10 rounded-xl p-6">
+              <div className="flex items-start justify-between mb-4">
+                <div className="space-y-2">
+                  <h3 className="text-xl font-semibold text-white">{lesson.title}</h3>
+                  <p className="text-slate-400 line-clamp-2">
+                    {lesson.description}
+                  </p>
+                  {lesson.course && (
+                    <div className="flex items-center gap-2 text-sm">
+                      <BookOpen className="h-4 w-4 text-slate-400" />
+                      <span className="text-slate-400">Course:</span>
+                      <Badge variant="outline" className="bg-slate-800/50 border-slate-600 text-slate-300">{lesson.course.title}</Badge>
                     </div>
-                    <span>Order: {lesson.order}</span>
-                    {lesson.videoUrl && (
-                      <Badge variant="outline" className="bg-purple-50 text-purple-700">
-                        Video
-                      </Badge>
-                    )}
-                    <span>Created {new Date(lesson._createdAt).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={`https://xpathpro.sanity.studio/desk/lesson;${lesson._id}`} target="_blank">
-                        <Eye className="h-4 w-4 mr-2" />
-                        View in Studio
-                      </Link>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={`https://xpathpro.sanity.studio/desk/lesson;${lesson._id}`} target="_blank">
-                        <Edit className="h-4 w-4 mr-2" />
-                        Edit
-                      </Link>
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => deleteLesson(lesson._id, lesson.title)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Delete
-                    </Button>
-                  </div>
+                  )}
                 </div>
-              </CardContent>
-            </Card>
+                <div className="flex items-center gap-2">
+                  {lesson.published && (
+                    <Badge variant="outline" className="bg-green-900/50 border-green-700 text-green-400">
+                      Published
+                    </Badge>
+                  )}
+                  {lesson.featured && (
+                    <Badge variant="outline" className="bg-blue-900/50 border-blue-700 text-blue-400">
+                      Featured
+                    </Badge>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-6 text-sm text-slate-400">
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" />
+                    <span>{lesson.duration} min</span>
+                  </div>
+                  <span>Order: {lesson.order}</span>
+                  {lesson.videoUrl && (
+                    <Badge variant="outline" className="bg-purple-900/50 border-purple-700 text-purple-400">
+                      Video
+                    </Badge>
+                  )}
+                  <span>Created {new Date(lesson._createdAt).toLocaleDateString()}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" className="bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/50" asChild>
+                    <Link href={`https://xpathpro.sanity.studio/desk/lesson;${lesson._id}`} target="_blank">
+                      <Eye className="h-4 w-4 mr-2" />
+                      View
+                    </Link>
+                  </Button>
+                  <Button variant="outline" size="sm" className="bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/50" asChild>
+                    <Link href={`https://xpathpro.sanity.studio/desk/lesson;${lesson._id}`} target="_blank">
+                      <Edit className="h-4 w-4 mr-2" />
+                      Edit
+                    </Link>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => deleteLesson(lesson._id, lesson.title)}
+                    className="bg-red-900/20 border-red-700 text-red-400 hover:bg-red-900/40"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       )}
-    </div>
   )
 }

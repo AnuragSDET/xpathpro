@@ -34,34 +34,27 @@ export default function QuickActions() {
   const iconColors = ['text-green-400', 'text-blue-400', 'text-purple-400', 'text-orange-400'];
   
   return (
-    <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
-      <CardHeader>
-        <CardTitle className="text-white text-xl font-bold">Quick Actions</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {actions.map((action, index) => (
-            <Button
-              key={action.name}
-              asChild
-              variant="outline"
-              className="h-auto p-4 justify-start bg-gray-800/30 border-white/10 hover:bg-gray-800/50 hover:border-cyan-400/30 transition-all duration-300 group"
-            >
-              <Link href={action.href}>
-                <div className="flex items-start space-x-3">
-                  <action.icon className={`h-6 w-6 mt-0.5 ${iconColors[index]} group-hover:scale-110 transition-transform duration-300`} />
-                  <div className="text-left">
-                    <div className="font-medium text-white group-hover:text-cyan-400 transition-colors">{action.name}</div>
-                    <div className="text-xs text-gray-400 mt-1">
-                      {action.description}
-                    </div>
-                  </div>
+    <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+      <h3 className="text-xl font-semibold text-white mb-6">Quick Actions</h3>
+      <div className="grid grid-cols-1 gap-3">
+        {actions.map((action, index) => (
+          <Link key={action.name} href={action.href}>
+            <div className="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-blue-500/50 transition-all duration-200 group">
+              <div className={`p-2 rounded-lg bg-slate-800/50 group-hover:scale-110 transition-transform duration-200`}>
+                <action.icon className={`h-5 w-5 ${iconColors[index]}`} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-medium text-white group-hover:text-blue-400 transition-colors truncate">
+                  {action.name}
                 </div>
-              </Link>
-            </Button>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+                <div className="text-sm text-slate-400 mt-1 line-clamp-2">
+                  {action.description}
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
   )
 }

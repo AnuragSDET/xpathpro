@@ -448,8 +448,13 @@
 
 /* Selection */
 ::selection {
-  background: rgba(59, 130, 246, 0.2);
-  color: #1e293b;
+  background: rgba(59, 130, 246, 0.3);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: #ffffff;
 }
 
 /* Smooth Scrolling */

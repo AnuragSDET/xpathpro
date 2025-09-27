@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card'
 import { Button } from '../../../components/ui/button'
 import { Input } from '../../../components/ui/input'
 import { Label } from '../../../components/ui/label'
+import AdminPageLayout from '../../../components/admin/AdminPageLayout'
 
 interface NavLink {
   label: string
@@ -95,14 +95,12 @@ export default function LayoutPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Layout Settings</h1>
-      
-      <Card>
-        <CardHeader>
-          <CardTitle>Navbar Configuration</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
+    <AdminPageLayout
+      title="Layout Settings"
+      description="Configure website navigation and layout"
+    >
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6 space-y-6">
           {/* Logo */}
           <div>
             <Label htmlFor="logo">Logo Text</Label>
@@ -110,6 +108,7 @@ export default function LayoutPage() {
               id="logo"
               value={settings.logo}
               onChange={(e) => setSettings({ ...settings, logo: e.target.value })}
+              className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400"
             />
           </div>
 
@@ -123,11 +122,13 @@ export default function LayoutPage() {
                     placeholder="Label"
                     value={link.label}
                     onChange={(e) => updateLink(index, 'label', e.target.value)}
+                    className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400"
                   />
                   <Input
                     placeholder="URL"
                     value={link.href}
                     onChange={(e) => updateLink(index, 'href', e.target.value)}
+                    className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400"
                   />
                   <Button
                     variant="outline"
@@ -155,6 +156,7 @@ export default function LayoutPage() {
                   ...settings,
                   ctaButton: { ...settings.ctaButton, label: e.target.value }
                 })}
+                className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400"
               />
               <Input
                 placeholder="Button URL"
@@ -163,17 +165,19 @@ export default function LayoutPage() {
                   ...settings,
                   ctaButton: { ...settings.ctaButton, href: e.target.value }
                 })}
+                className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400"
               />
             </div>
           </div>
 
           {/* Save Button */}
           <div className="flex items-center gap-4">
-            <Button onClick={saveSettings} disabled={loading}>
+            <Button onClick={saveSettings} disabled={loading} className="bg-blue-600 hover:bg-blue-700">
               {loading ? 'Saving...' : 'Save Settings'}
             </Button>
             <Button 
               variant="outline" 
+              className="bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/50"
               onClick={async () => {
                 try {
                   const res = await fetch('/api/setup-layout-table', { method: 'POST' })
@@ -187,13 +191,13 @@ export default function LayoutPage() {
               Setup Table
             </Button>
             {message && (
-              <span className={message.includes('success') || message.includes('complete') ? 'text-green-600' : 'text-red-600'}>
+              <span className={message.includes('success') || message.includes('complete') ? 'text-green-400' : 'text-red-400'}>
                 {message}
               </span>
             )}
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </AdminPageLayout>
   )
 }
