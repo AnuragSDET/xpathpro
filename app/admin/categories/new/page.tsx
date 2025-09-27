@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Checkbox } from '@/components/ui/checkbox'
 import AdminPageLayout from '@/components/admin/AdminPageLayout'
 
 export default function NewCategoryPage() {
@@ -57,7 +59,7 @@ export default function NewCategoryPage() {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -71,123 +73,115 @@ export default function NewCategoryPage() {
       backUrl="/admin/categories"
       backLabel="Back to Categories"
     >
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="md:col-span-2">
-                <Label htmlFor="title">Category Title *</Label>
-                <Input
-                  id="title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  placeholder="e.g., SDET Fundamentals"
-                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="order">Order *</Label>
-                <Input
-                  id="order"
-                  name="order"
-                  type="number"
-                  value={formData.order}
-                  onChange={handleChange}
-                  placeholder="1"
-                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20"
-                  min="1"
-                  required
-                />
-              </div>
-              <div className="flex items-end">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="featured"
-                    name="featured"
-                    checked={formData.featured}
-                    onChange={(e) => setFormData({...formData, featured: e.target.checked})}
-                    className="rounded border-gray-300"
-                  />
-                  <Label htmlFor="featured">Featured</Label>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="description">Description *</Label>
-              <Textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Brief description of this category..."
-                className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20"
-                rows={2}
-                required
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="md:col-span-2 space-y-2">
+            <Label htmlFor="title" className="text-white">Category Title *</Label>
+            <Input
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="e.g., SDET Fundamentals"
+              className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-400"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="order" className="text-white">Order *</Label>
+            <Input
+              id="order"
+              name="order"
+              type="number"
+              value={formData.order}
+              onChange={handleChange}
+              placeholder="1"
+              className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-400"
+              min="1"
+              required
+            />
+          </div>
+          <div className="flex items-end">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="featured"
+                checked={formData.featured}
+                onCheckedChange={(checked) => setFormData({...formData, featured: !!checked})}
+                className="border-slate-700 data-[state=checked]:bg-blue-600"
               />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="icon">Icon</Label>
-                <select
-                  id="icon"
-                  name="icon"
-                  value={formData.icon}
-                  onChange={handleChange}
-                  className="flex h-10 w-full rounded-md border border-slate-600 bg-slate-800/50 text-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <option value="code">Code</option>
-                  <option value="test-tube">Test Tube</option>
-                  <option value="server">Server</option>
-                  <option value="bug">Bug</option>
-                  <option value="shield">Shield</option>
-                </select>
-              </div>
-              <div>
-                <Label htmlFor="color">Color</Label>
-                <select
-                  id="color"
-                  name="color"
-                  value={formData.color}
-                  onChange={handleChange}
-                  className="flex h-10 w-full rounded-md border border-slate-600 bg-slate-800/50 text-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <option value="blue">Blue</option>
-                  <option value="green">Green</option>
-                  <option value="purple">Purple</option>
-                  <option value="orange">Orange</option>
-                  <option value="red">Red</option>
-                  <option value="teal">Teal</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <Button 
-                type="button" 
-                disabled={loading}
-                onClick={(e) => handleSubmit(e, 'draft')}
-                variant="outline"
-                className="bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/50"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                {loading && saveType === 'draft' ? 'Saving...' : 'Save as Draft'}
-              </Button>
-              <Button 
-                type="button" 
-                disabled={loading}
-                onClick={(e) => handleSubmit(e, 'publish')}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                {loading && saveType === 'publish' ? 'Publishing...' : 'Publish Category'}
-              </Button>
+              <Label htmlFor="featured" className="text-white">Featured</Label>
             </div>
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="description" className="text-white">Description *</Label>
+          <Textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Brief description of this category..."
+            className="bg-slate-900 border-slate-700 text-white placeholder:text-slate-400"
+            rows={2}
+            required
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <Label className="text-white">Icon</Label>
+            <Select value={formData.icon} onValueChange={(value) => setFormData({...formData, icon: value})}>
+              <SelectTrigger className="bg-slate-900 border-slate-700 text-white">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-slate-900 border-slate-700">
+                <SelectItem value="code" className="text-white hover:bg-slate-800">Code</SelectItem>
+                <SelectItem value="test-tube" className="text-white hover:bg-slate-800">Test Tube</SelectItem>
+                <SelectItem value="server" className="text-white hover:bg-slate-800">Server</SelectItem>
+                <SelectItem value="bug" className="text-white hover:bg-slate-800">Bug</SelectItem>
+                <SelectItem value="shield" className="text-white hover:bg-slate-800">Shield</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label className="text-white">Color</Label>
+            <Select value={formData.color} onValueChange={(value) => setFormData({...formData, color: value})}>
+              <SelectTrigger className="bg-slate-900 border-slate-700 text-white">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-slate-900 border-slate-700">
+                <SelectItem value="blue" className="text-white hover:bg-slate-800">Blue</SelectItem>
+                <SelectItem value="green" className="text-white hover:bg-slate-800">Green</SelectItem>
+                <SelectItem value="purple" className="text-white hover:bg-slate-800">Purple</SelectItem>
+                <SelectItem value="orange" className="text-white hover:bg-slate-800">Orange</SelectItem>
+                <SelectItem value="red" className="text-white hover:bg-slate-800">Red</SelectItem>
+                <SelectItem value="teal" className="text-white hover:bg-slate-800">Teal</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="flex gap-4 pt-6">
+          <Button 
+            type="button" 
+            disabled={loading}
+            onClick={(e) => handleSubmit(e, 'draft')}
+            variant="outline"
+            className="bg-slate-800 border-slate-600 text-slate-300 hover:bg-slate-700"
+          >
+            <Save className="h-4 w-4 mr-2" />
+            {loading && saveType === 'draft' ? 'Saving...' : 'Save as Draft'}
+          </Button>
+          <Button 
+            type="button" 
+            disabled={loading}
+            onClick={(e) => handleSubmit(e, 'publish')}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            <Save className="h-4 w-4 mr-2" />
+            {loading && saveType === 'publish' ? 'Publishing...' : 'Publish Category'}
+          </Button>
         </div>
       </div>
     </AdminPageLayout>
