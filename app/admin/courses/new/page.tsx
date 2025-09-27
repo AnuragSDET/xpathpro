@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import ImageUpload from '@/components/admin/ImageUpload'
 import Link from 'next/link'
 
 export default function NewCoursePage() {
@@ -232,17 +233,12 @@ export default function NewCoursePage() {
                 </div>
               </div>
 
-              <div>
-                <Label htmlFor="featuredImage">Featured Image URL</Label>
-                <Input
-                  id="featuredImage"
-                  name="featuredImage"
-                  type="url"
-                  value={formData.featuredImage}
-                  onChange={handleChange}
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
+              <ImageUpload
+                currentUrl={formData.featuredImage}
+                onImageChange={(url) => setFormData({ ...formData, featuredImage: url })}
+                folder="courses"
+                label="Featured Image"
+              />
 
               <div className="flex items-center gap-6">
                 <div className="flex items-center space-x-2">
