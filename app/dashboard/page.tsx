@@ -24,7 +24,19 @@ interface DashboardData {
 export default function DashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [dashboardData, setDashboardData] = useState<DashboardData>({
+    totalCourses: 12,
+    completedCourses: 3,
+    totalLessons: 48,
+    completedLessons: 15,
+    studyTime: 25,
+    recentProgress: [
+      { title: 'SDET Fundamentals', progress: 85 },
+      { title: 'Test Automation', progress: 60 },
+      { title: 'API Testing', progress: 40 }
+    ],
+    subscription: 'free'
+  });
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
 
@@ -54,21 +66,7 @@ export default function DashboardPage() {
     );
   }
 
-  const defaultData = {
-    totalCourses: 12,
-    completedCourses: 3,
-    totalLessons: 48,
-    completedLessons: 15,
-    studyTime: 25,
-    recentProgress: [
-      { title: 'SDET Fundamentals', progress: 85 },
-      { title: 'Test Automation', progress: 60 },
-      { title: 'API Testing', progress: 40 }
-    ],
-    subscription: 'free'
-  };
-
-  const data = dashboardData || defaultData;
+  const data = dashboardData;
   const overallProgress = data.totalLessons > 0 
     ? (data.completedLessons / data.totalLessons) * 100 
     : 0;
