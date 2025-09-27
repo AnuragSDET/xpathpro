@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "sanity": "^3.20.1",
-    "@sanity/vision": "^3.20.1"
+    "@sanity/vision": "^3.20.1",
+    "@sanity/code-input": "^4.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43"

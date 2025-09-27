@@ -1,0 +1,138 @@
+[
+  {
+    "_type": "category",
+    "title": "SDET Fundamentals",
+    "slug": {"current": "sdet-fundamentals"},
+    "description": "Core concepts and principles of Software Development Engineer in Test",
+    "icon": "code",
+    "color": "blue",
+    "order": 1,
+    "featured": true
+  },
+  {
+    "_type": "category", 
+    "title": "Test Automation",
+    "slug": {"current": "test-automation"},
+    "description": "Automated testing frameworks and tools",
+    "icon": "test-tube",
+    "color": "green",
+    "order": 2,
+    "featured": true
+  },
+  {
+    "_type": "category",
+    "title": "API Testing",
+    "slug": {"current": "api-testing"},
+    "description": "REST API testing and validation techniques",
+    "icon": "server",
+    "color": "purple",
+    "order": 3,
+    "featured": false
+  },
+  {
+    "_type": "course",
+    "title": "Introduction to SDET",
+    "slug": {"current": "introduction-to-sdet"},
+    "description": "Learn the fundamentals of Software Development Engineer in Test role and responsibilities",
+    "overview": [
+      {
+        "_type": "block",
+        "children": [
+          {
+            "_type": "span",
+            "text": "This comprehensive course introduces you to the world of Software Development Engineer in Test (SDET). You'll learn the core principles, methodologies, and tools that make SDETs essential in modern software development."
+          }
+        ]
+      }
+    ],
+    "difficulty": "beginner",
+    "duration": 8,
+    "prerequisites": ["Basic programming knowledge", "Understanding of software development lifecycle"],
+    "learningObjectives": [
+      "Understand the SDET role and responsibilities",
+      "Learn testing methodologies and best practices", 
+      "Master test planning and strategy",
+      "Implement quality assurance processes"
+    ],
+    "tags": ["sdet", "testing", "quality-assurance", "beginner"],
+    "featured": true,
+    "published": true,
+    "publishedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "_type": "lesson",
+    "title": "What is an SDET?",
+    "slug": {"current": "what-is-an-sdet"},
+    "description": "Understanding the role and responsibilities of a Software Development Engineer in Test",
+    "content": [
+      {
+        "_type": "block",
+        "children": [
+          {
+            "_type": "span",
+            "text": "A Software Development Engineer in Test (SDET) is a professional who combines software development skills with testing expertise to ensure high-quality software delivery."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span", 
+            "text": "Key Responsibilities"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "children": [
+          {
+            "_type": "span",
+            "text": "SDETs are responsible for:"
+          }
+        ]
+      }
+    ],
+    "order": 1,
+    "duration": 45,
+    "quiz": [
+      {
+        "question": "What does SDET stand for?",
+        "options": [
+          "Software Development Engineer in Test",
+          "System Design Engineer in Technology", 
+          "Software Design Engineer in Testing",
+          "System Development Engineer in Test"
+        ],
+        "correctAnswer": 0,
+        "explanation": "SDET stands for Software Development Engineer in Test, combining development and testing skills."
+      }
+    ],
+    "tags": ["sdet", "introduction", "roles"],
+    "published": true,
+    "publishedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "_type": "lesson",
+    "title": "SDET vs QA Engineer",
+    "slug": {"current": "sdet-vs-qa-engineer"},
+    "description": "Understanding the differences between SDET and traditional QA roles",
+    "content": [
+      {
+        "_type": "block",
+        "children": [
+          {
+            "_type": "span",
+            "text": "While both SDETs and QA Engineers focus on quality, their approaches and skill sets differ significantly."
+          }
+        ]
+      }
+    ],
+    "order": 2,
+    "duration": 30,
+    "tags": ["sdet", "qa", "comparison"],
+    "published": true,
+    "publishedAt": "2024-01-15T11:00:00Z"
+  }
+]
