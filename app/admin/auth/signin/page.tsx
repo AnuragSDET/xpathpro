@@ -16,11 +16,13 @@ export default function AdminSignIn() {
     setLoading(true)
     
     try {
-      const result = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
+      const response = await fetch('/api/auth/admin/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
       })
+      
+      const result = await response.json()
       
       if (result?.ok) {
         window.location.href = '/admin'
