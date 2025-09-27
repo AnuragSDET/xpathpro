@@ -23,13 +23,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .single()
 
     console.log('User found:', user ? 'Yes' : 'No', error)
+    console.log('User data:', { id: user?.id, email: user?.email, hasPassword: !!user?.password })
 
     if (error || !user) {
       return res.status(401).json({ error: 'User not found' })
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.password)
-    console.log('Password valid:', isValidPassword)
+    if (!user.password) {
+      console.log('No password found for user')
+      return res.status(401).json({ error: 'No password set' })
+    }
+
+    let isValidPassword = false
+    try {
+      isValidPassword = await bcrypt.compare(password, user.password)
+      console.log('Password valid:', isValidPassword)
+    } catch (bcryptError) {
+      console.log('Bcrypt error:', bcryptError)
+      return res.status(500).json({ error: 'Password verification failed' })
+    }
     
     if (!isValidPassword) {
       return res.status(401).json({ error: 'Invalid password' })
