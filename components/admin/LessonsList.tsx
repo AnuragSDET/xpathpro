@@ -109,7 +109,7 @@ export default function LessonsList() {
   }
 
   return (
-
+    <div>
       {lessons.length === 0 ? (
         <div className="bg-white/5 border border-white/10 rounded-xl p-12 text-center">
           <div className="space-y-4">
@@ -199,5 +199,6 @@ export default function LessonsList() {
           ))}
         </div>
       )}
+    </div>
   )
 }
