@@ -3,199 +3,276 @@
 import { useEffect, useState, useRef } from 'react';
 
 export default function Home() {
-  const [scrollY, setScrollY] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
 
-    window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
-    setIsVisible(true);
+    setTimeout(() => setIsLoaded(true), 100);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 overflow-hidden relative">
       
-      {/* Animated Background Elements */}
+      {/* Dynamic Mesh Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-pink-200/30 to-yellow-200/30 rounded-full blur-3xl animate-pulse animation-delay-2000" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-cyan-200/20 to-blue-200/20 rounded-full blur-2xl animate-spin-slow" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),transparent_50%)] animate-pulse-slow" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,rgba(59,130,246,0.1)_60deg,transparent_120deg)] animate-spin-ultra-slow" />
+        
+        {/* Morphing Shapes */}
+        <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-full animate-morph-1" />
+        <div className="absolute top-40 right-32 w-24 h-24 bg-gradient-to-r from-purple-400/20 to-pink-400/20 animate-morph-2" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
+        <div className="absolute bottom-32 left-40 w-28 h-28 bg-gradient-to-r from-emerald-400/20 to-teal-400/20 animate-morph-3" style={{ clipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)' }} />
+        <div className="absolute bottom-20 right-20 w-36 h-36 bg-gradient-to-r from-orange-400/20 to-red-400/20 rounded-full animate-morph-4" />
       </div>
 
-      {/* Floating Particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 bg-gradient-to-r from-blue-300/40 to-purple-300/40 rounded-full animate-float-gentle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 8}s`,
-              animationDuration: `${6 + Math.random() * 4}s`
-            }}
-          />
-        ))}
+      {/* Interactive Grid */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] animate-grid-flow" />
       </div>
 
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center px-4 py-20">
-        <div className={`max-w-7xl mx-auto text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`max-w-7xl mx-auto text-center transition-all duration-1500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
           
-          {/* Premium Badge */}
-          <div className="inline-flex items-center px-6 py-3 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 shadow-lg mb-8 hover:shadow-xl transition-all duration-300 group">
-            <div className="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse" />
-            <span className="text-slate-700 font-semibold text-sm tracking-wide">
-              🚀 World's Most Advanced SDET Platform
-            </span>
-            <div className="ml-2 px-2 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs rounded-full font-bold">
-              NEW
+          {/* Floating Status Badge */}
+          <div className="relative inline-block mb-12">
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-full blur opacity-30 animate-pulse" />
+            <div className="relative flex items-center px-8 py-4 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl">
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full animate-ping" />
+                  <div className="absolute inset-0 w-3 h-3 bg-emerald-400 rounded-full" />
+                </div>
+                <span className="text-white font-bold text-sm tracking-wider">
+                  ⚡ NEXT-GEN SDET MASTERY
+                </span>
+                <div className="px-3 py-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs rounded-full font-black animate-pulse">
+                  LIVE
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-tight">
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 animate-gradient-x">
-              Master SDET
-            </span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 animate-gradient-x-reverse">
-              Like Never Before
-            </span>
-          </h1>
+          {/* Revolutionary Headline */}
+          <div className="relative mb-12">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight">
+              <div className="relative inline-block">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-blue-200 animate-text-shimmer">
+                  TRANSFORM INTO
+                </span>
+                <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-600/20 blur-xl animate-pulse" />
+              </div>
+              <div className="relative mt-4">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-gradient-flow">
+                  ELITE SDET
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 to-purple-600/10 blur-2xl animate-pulse-slow" />
+              </div>
+            </h1>
+            
+            {/* Floating Elements */}
+            <div className="absolute -top-8 -left-8 w-4 h-4 bg-cyan-400 rounded-full animate-float-random-1" />
+            <div className="absolute -top-4 -right-12 w-3 h-3 bg-purple-500 rounded-full animate-float-random-2" />
+            <div className="absolute -bottom-6 left-16 w-2 h-2 bg-blue-400 rounded-full animate-float-random-3" />
+          </div>
 
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-            Join <span className="font-bold text-blue-600">150,000+</span> professionals who transformed their careers with our 
-            <span className="font-bold text-purple-600"> AI-powered</span> learning platform.
-            <br />
-            <span className="text-lg text-slate-500">Average salary increase: <span className="font-bold text-green-600">$45,000</span></span>
-          </p>
+          {/* Dynamic Subtitle */}
+          <div className="relative mb-16">
+            <p className="text-xl md:text-2xl text-gray-300 max-w-5xl mx-auto leading-relaxed">
+              Join <span className="relative inline-block">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 font-black">150,000+</span>
+                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 blur animate-pulse" />
+              </span> professionals who achieved 
+              <span className="relative inline-block">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-black">6-figure salaries</span>
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-400/20 to-pink-400/20 blur animate-pulse" />
+              </span>
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-8 text-sm text-gray-400">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                <span>Average: <span className="text-emerald-400 font-bold">$185K salary</span></span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+                <span>Success: <span className="text-blue-400 font-bold">97.8% job rate</span></span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
+                <span>Speed: <span className="text-purple-400 font-bold">3 months avg</span></span>
+              </div>
+            </div>
+          </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-            <button className="group relative px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+          {/* Revolutionary CTA */}
+          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-20">
+            <button className="group relative px-12 py-6 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-black text-xl rounded-2xl shadow-2xl hover:shadow-cyan-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-white/30 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 skew-x-12" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 opacity-0 group-hover:opacity-50 blur transition-opacity duration-500" />
               <span className="relative z-10 flex items-center">
-                Start Learning FREE
-                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                <span className="mr-3">🚀</span>
+                START FREE TRANSFORMATION
+                <svg className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
             </button>
             
-            <button className="group px-10 py-5 bg-white/80 backdrop-blur-sm border-2 border-blue-200 text-slate-700 font-bold text-lg rounded-2xl hover:bg-white hover:border-blue-300 hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-              <span className="flex items-center">
-                <svg className="w-5 h-5 mr-2 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 12l-6-6 1.5-1.5L10 9l4.5-4.5L16 6z"/>
+            <button className="group relative px-12 py-6 bg-gray-900/50 backdrop-blur-xl border-2 border-white/20 text-white font-bold text-xl rounded-2xl hover:bg-gray-800/60 hover:border-white/40 transform hover:scale-105 transition-all duration-500 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <span className="relative z-10 flex items-center">
+                <div className="w-3 h-3 bg-red-500 rounded-full mr-3 animate-pulse" />
+                WATCH LIVE DEMO
+                <svg className="w-5 h-5 ml-3 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M8 5v10l7-5z"/>
                 </svg>
-                Watch Demo
               </span>
             </button>
           </div>
 
-          {/* Animated Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          {/* Interactive Stats Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {[
-              { number: '150K+', label: 'Students', icon: '👥', color: 'from-blue-500 to-cyan-500' },
-              { number: '97.8%', label: 'Success Rate', icon: '🎯', color: 'from-green-500 to-emerald-500' },
-              { number: '4.9★', label: 'Rating', icon: '⭐', color: 'from-yellow-500 to-orange-500' },
-              { number: '$185K', label: 'Avg Salary', icon: '💰', color: 'from-purple-500 to-pink-500' }
+              { number: '150K+', label: 'Elite SDETs', icon: '⚡', gradient: 'from-cyan-400 to-blue-500', bg: 'from-cyan-500/10 to-blue-500/10' },
+              { number: '97.8%', label: 'Success Rate', icon: '🎯', gradient: 'from-emerald-400 to-green-500', bg: 'from-emerald-500/10 to-green-500/10' },
+              { number: '4.9★', label: 'Rating', icon: '⭐', gradient: 'from-yellow-400 to-orange-500', bg: 'from-yellow-500/10 to-orange-500/10' },
+              { number: '$185K', label: 'Avg Salary', icon: '💎', gradient: 'from-purple-400 to-pink-500', bg: 'from-purple-500/10 to-pink-500/10' }
             ].map((stat, index) => (
-              <div key={index} className="group relative">
-                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/50 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                  <div className="text-3xl mb-2">{stat.icon}</div>
-                  <div className={`text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r ${stat.color} mb-2`}>
+              <div 
+                key={index} 
+                className="group relative cursor-pointer"
+                onMouseEnter={() => setActiveCard(index)}
+                onMouseLeave={() => setActiveCard(null)}
+              >
+                <div className={`absolute -inset-1 bg-gradient-to-r ${stat.gradient} opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl`} />
+                <div className={`relative bg-gradient-to-br ${stat.bg} backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-xl hover:shadow-2xl transform hover:scale-110 hover:-rotate-2 transition-all duration-500`}>
+                  <div className="text-4xl mb-4 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">{stat.icon}</div>
+                  <div className={`text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r ${stat.gradient} mb-2 group-hover:animate-pulse`}>
                     {stat.number}
                   </div>
-                  <div className="text-slate-600 text-sm font-medium">
+                  <div className="text-gray-300 text-sm font-bold tracking-wide">
                     {stat.label}
                   </div>
+                  {activeCard === index && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 rounded-2xl animate-pulse" />
+                  )}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Interactive Elements */}
+        {/* Advanced Cursor Effects */}
         <div 
-          className="absolute w-4 h-4 bg-gradient-to-r from-blue-400/60 to-purple-400/60 rounded-full pointer-events-none transition-all duration-200 ease-out z-50"
+          className="fixed w-8 h-8 pointer-events-none z-50 transition-all duration-300 ease-out"
           style={{
-            left: mousePos.x - 8,
-            top: mousePos.y - 8,
-            transform: `scale(${mousePos.x > 0 ? 1 : 0.8})`,
-            opacity: mousePos.x > 0 ? 0.7 : 0
+            left: mousePos.x - 16,
+            top: mousePos.y - 16,
+            transform: `scale(${mousePos.x > 0 ? 1 : 0})`,
+            opacity: mousePos.x > 0 ? 0.8 : 0
           }}
-        />
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/40 to-purple-400/40 rounded-full animate-ping" />
+          <div className="absolute inset-2 bg-gradient-to-r from-cyan-400/60 to-purple-400/60 rounded-full" />
+        </div>
+
+      {/* Floating Action Elements */}
+      <div className="fixed bottom-8 right-8 z-40">
+        <div className="relative">
+          <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-full blur opacity-40 animate-pulse" />
+          <button className="relative bg-gray-900/90 backdrop-blur-xl border border-white/20 rounded-full p-4 text-white hover:scale-110 transition-all duration-300 shadow-2xl">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          </button>
+        </div>
+      </div>
       </section>
 
-      {/* Features Section */}
-      <section className="relative py-20 px-4">
+      {/* Revolutionary Features Section */}
+      <section className="relative py-32 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6">
-              Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">xPath Pro</span>?
-            </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Experience the future of SDET education with cutting-edge technology
+          <div className="text-center mb-20">
+            <div className="relative inline-block mb-8">
+              <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-purple-200">
+                THE FUTURE IS
+              </h2>
+              <div className="absolute -inset-4 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 to-purple-600/10 blur-2xl animate-pulse-slow" />
+            </div>
+            <h3 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-8">
+              HERE
+            </h3>
+            <p className="text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed">
+              Revolutionary technology meets elite education. Experience learning like never before.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-12">
             {[
               {
-                icon: '🧠',
-                title: 'AI-Powered Learning',
-                description: 'Personalized learning paths that adapt to your pace and style.',
-                gradient: 'from-blue-500 to-cyan-500',
-                bgGradient: 'from-blue-50 to-cyan-50'
+                icon: '🤖',
+                title: 'AI Neural Learning',
+                description: 'Advanced AI adapts to your learning patterns, creating personalized pathways that evolve with your progress.',
+                gradient: 'from-cyan-400 to-blue-500',
+                bgGradient: 'from-cyan-500/5 to-blue-500/5',
+                borderGradient: 'from-cyan-400/30 to-blue-500/30'
               },
               {
-                icon: '🎯',
-                title: 'Industry Experts',
-                description: 'Learn from top SDET professionals at leading tech companies.',
-                gradient: 'from-purple-500 to-pink-500',
-                bgGradient: 'from-purple-50 to-pink-50'
+                icon: '✨',
+                title: 'Quantum Mentorship',
+                description: 'Connect with industry titans through our exclusive network of FAANG+ senior engineers and architects.',
+                gradient: 'from-purple-400 to-pink-500',
+                bgGradient: 'from-purple-500/5 to-pink-500/5',
+                borderGradient: 'from-purple-400/30 to-pink-500/30'
               },
               {
-                icon: '🚀',
-                title: 'Guaranteed Results',
-                description: '97.8% job placement rate within 6 months or money back.',
-                gradient: 'from-green-500 to-emerald-500',
-                bgGradient: 'from-green-50 to-emerald-50'
+                icon: '🔥',
+                title: 'Reality Simulation',
+                description: 'Practice in hyper-realistic environments that mirror actual enterprise testing scenarios.',
+                gradient: 'from-orange-400 to-red-500',
+                bgGradient: 'from-orange-500/5 to-red-500/5',
+                borderGradient: 'from-orange-400/30 to-red-500/30'
               }
             ].map((feature, index) => (
               <div key={index} className="group relative">
-                <div className={`relative p-8 bg-gradient-to-br ${feature.bgGradient} rounded-3xl border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-rotate-1 overflow-hidden`}>
+                <div className={`absolute -inset-1 bg-gradient-to-r ${feature.borderGradient} opacity-0 group-hover:opacity-100 blur transition-opacity duration-700 rounded-3xl`} />
+                <div className={`relative bg-gradient-to-br ${feature.bgGradient} backdrop-blur-xl rounded-3xl p-10 border border-white/5 shadow-2xl hover:shadow-4xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2 overflow-hidden`}>
                   
-                  {/* Animated Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                  {/* Animated Background Pattern */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_70%)] animate-pulse-slow" />
+                  </div>
                   
-                  {/* Shimmer Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                  {/* Floating Orb */}
+                  <div className={`absolute -top-6 -right-6 w-12 h-12 bg-gradient-to-r ${feature.gradient} rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-700 animate-pulse`} />
                   
                   <div className="relative z-10">
-                    <div className="text-5xl mb-6 transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                    <div className="text-6xl mb-8 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-700">
                       {feature.icon}
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-500">
+                    <h3 className={`text-3xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r ${feature.gradient} group-hover:animate-pulse`}>
                       {feature.title}
                     </h3>
-                    <p className="text-slate-600 leading-relaxed">
+                    <p className="text-gray-300 text-lg leading-relaxed">
                       {feature.description}
                     </p>
+                    
+                    {/* Interactive Element */}
+                    <div className="mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                      <div className={`h-1 bg-gradient-to-r ${feature.gradient} rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700`} />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -204,63 +281,159 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Premium Section */}
-      <section className="relative py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="relative p-12 bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl border border-amber-200/50 shadow-2xl overflow-hidden">
+      {/* Elite Access Section */}
+      <section className="relative py-32 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative">
+            {/* Holographic Border Effect */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500 opacity-30 blur-2xl animate-gradient-flow rounded-3xl" />
+            <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400/50 via-blue-500/50 via-purple-500/50 to-pink-500/50 opacity-50 blur animate-gradient-flow rounded-3xl" />
             
-            {/* Animated Border */}
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 opacity-20 animate-gradient-x blur-sm" />
-            <div className="absolute inset-[2px] bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl" />
-            
-            <div className="relative z-10">
-              {/* Premium Badge */}
-              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-300/50 mb-8">
-                <span className="w-3 h-3 bg-amber-500 rounded-full mr-3 animate-pulse" />
-                <span className="text-amber-800 text-sm font-bold tracking-wide">
-                  ⚡ LIMITED TIME: 70% OFF PREMIUM
-                </span>
-              </div>
-
-              <h3 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 mb-6">
-                Unlock Your Potential
-              </h3>
+            <div className="relative bg-gray-900/95 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+              {/* Animated Grid Background */}
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:30px_30px] animate-grid-flow" />
               
-              <p className="text-xl text-slate-700 mb-8 max-w-3xl mx-auto">
-                Get access to <span className="font-bold text-amber-600">AI mentorship</span>, 
-                <span className="font-bold text-orange-600"> mock interviews</span>, 
-                <span className="font-bold text-red-600"> resume builder</span>, and 
-                <span className="font-bold text-purple-600"> exclusive content</span>.
-              </p>
+              <div className="relative z-10 p-16 text-center">
+                {/* Elite Badge */}
+                <div className="relative inline-block mb-12">
+                  <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 opacity-40 blur animate-pulse rounded-full" />
+                  <div className="relative flex items-center px-8 py-4 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 backdrop-blur-xl border border-yellow-400/30 rounded-full">
+                    <div className="flex items-center space-x-3">
+                      <div className="relative">
+                        <div className="w-4 h-4 bg-yellow-400 rounded-full animate-ping" />
+                        <div className="absolute inset-0 w-4 h-4 bg-yellow-400 rounded-full" />
+                      </div>
+                      <span className="text-yellow-200 font-black text-sm tracking-widest">
+                        🔥 ELITE ACCESS - 80% OFF
+                      </span>
+                      <div className="px-3 py-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full font-black animate-pulse">
+                        ENDING SOON
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-              <button className="group relative px-12 py-6 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 text-white font-black text-xl rounded-2xl shadow-2xl hover:shadow-amber-500/25 transform hover:scale-110 transition-all duration-300 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
-                <span className="relative z-10">
-                  Claim 70% Discount
-                </span>
-              </button>
+                <h3 className="text-5xl md:text-7xl font-black mb-8">
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 animate-text-shimmer">
+                    BECOME
+                  </span>
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-gradient-flow">
+                    UNSTOPPABLE
+                  </span>
+                </h3>
+                
+                <p className="text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+                  Unlock <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-black">AI-powered mentorship</span>, 
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-black">live coding sessions</span>, 
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 font-black">exclusive masterclasses</span>, and 
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-500 font-black">guaranteed job placement</span>.
+                </p>
 
-              <p className="text-sm text-slate-500 mt-4">
-                ⏰ Offer expires soon • Limited spots available
-              </p>
+                <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-12">
+                  <button className="group relative px-16 py-8 bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white font-black text-2xl rounded-2xl shadow-2xl hover:shadow-yellow-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-600 via-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-white/40 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 skew-x-12" />
+                    <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 opacity-0 group-hover:opacity-60 blur transition-opacity duration-500" />
+                    <span className="relative z-10 flex items-center">
+                      🔥 CLAIM ELITE ACCESS
+                    </span>
+                  </button>
+                  
+                  <div className="text-center">
+                    <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-pink-500 mb-2">
+                      $2,997 → $597
+                    </div>
+                    <div className="text-sm text-gray-400">
+                      ⏰ Only 47 spots remaining
+                    </div>
+                  </div>
+                </div>
+
+                {/* Countdown Timer Effect */}
+                <div className="flex justify-center space-x-8 text-center">
+                  {['23', '14', '07', '42'].map((time, index) => (
+                    <div key={index} className="relative">
+                      <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-500 opacity-30 blur rounded-lg" />
+                      <div className="relative bg-gray-800/80 backdrop-blur-xl border border-red-400/20 rounded-lg px-4 py-3">
+                        <div className="text-2xl font-black text-red-400">{time}</div>
+                        <div className="text-xs text-gray-400">
+                          {['HRS', 'MIN', 'SEC', 'MS'][index]}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Social Proof */}
-      <section className="relative py-16 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <h3 className="text-2xl font-bold text-slate-700 mb-8">
-            Trusted by professionals at
-          </h3>
-          <div className="flex flex-wrap justify-center items-center gap-12 opacity-60">
-            {['Google', 'Microsoft', 'Amazon', 'Meta', 'Netflix', 'Apple'].map((company, index) => (
-              <div key={index} className="text-xl font-bold text-slate-600 hover:text-blue-600 transition-colors duration-300 cursor-pointer">
-                {company}
+      {/* Elite Network */}
+      <section className="relative py-24 px-4">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="mb-16">
+            <h3 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600 mb-4">
+              ELITE NETWORK
+            </h3>
+            <p className="text-gray-500 text-lg">
+              Our graduates now lead teams at the world's most innovative companies
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-8 items-center">
+            {[
+              { name: 'Google', gradient: 'from-blue-400 to-green-400' },
+              { name: 'Microsoft', gradient: 'from-blue-500 to-cyan-400' },
+              { name: 'Amazon', gradient: 'from-orange-400 to-yellow-400' },
+              { name: 'Meta', gradient: 'from-blue-600 to-purple-500' },
+              { name: 'Netflix', gradient: 'from-red-500 to-pink-500' },
+              { name: 'Apple', gradient: 'from-gray-400 to-gray-600' }
+            ].map((company, index) => (
+              <div key={index} className="group relative cursor-pointer">
+                <div className={`absolute -inset-2 bg-gradient-to-r ${company.gradient} opacity-0 group-hover:opacity-20 blur transition-opacity duration-500 rounded-xl`} />
+                <div className="relative bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-xl p-6 hover:border-white/20 transition-all duration-500 transform hover:scale-110">
+                  <div className={`text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r ${company.gradient} group-hover:animate-pulse`}>
+                    {company.name}
+                  </div>
+                </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+      {/* Final CTA */}
+      <section className="relative py-32 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="relative">
+            <div className="absolute -inset-8 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500 opacity-20 blur-3xl animate-pulse-slow rounded-full" />
+            <div className="relative">
+              <h2 className="text-6xl md:text-8xl font-black mb-8">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-blue-200">
+                  YOUR TIME
+                </span>
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-gradient-flow">
+                  IS NOW
+                </span>
+              </h2>
+              
+              <p className="text-2xl text-gray-300 mb-16 max-w-3xl mx-auto">
+                Don't let another day pass wondering "what if". 
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-black">
+                  Transform your career today.
+                </span>
+              </p>
+
+              <button className="group relative px-20 py-8 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-black text-3xl rounded-2xl shadow-2xl hover:shadow-cyan-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-white/30 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 skew-x-12" />
+                <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 opacity-0 group-hover:opacity-50 blur transition-opacity duration-500" />
+                <span className="relative z-10 flex items-center">
+                  🚀 BEGIN TRANSFORMATION
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </section>

@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { BookOpen, Clock, Trophy, Target, FileText, Star } from 'lucide-react';
+import { BookOpen, Clock, Trophy, Target, FileText, Star, MessageSquare } from 'lucide-react';
+import MockInterview from '@/components/dashboard/MockInterview';
 
 interface DashboardData {
   totalCourses: number;
@@ -122,6 +123,11 @@ export default function DashboardPage() {
           </Card>
         </div>
 
+        {/* Mock Interview Section */}
+        <div className="mb-8">
+          <MockInterview userId={session?.user?.id || ''} />
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Progress Overview */}
           <div className="lg:col-span-2">
@@ -171,6 +177,10 @@ export default function DashboardPage() {
                 <Button className="w-full justify-start" variant="outline">
                   <Target className="h-4 w-4 mr-2" />
                   Take Assessment
+                </Button>
+                <Button className="w-full justify-start" variant="outline">
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  AI Mock Interview
                 </Button>
                 <Button className="w-full justify-start" variant="outline">
                   <Star className="h-4 w-4 mr-2" />

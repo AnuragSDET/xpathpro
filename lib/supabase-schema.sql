@@ -79,6 +79,21 @@ CREATE TABLE IF NOT EXISTS user_subscriptions (
   stripe_subscription_id VARCHAR(255)
 );
 
+-- Mock interviews
+CREATE TABLE IF NOT EXISTS mock_interviews (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  interview_type VARCHAR(50) NOT NULL,
+  questions JSONB,
+  responses JSONB,
+  ai_feedback JSONB,
+  score INTEGER,
+  duration INTEGER,
+  status VARCHAR(20) DEFAULT 'active',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  completed_at TIMESTAMP WITH TIME ZONE
+);
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_user_progress_user_id ON user_progress(user_id);
 CREATE INDEX IF NOT EXISTS idx_analytics_events_timestamp ON analytics_events(timestamp);
@@ -87,6 +102,7 @@ CREATE INDEX IF NOT EXISTS idx_user_bookmarks_user_id ON user_bookmarks(user_id)
 CREATE INDEX IF NOT EXISTS idx_user_notes_user_id ON user_notes(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_assessments_user_id ON user_assessments(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_subscriptions_user_id ON user_subscriptions(user_id);
+CREATE INDEX IF NOT EXISTS idx_mock_interviews_user_id ON mock_interviews(user_id);
 
 -- Row Level Security (RLS)
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
@@ -96,6 +112,7 @@ ALTER TABLE user_bookmarks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_notes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_assessments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_subscriptions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE mock_interviews ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies
 CREATE POLICY "Users can view own profile" ON users FOR SELECT USING (auth.uid() = id);
@@ -119,3 +136,5 @@ CREATE POLICY "Users can view own subscription" ON user_subscriptions FOR SELECT
 CREATE POLICY "Admins can manage subscriptions" ON user_subscriptions FOR ALL USING (
   EXISTS (SELECT 1 FROM users WHERE id = auth.uid() AND role = 'admin')
 );
+
+CREATE POLICY "Users can manage own interviews" ON mock_interviews FOR ALL USING (auth.uid() = user_id);
