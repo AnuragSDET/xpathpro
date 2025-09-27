@@ -45,17 +45,57 @@ CREATE TABLE IF NOT EXISTS user_bookmarks (
   UNIQUE(user_id, course_id, lesson_id)
 );
 
+-- User notes
+CREATE TABLE IF NOT EXISTS user_notes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  course_id VARCHAR(255),
+  lesson_id VARCHAR(255),
+  content TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- User assessments
+CREATE TABLE IF NOT EXISTS user_assessments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  course_id VARCHAR(255) NOT NULL,
+  lesson_id VARCHAR(255),
+  score INTEGER NOT NULL,
+  total_questions INTEGER NOT NULL,
+  answers JSONB,
+  completed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- User subscriptions
+CREATE TABLE IF NOT EXISTS user_subscriptions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  plan VARCHAR(50) NOT NULL DEFAULT 'free',
+  status VARCHAR(50) NOT NULL DEFAULT 'active',
+  started_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  expires_at TIMESTAMP WITH TIME ZONE,
+  stripe_subscription_id VARCHAR(255)
+);
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_user_progress_user_id ON user_progress(user_id);
 CREATE INDEX IF NOT EXISTS idx_analytics_events_timestamp ON analytics_events(timestamp);
 CREATE INDEX IF NOT EXISTS idx_analytics_events_user_id ON analytics_events(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_bookmarks_user_id ON user_bookmarks(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_notes_user_id ON user_notes(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_assessments_user_id ON user_assessments(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_subscriptions_user_id ON user_subscriptions(user_id);
 
 -- Row Level Security (RLS)
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE analytics_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_bookmarks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_notes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_assessments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_subscriptions ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies
 CREATE POLICY "Users can view own profile" ON users FOR SELECT USING (auth.uid() = id);
@@ -70,3 +110,12 @@ CREATE POLICY "Admins can view all analytics" ON analytics_events FOR SELECT USI
 );
 
 CREATE POLICY "Users can manage own bookmarks" ON user_bookmarks FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can manage own notes" ON user_notes FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can manage own assessments" ON user_assessments FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view own subscription" ON user_subscriptions FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Admins can manage subscriptions" ON user_subscriptions FOR ALL USING (
+  EXISTS (SELECT 1 FROM users WHERE id = auth.uid() AND role = 'admin')
+);

@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { supabase } from '../../../lib/supabase'
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -71,4 +71,6 @@ export default NextAuth({
     signIn: '/auth/signin',
     error: '/auth/error',
   },
-})
+}
+
+export default NextAuth(authOptions)
