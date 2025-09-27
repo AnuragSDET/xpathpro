@@ -43,19 +43,22 @@ export default function AnalyticsStats() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {stats.map((stat, index) => (
-        <div key={stat.name} className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-blue-500/50 transition-all duration-200 h-32">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-slate-400 leading-tight">
-              {stat.name}
-            </h3>
-            <stat.icon className={`h-5 w-5 ${iconColors[index]}`} />
+        <div key={stat.name} className="relative group h-32">
+          <div className={`absolute -inset-1 bg-gradient-to-r ${gradients[index]} opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-xl`} />
+          <div className="relative bg-white/5 border border-white/10 rounded-xl p-6 hover:border-blue-500/50 transition-all duration-200 h-full">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-medium text-slate-400 leading-tight">
+                {stat.name}
+              </h3>
+              <stat.icon className={`h-5 w-5 ${iconColors[index]}`} />
+            </div>
+            <div className="text-2xl font-bold text-white mb-2">{stat.value}</div>
+            <p className="text-sm text-slate-400">
+              <span className={stat.changeType === 'positive' ? 'text-green-400' : 'text-red-400'}>
+                {stat.change}
+              </span> from last month
+            </p>
           </div>
-          <div className="text-2xl font-bold text-white mb-2">{stat.value}</div>
-          <p className="text-sm text-slate-400">
-            <span className={stat.changeType === 'positive' ? 'text-green-400' : 'text-red-400'}>
-              {stat.change}
-            </span> from last month
-          </p>
         </div>
       ))}
     </div>
