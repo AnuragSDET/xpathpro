@@ -32,13 +32,22 @@ export default function MockInterview({ userId }: { userId: string }) {
         body: JSON.stringify({ userId, interviewType: type })
       });
       
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
       setInterviewId(data.interviewId);
       setCurrentQuestion(data.question);
       setIsActive(true);
       setStartTime(Date.now());
     } catch (error) {
       console.error('Failed to start interview:', error);
+      alert('Failed to start interview. Please try again.');
     }
     setLoading(false);
   };
@@ -58,12 +67,21 @@ export default function MockInterview({ userId }: { userId: string }) {
         })
       });
       
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
       setEvaluation(data.evaluation);
       setCurrentQuestion(data.nextQuestion);
       setAnswer('');
     } catch (error) {
       console.error('Failed to submit answer:', error);
+      alert('Failed to submit answer. Please try again.');
     }
     setLoading(false);
   };
@@ -80,14 +98,24 @@ export default function MockInterview({ userId }: { userId: string }) {
         body: JSON.stringify({ interviewId, duration })
       });
       
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
-      alert(`Interview completed! Score: ${data.score}/100`);
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
+      alert(`🎉 Interview completed!\n\nFinal Score: ${data.score}/100\nQuestions Answered: ${data.totalQuestions}\nDuration: ${Math.floor(duration/60)}m ${duration%60}s`);
       setIsActive(false);
       setInterviewId(null);
       setCurrentQuestion(null);
       setEvaluation(null);
+      setStartTime(null);
     } catch (error) {
       console.error('Failed to complete interview:', error);
+      alert('Failed to complete interview. Please try again.');
     }
   };
 

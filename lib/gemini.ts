@@ -28,19 +28,29 @@ export class GeminiClient {
     }
   }
 
-  async generateInterviewQuestion(type: string, previousQuestions: string[] = []): Promise<{
+  async generateInterviewQuestion(type: string, previousQuestions: string[] = [], candidateLevel: string = 'intermediate'): Promise<{
     question: string;
     category: string;
     difficulty: string;
+    expectedDuration: number;
+    followUpHints: string[];
   }> {
-    const prompt = `Generate a ${type} SDET interview question. 
+    const prompt = `Generate a ${type} SDET interview question for ${candidateLevel} level candidate.
     Previous questions: ${previousQuestions.join(', ')}
+    
+    Create a realistic interview question that:
+    - Tests practical SDET knowledge
+    - Allows for detailed explanation
+    - Has clear evaluation criteria
+    - Is appropriate for video response
     
     Return JSON format:
     {
-      "question": "Your question here",
+      "question": "Your detailed question here",
       "category": "technical/behavioral/system_design",
-      "difficulty": "easy/medium/hard"
+      "difficulty": "easy/medium/hard",
+      "expectedDuration": 120,
+      "followUpHints": ["hint1", "hint2"]
     }`;
 
     const response = await this.generateContent(prompt);
@@ -50,25 +60,46 @@ export class GeminiClient {
       return {
         question: response,
         category: type,
-        difficulty: 'medium'
+        difficulty: 'medium',
+        expectedDuration: 120,
+        followUpHints: []
       };
     }
   }
 
-  async evaluateAnswer(question: string, answer: string): Promise<{
-    score: number;
+  async evaluateVideoResponse(question: string, transcript: string, speechMetrics: any): Promise<{
+    technicalScore: number;
+    communicationScore: number;
+    overallScore: number;
     feedback: string;
     suggestions: string[];
+    speechAnalysis: any;
   }> {
-    const prompt = `Evaluate this SDET interview answer:
+    const prompt = `Evaluate this SDET video interview response:
+    
     Question: ${question}
-    Answer: ${answer}
+    Transcript: ${transcript}
+    Speech Metrics: ${JSON.stringify(speechMetrics)}
+    
+    Analyze both technical content and communication skills:
+    - Technical accuracy and depth
+    - Communication clarity and confidence
+    - Professional presentation
+    - Speech pace and articulation
     
     Return JSON format:
     {
-      "score": 85,
-      "feedback": "Your detailed feedback here",
-      "suggestions": ["suggestion 1", "suggestion 2"]
+      "technicalScore": 85,
+      "communicationScore": 78,
+      "overallScore": 82,
+      "feedback": "Detailed feedback on both technical and communication aspects",
+      "suggestions": ["technical improvement", "communication tip"],
+      "speechAnalysis": {
+        "pace": "good",
+        "clarity": "excellent",
+        "confidence": "moderate",
+        "fillerWords": 3
+      }
     }`;
 
     const response = await this.generateContent(prompt);
@@ -76,10 +107,28 @@ export class GeminiClient {
       return JSON.parse(response);
     } catch {
       return {
-        score: 70,
+        technicalScore: 70,
+        communicationScore: 75,
+        overallScore: 72,
         feedback: response,
-        suggestions: ['Practice more technical concepts']
+        suggestions: ['Practice technical explanations', 'Work on speaking confidence'],
+        speechAnalysis: { pace: 'moderate', clarity: 'good', confidence: 'moderate' }
       };
     }
+  }
+
+  // Backward compatibility method
+  async evaluateAnswer(question: string, answer: string): Promise<{
+    score: number;
+    feedback: string;
+    suggestions: string[];
+  }> {
+    const speechMetrics = { duration: 0, wordsPerMinute: 0, fillerWords: 0, pace: 'moderate' };
+    const result = await this.evaluateVideoResponse(question, answer, speechMetrics);
+    return {
+      score: result.overallScore,
+      feedback: result.feedback,
+      suggestions: result.suggestions
+    };
   }
 }
