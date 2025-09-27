@@ -2,13 +2,12 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Save } from 'lucide-react'
+import { Save } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import Link from 'next/link'
+import AdminPageLayout from '@/components/admin/AdminPageLayout'
 
 export default function NewCategoryPage() {
   const router = useRouter()
@@ -66,26 +65,14 @@ export default function NewCategoryPage() {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center gap-4">
-        <Button variant="outline" size="sm" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
-          <Link href="/admin/categories">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Categories
-          </Link>
-        </Button>
-        <div>
-          <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Create New Category</h1>
-          <p className="text-gray-300 mt-2 text-lg">Add a new course category</p>
-        </div>
-      </div>
-
+    <AdminPageLayout
+      title="Create New Category"
+      description="Add a new course category"
+      backUrl="/admin/categories"
+      backLabel="Back to Categories"
+    >
       <div className="max-w-4xl mx-auto">
-        <Card className="bg-gray-900/50 backdrop-blur-xl border border-white/10">
-          <CardHeader>
-            <CardTitle className="text-white text-xl">Category Information</CardTitle>
-          </CardHeader>
-        <CardContent>
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6">
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-2">
@@ -96,7 +83,7 @@ export default function NewCategoryPage() {
                   value={formData.title}
                   onChange={handleChange}
                   placeholder="e.g., SDET Fundamentals"
-                  className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
+                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20"
                   required
                 />
               </div>
@@ -109,7 +96,7 @@ export default function NewCategoryPage() {
                   value={formData.order}
                   onChange={handleChange}
                   placeholder="1"
-                  className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
+                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20"
                   min="1"
                   required
                 />
@@ -137,7 +124,7 @@ export default function NewCategoryPage() {
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="Brief description of this category..."
-                className="bg-gray-800/50 border-white/10 text-white placeholder:text-gray-400"
+                className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20"
                 rows={2}
                 required
               />
@@ -151,7 +138,7 @@ export default function NewCategoryPage() {
                   name="icon"
                   value={formData.icon}
                   onChange={handleChange}
-                  className="flex h-10 w-full rounded-md border border-white/10 bg-gray-800/50 text-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full rounded-md border border-slate-600 bg-slate-800/50 text-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <option value="code">Code</option>
                   <option value="test-tube">Test Tube</option>
@@ -167,7 +154,7 @@ export default function NewCategoryPage() {
                   name="color"
                   value={formData.color}
                   onChange={handleChange}
-                  className="flex h-10 w-full rounded-md border border-white/10 bg-gray-800/50 text-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full rounded-md border border-slate-600 bg-slate-800/50 text-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <option value="blue">Blue</option>
                   <option value="green">Green</option>
@@ -185,7 +172,7 @@ export default function NewCategoryPage() {
                 disabled={loading}
                 onClick={(e) => handleSubmit(e, 'draft')}
                 variant="outline"
-                className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white"
+                className="bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/50"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {loading && saveType === 'draft' ? 'Saving...' : 'Save as Draft'}
@@ -194,19 +181,15 @@ export default function NewCategoryPage() {
                 type="button" 
                 disabled={loading}
                 onClick={(e) => handleSubmit(e, 'publish')}
-                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {loading && saveType === 'publish' ? 'Publishing...' : 'Publish Category'}
               </Button>
-              <Button type="button" variant="outline" className="bg-gray-800/50 border-white/10 text-gray-300 hover:bg-gray-700/50 hover:text-white" asChild>
-                <Link href="/admin/categories">Cancel</Link>
-              </Button>
             </div>
           </div>
-        </CardContent>
-        </Card>
+        </div>
       </div>
-    </div>
+    </AdminPageLayout>
   )
 }

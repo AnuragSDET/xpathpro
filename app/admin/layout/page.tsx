@@ -134,12 +134,13 @@ export default function LayoutPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => removeLink(index)}
+                    className="bg-red-900/20 border-red-700 text-red-400 hover:bg-red-900/40"
                   >
                     Remove
                   </Button>
                 </div>
               ))}
-              <Button variant="outline" onClick={addLink}>
+              <Button variant="outline" onClick={addLink} className="bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/50">
                 Add Link
               </Button>
             </div>

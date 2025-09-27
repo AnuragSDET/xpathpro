@@ -41,28 +41,21 @@ export default function AnalyticsStats() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {stats.map((stat, index) => (
-        <div key={stat.name} className="relative group">
-          <div className={`absolute -inset-1 bg-gradient-to-r ${gradients[index]} opacity-0 group-hover:opacity-30 blur transition-opacity duration-500 rounded-2xl`} />
-          <div className="relative bg-gray-900/50 backdrop-blur-xl border border-white/10 p-6 rounded-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-300">{stat.name}</p>
-                <p className="text-3xl font-bold text-white">{stat.value}</p>
-              </div>
-              <div className={`p-3 bg-gradient-to-r ${gradients[index]} rounded-lg`}>
-                <stat.icon className="h-6 w-6 text-white" />
-              </div>
-            </div>
-            <div className="mt-4">
-              <span className={`text-sm font-medium ${
-                stat.changeType === 'positive' ? 'text-green-400' : 'text-red-400'
-              }`}>
-                {stat.change} from last month
-              </span>
-            </div>
+        <div key={stat.name} className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-blue-500/50 transition-all duration-200 h-32">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-medium text-slate-400 leading-tight">
+              {stat.name}
+            </h3>
+            <stat.icon className={`h-5 w-5 ${iconColors[index]}`} />
           </div>
+          <div className="text-2xl font-bold text-white mb-2">{stat.value}</div>
+          <p className="text-sm text-slate-400">
+            <span className={stat.changeType === 'positive' ? 'text-green-400' : 'text-red-400'}>
+              {stat.change}
+            </span> from last month
+          </p>
         </div>
       ))}
     </div>
