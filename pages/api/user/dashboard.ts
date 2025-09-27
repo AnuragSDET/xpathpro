@@ -7,10 +7,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // Get courses from Sanity
-    const coursesRes = await fetch(`${process.env.NEXTAUTH_URL}/api/sanity/courses`)
-    const coursesData = await coursesRes.json()
-    const totalCourses = coursesData.success ? coursesData.courses.length : 0
+    // Get courses count (placeholder until Sanity integration)
+    const totalCourses = 12
 
     // Get user progress
     const { data: userProgress, error: progressError } = await supabase
