@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import ImageUpload from '@/components/admin/ImageUpload'
+import SimpleImageUpload from '@/components/admin/SimpleImageUpload'
 import Link from 'next/link'
 
 export default function NewCoursePage() {
@@ -233,10 +233,9 @@ export default function NewCoursePage() {
                 </div>
               </div>
 
-              <ImageUpload
+              <SimpleImageUpload
                 currentUrl={formData.featuredImage}
                 onImageChange={(url) => setFormData({ ...formData, featuredImage: url })}
-                folder="courses"
                 label="Featured Image"
               />
 

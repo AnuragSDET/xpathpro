@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import ImageUpload from '@/components/admin/ImageUpload'
+import SimpleImageUpload from '@/components/admin/SimpleImageUpload'
 import Link from 'next/link'
 
 interface Course {
@@ -203,10 +203,9 @@ export default function NewLessonPage() {
                 />
               </div>
               <div>
-                <ImageUpload
+                <SimpleImageUpload
                   currentUrl={formData.videoUrl}
                   onImageChange={(url) => setFormData({ ...formData, videoUrl: url })}
-                  folder="lessons"
                   label="Video/Thumbnail"
                 />
               </div>
