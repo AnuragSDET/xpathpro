@@ -29,10 +29,10 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <AdminSidebar />
       <main className="flex-1 overflow-y-auto">
-        <div className="container mx-auto p-6">
+        <div className="p-8">
           {children}
         </div>
       </main>

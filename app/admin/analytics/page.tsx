@@ -1,3 +1,4 @@
+import AdminPageLayout from '../../../components/admin/AdminPageLayout'
 import AnalyticsCharts from '../../../components/admin/AnalyticsCharts'
 import AnalyticsStats from '../../../components/admin/AnalyticsStats'
 
@@ -8,16 +9,14 @@ export const metadata = {
 
 export default function AnalyticsPage() {
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Analytics Dashboard</h1>
-          <p className="text-gray-300 mt-2 text-lg">Track website performance and user engagement</p>
-        </div>
+    <AdminPageLayout
+      title="Analytics Dashboard"
+      description="Track website performance and user engagement"
+    >
+      <div className="space-y-6">
+        <AnalyticsStats />
+        <AnalyticsCharts />
       </div>
-
-      <AnalyticsStats />
-      <AnalyticsCharts />
-    </div>
+    </AdminPageLayout>
   )
 }

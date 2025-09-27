@@ -1,3 +1,4 @@
+import AdminPageLayout from '../../../components/admin/AdminPageLayout'
 import UsersList from '../../../components/admin/UsersList'
 import UserStats from '../../../components/admin/UserStats'
 
@@ -8,16 +9,14 @@ export const metadata = {
 
 export default function UsersPage() {
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Users Management</h1>
-          <p className="text-gray-300 mt-2 text-lg">Manage user accounts and permissions</p>
-        </div>
+    <AdminPageLayout
+      title="Users Management"
+      description="Manage user accounts and permissions"
+    >
+      <div className="space-y-6">
+        <UserStats />
+        <UsersList />
       </div>
-
-      <UserStats />
-      <UsersList />
-    </div>
+    </AdminPageLayout>
   )
 }
