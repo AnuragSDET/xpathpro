@@ -201,6 +201,7 @@ export default function NewCategoryPage() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </AdminLayout>
   )
 }

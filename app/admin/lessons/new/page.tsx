@@ -286,6 +286,7 @@ export default function NewLessonPage() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </AdminLayout>
   )
 }

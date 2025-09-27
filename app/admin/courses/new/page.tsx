@@ -307,6 +307,7 @@ export default function NewCoursePage() {
           </CardContent>
         </Card>
       </div>
+      </div>
     </AdminLayout>
   )
 }
