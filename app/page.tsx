@@ -405,6 +405,93 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Career Transformation Section */}
+      <section className="relative py-32 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="relative">
+            <div className="absolute -inset-8 bg-gradient-to-r from-emerald-400 via-blue-500 to-purple-600 opacity-20 blur-3xl animate-pulse-slow rounded-3xl" />
+            <div className="relative bg-gray-900/95 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl p-12">
+              
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-6xl font-black mb-6">
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-500">
+                    Break Into IT
+                  </span>
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                    in Just 4 Months!
+                  </span>
+                </h2>
+              </div>
+
+              <div className="max-w-4xl mx-auto text-center space-y-8">
+                <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
+                  Dreaming of a high-paying IT career but don't know where to start? The fastest and easiest path is through becoming a 
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-500 font-black"> QA Automation Engineer / SDET</span> — and you don't need any prior coding experience to begin.
+                </p>
+
+                <p className="text-lg text-gray-400">
+                  With our <span className="text-purple-400 font-bold">4-Month Mentorship Program</span>, we'll take you step by step from beginner to job-ready professional, no matter your background.
+                </p>
+
+                <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 my-12">
+                  <p className="text-2xl text-white mb-6">
+                    For just <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 font-black text-3xl">$1,299/month</span>, you'll get everything you need to succeed:
+                  </p>
+                  
+                  <div className="grid md:grid-cols-2 gap-6 text-left">
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2" />
+                        <span className="text-gray-300">Learn automation skills from scratch — no coding experience required</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full mt-2" />
+                        <span className="text-gray-300">Work on hands-on projects that build a real portfolio</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-purple-400 rounded-full mt-2" />
+                        <span className="text-gray-300">1-on-1 mentorship to keep you on track</span>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2" />
+                        <span className="text-gray-300">Complete interview coaching and mock sessions</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-pink-400 rounded-full mt-2" />
+                        <span className="text-gray-300">Direct job application support — we'll apply to companies for you</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <p className="text-xl text-gray-300">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-black">Imagine this:</span> in 4 months, you could be working in IT with a stable, well-paying career.
+                  </p>
+                  
+                  <p className="text-lg text-red-400 font-semibold">
+                    Seats are limited and demand is high — don't wait another month to change your future.
+                  </p>
+                </div>
+
+                <div className="pt-8">
+                  <button className="group relative px-16 py-6 bg-gradient-to-r from-emerald-500 via-blue-600 to-purple-600 text-white font-black text-2xl rounded-2xl shadow-2xl hover:shadow-emerald-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-white/30 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 skew-x-12" />
+                    <div className="absolute -inset-2 bg-gradient-to-r from-emerald-400 via-blue-500 to-purple-600 opacity-0 group-hover:opacity-50 blur transition-opacity duration-500" />
+                    <span className="relative z-10 flex items-center">
+                      👉 Apply Now & Start Your Career Transformation Today!
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="relative py-32 px-4">
         <div className="max-w-4xl mx-auto text-center">
