@@ -90,19 +90,19 @@ export default function Home() {
           {/* Dynamic Subtitle */}
           <div className="relative mb-16">
             <p className="text-xl md:text-2xl text-gray-300 max-w-5xl mx-auto leading-relaxed">
-              Join <span className="relative inline-block">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 font-black">150,000+</span>
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 blur animate-pulse" />
-              </span> professionals who achieved 
               <span className="relative inline-block">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-black">6-figure salaries</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-400 font-black">100% FREE</span>
+                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400/20 to-green-400/20 blur animate-pulse" />
+              </span> comprehensive SDET courses + 
+              <span className="relative inline-block">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-black">Elite 1-on-1 Mentorship</span>
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-400/20 to-pink-400/20 blur animate-pulse" />
-              </span>
+              </span> for career transformation
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-8 text-sm text-gray-400">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                <span>Average: <span className="text-emerald-400 font-bold">$185K salary</span></span>
+                <span>Courses: <span className="text-emerald-400 font-bold">100% FREE</span></span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
@@ -110,33 +110,35 @@ export default function Home() {
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
-                <span>Speed: <span className="text-purple-400 font-bold">3 months avg</span></span>
+                <span>Mentorship: <span className="text-purple-400 font-bold">$1,299/month</span></span>
               </div>
             </div>
           </div>
 
           {/* Revolutionary CTA */}
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-20">
-            <button className="group relative px-12 py-6 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-black text-xl rounded-2xl shadow-2xl hover:shadow-cyan-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <button className="group relative px-12 py-6 bg-gradient-to-r from-emerald-500 via-green-600 to-teal-600 text-white font-black text-xl rounded-2xl shadow-2xl hover:shadow-emerald-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-green-700 to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-white/30 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 skew-x-12" />
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 opacity-0 group-hover:opacity-50 blur transition-opacity duration-500" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 via-green-500 to-teal-600 opacity-0 group-hover:opacity-50 blur transition-opacity duration-500" />
               <span className="relative z-10 flex items-center">
-                <span className="mr-3">🚀</span>
-                START FREE TRANSFORMATION
+                <span className="mr-3">🎓</span>
+                START FREE COURSES
                 <svg className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
             </button>
             
-            <button className="group relative px-12 py-6 bg-gray-900/50 backdrop-blur-xl border-2 border-white/20 text-white font-bold text-xl rounded-2xl hover:bg-gray-800/60 hover:border-white/40 transform hover:scale-105 transition-all duration-500 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <button className="group relative px-12 py-6 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 text-white font-black text-xl rounded-2xl shadow-2xl hover:shadow-purple-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-white/30 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 skew-x-12" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-0 group-hover:opacity-50 blur transition-opacity duration-500" />
               <span className="relative z-10 flex items-center">
-                <div className="w-3 h-3 bg-red-500 rounded-full mr-3 animate-pulse" />
-                WATCH LIVE DEMO
-                <svg className="w-5 h-5 ml-3 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M8 5v10l7-5z"/>
+                <span className="mr-3">👨🏫</span>
+                GET 1-ON-1 MENTOR
+                <svg className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
             </button>
@@ -145,10 +147,10 @@ export default function Home() {
           {/* Interactive Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {[
-              { number: '150K+', label: 'Elite SDETs', icon: '⚡', gradient: 'from-cyan-400 to-blue-500', bg: 'from-cyan-500/10 to-blue-500/10' },
-              { number: '97.8%', label: 'Success Rate', icon: '🎯', gradient: 'from-emerald-400 to-green-500', bg: 'from-emerald-500/10 to-green-500/10' },
-              { number: '4.9★', label: 'Rating', icon: '⭐', gradient: 'from-yellow-400 to-orange-500', bg: 'from-yellow-500/10 to-orange-500/10' },
-              { number: '$185K', label: 'Avg Salary', icon: '💎', gradient: 'from-purple-400 to-pink-500', bg: 'from-purple-500/10 to-pink-500/10' }
+              { number: 'FREE', label: 'All Courses', icon: '🎓', gradient: 'from-emerald-400 to-green-500', bg: 'from-emerald-500/10 to-green-500/10' },
+              { number: '97.8%', label: 'Success Rate', icon: '🎯', gradient: 'from-blue-400 to-cyan-500', bg: 'from-blue-500/10 to-cyan-500/10' },
+              { number: '4 Mo', label: 'Mentorship', icon: '👨🏫', gradient: 'from-purple-400 to-pink-500', bg: 'from-purple-500/10 to-pink-500/10' },
+              { number: '$185K', label: 'Avg Salary', icon: '💎', gradient: 'from-yellow-400 to-orange-500', bg: 'from-yellow-500/10 to-orange-500/10' }
             ].map((stat, index) => (
               <div 
                 key={index} 
@@ -315,37 +317,37 @@ export default function Home() {
                 </div>
 
                 <h3 className="text-5xl md:text-7xl font-black mb-8">
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 animate-text-shimmer">
-                    BECOME
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-text-shimmer">
+                    ELITE
                   </span>
                   <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-gradient-flow">
-                    UNSTOPPABLE
+                    MENTORSHIP
                   </span>
                 </h3>
                 
                 <p className="text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-                  Unlock <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-black">AI-powered mentorship</span>, 
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-black">live coding sessions</span>, 
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 font-black">exclusive masterclasses</span>, and 
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-500 font-black">guaranteed job placement</span>.
+                  Get <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 font-black">1-on-1 expert mentorship</span> for 
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-black">4 months</span> with 
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-500 font-black">guaranteed career transformation</span> and 
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 font-black">job placement support</span>.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-12">
-                  <button className="group relative px-16 py-8 bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white font-black text-2xl rounded-2xl shadow-2xl hover:shadow-yellow-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-600 via-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <button className="group relative px-16 py-8 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white font-black text-2xl rounded-2xl shadow-2xl hover:shadow-purple-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="absolute inset-0 bg-white/40 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 skew-x-12" />
-                    <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 opacity-0 group-hover:opacity-60 blur transition-opacity duration-500" />
+                    <div className="absolute -inset-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 opacity-0 group-hover:opacity-60 blur transition-opacity duration-500" />
                     <span className="relative z-10 flex items-center">
-                      🔥 CLAIM ELITE ACCESS
+                      👨🏫 GET ELITE MENTOR
                     </span>
                   </button>
                   
                   <div className="text-center">
-                    <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-pink-500 mb-2">
-                      $2,997 → $597
+                    <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-2">
+                      $1,299/month
                     </div>
                     <div className="text-sm text-gray-400">
-                      ⏰ Only 47 spots remaining
+                      🔥 4-month transformation program
                     </div>
                   </div>
                 </div>
