@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-      const { title, description, icon, color, order } = req.body
+      const { title, description, icon, color, order, featured, published } = req.body
 
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
@@ -22,7 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         icon,
         color,
         order: parseInt(order),
-        featured: false
+        featured: featured || false,
+        published: published || false
       }
 
       const result = await writeClient.create(category)

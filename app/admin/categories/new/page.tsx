@@ -18,26 +18,34 @@ export default function NewCategoryPage() {
     description: '',
     icon: 'code',
     color: 'blue',
-    order: '1'
+    order: '1',
+    featured: false
   })
+  const [saveType, setSaveType] = useState<'draft' | 'publish'>('draft')
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, type: 'draft' | 'publish') => {
     e.preventDefault()
     setLoading(true)
+    setSaveType(type)
 
     try {
+      const categoryData = {
+        ...formData,
+        published: type === 'publish'
+      }
+
       const response = await fetch('/api/sanity/categories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(categoryData),
       })
 
       const result = await response.json()
 
       if (result.success) {
-        alert('Category created successfully!')
+        alert(`Category ${type === 'publish' ? 'published' : 'saved as draft'} successfully!`)
         router.push('/admin/categories')
       } else {
         alert('Error: ' + result.error)
@@ -77,7 +85,7 @@ export default function NewCategoryPage() {
           <CardTitle>Category Information</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="title">Category Title</Label>
@@ -154,16 +162,41 @@ export default function NewCategoryPage() {
               </div>
             </div>
 
+            <div className="flex items-center space-x-2 mb-6">
+              <input
+                type="checkbox"
+                id="featured"
+                name="featured"
+                checked={formData.featured}
+                onChange={(e) => setFormData({...formData, featured: e.target.checked})}
+                className="rounded border-gray-300"
+              />
+              <Label htmlFor="featured">Featured Category</Label>
+            </div>
+
             <div className="flex gap-4">
-              <Button type="submit" disabled={loading}>
+              <Button 
+                type="button" 
+                disabled={loading}
+                onClick={(e) => handleSubmit(e, 'draft')}
+                variant="outline"
+              >
                 <Save className="h-4 w-4 mr-2" />
-                {loading ? 'Creating...' : 'Create Category'}
+                {loading && saveType === 'draft' ? 'Saving...' : 'Save as Draft'}
+              </Button>
+              <Button 
+                type="button" 
+                disabled={loading}
+                onClick={(e) => handleSubmit(e, 'publish')}
+              >
+                <Save className="h-4 w-4 mr-2" />
+                {loading && saveType === 'publish' ? 'Publishing...' : 'Publish Category'}
               </Button>
               <Button type="button" variant="outline" asChild>
                 <Link href="/admin/categories">Cancel</Link>
               </Button>
             </div>
-          </form>
+          </div>
         </CardContent>
       </Card>
     </div>

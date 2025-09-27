@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-      const { title, description, content, courseId, order, duration, videoUrl } = req.body
+      const { title, description, content, courseId, order, duration, videoUrl, resources, quiz, tags, featured, published } = req.body
 
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
@@ -27,8 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         order: parseInt(order) || 1,
         duration: parseInt(duration) || 5,
         videoUrl: videoUrl || '',
-        published: false,
-        featured: false
+        resources: resources || [],
+        quiz: quiz ? JSON.parse(quiz) : null,
+        tags: tags || [],
+        featured: featured || false,
+        published: published || false,
+        publishedAt: published ? new Date().toISOString() : null
       }
 
       const result = await writeClient.create(lesson)

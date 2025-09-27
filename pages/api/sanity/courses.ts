@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-      const { title, description, difficulty, duration, prerequisites, learningObjectives } = req.body
+      const { title, description, overview, difficulty, duration, prerequisites, learningObjectives, tags, featuredImage, category, featured, published } = req.body
 
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
@@ -19,12 +19,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         title,
         slug: { current: slug },
         description,
+        overview: overview || '',
         difficulty,
         duration: parseInt(duration) || 1,
         prerequisites: prerequisites ? prerequisites.split(',').map((p: string) => p.trim()).filter(Boolean) : [],
         learningObjectives: learningObjectives ? learningObjectives.split(',').map((o: string) => o.trim()).filter(Boolean) : ['Learn the basics'],
-        published: false,
-        featured: false
+        tags: tags || [],
+        featuredImage: featuredImage || '',
+        category: category ? {
+          _type: 'reference',
+          _ref: category
+        } : null,
+        featured: featured || false,
+        published: published || false,
+        publishedAt: published ? new Date().toISOString() : null
       }
 
       const result = await writeClient.create(course)

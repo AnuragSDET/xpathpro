@@ -26,8 +26,14 @@ export default function NewLessonPage() {
     courseId: '',
     order: '1',
     duration: '10',
-    videoUrl: ''
+    videoUrl: '',
+    resources: '',
+    quiz: '',
+    tags: '',
+    featured: false,
+    published: false
   })
+  const [saveType, setSaveType] = useState<'draft' | 'publish'>('draft')
 
   useEffect(() => {
     fetchCourses()
@@ -45,23 +51,31 @@ export default function NewLessonPage() {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, type: 'draft' | 'publish') => {
     e.preventDefault()
     setLoading(true)
+    setSaveType(type)
 
     try {
+      const lessonData = {
+        ...formData,
+        published: type === 'publish',
+        resources: formData.resources ? formData.resources.split(',').map(r => r.trim()) : [],
+        tags: formData.tags ? formData.tags.split(',').map(t => t.trim()) : []
+      }
+
       const response = await fetch('/api/sanity/lessons', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(lessonData),
       })
 
       const result = await response.json()
 
       if (result.success) {
-        alert('Lesson created successfully!')
+        alert(`Lesson ${type === 'publish' ? 'published' : 'saved as draft'} successfully!`)
         router.push('/admin/lessons')
       } else {
         alert('Error: ' + result.error)
@@ -101,7 +115,7 @@ export default function NewLessonPage() {
           <CardTitle>Lesson Information</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="title">Lesson Title</Label>
@@ -200,16 +214,76 @@ export default function NewLessonPage() {
               </div>
             </div>
 
+            <div>
+              <Label htmlFor="resources">Resources (comma-separated URLs)</Label>
+              <Textarea
+                id="resources"
+                name="resources"
+                value={formData.resources}
+                onChange={handleChange}
+                placeholder="https://example.com/resource1, https://example.com/resource2"
+                rows={2}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="quiz">Quiz Questions (JSON format)</Label>
+              <Textarea
+                id="quiz"
+                name="quiz"
+                value={formData.quiz}
+                onChange={handleChange}
+                placeholder='{"questions": [{"question": "What is SDET?", "options": ["A", "B", "C"], "correct": 0}]}'
+                rows={4}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="tags">Tags (comma-separated)</Label>
+              <Input
+                id="tags"
+                name="tags"
+                value={formData.tags}
+                onChange={handleChange}
+                placeholder="testing, automation, basics"
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="featured"
+                name="featured"
+                checked={formData.featured}
+                onChange={(e) => setFormData({...formData, featured: e.target.checked})}
+                className="rounded border-gray-300"
+              />
+              <Label htmlFor="featured">Featured Lesson</Label>
+            </div>
+
             <div className="flex gap-4">
-              <Button type="submit" disabled={loading}>
+              <Button 
+                type="button" 
+                disabled={loading}
+                onClick={(e) => handleSubmit(e, 'draft')}
+                variant="outline"
+              >
                 <Save className="h-4 w-4 mr-2" />
-                {loading ? 'Creating...' : 'Create Lesson'}
+                {loading && saveType === 'draft' ? 'Saving...' : 'Save as Draft'}
+              </Button>
+              <Button 
+                type="button" 
+                disabled={loading}
+                onClick={(e) => handleSubmit(e, 'publish')}
+              >
+                <Save className="h-4 w-4 mr-2" />
+                {loading && saveType === 'publish' ? 'Publishing...' : 'Publish Lesson'}
               </Button>
               <Button type="button" variant="outline" asChild>
                 <Link href="/admin/lessons">Cancel</Link>
               </Button>
             </div>
-          </form>
+          </div>
         </CardContent>
       </Card>
     </div>
