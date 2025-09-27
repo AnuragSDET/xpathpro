@@ -23,7 +23,7 @@ export default function DashboardSidebar({ activeTab, setActiveTab, userName }: 
   ]
 
   return (
-    <div className="fixed left-0 top-0 h-full w-64 bg-white/5 border-r border-white/10 backdrop-blur-xl">
+    <div className="fixed left-0 top-20 h-full w-64 bg-white/5 border-r border-white/10 backdrop-blur-xl">
       <div className="p-6">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
