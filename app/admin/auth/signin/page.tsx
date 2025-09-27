@@ -5,9 +5,8 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import Link from 'next/link'
 
-export default function SignIn() {
+export default function AdminSignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -24,9 +23,9 @@ export default function SignIn() {
       })
       
       if (result?.ok) {
-        window.location.href = '/dashboard'
+        window.location.href = '/admin'
       } else {
-        alert('Login failed. Please check your credentials.')
+        alert('Admin login failed. Please check your credentials.')
       }
     } catch (error) {
       alert('Login error. Please try again.')
@@ -39,8 +38,8 @@ export default function SignIn() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-xl p-8 backdrop-blur-sm">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-          <p className="text-slate-400">Sign in to continue your learning journey</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Admin Access</h1>
+          <p className="text-slate-400">Sign in to access the admin dashboard</p>
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -71,34 +70,9 @@ export default function SignIn() {
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3" 
             disabled={loading}
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Signing in...' : 'Admin Sign In'}
           </Button>
         </form>
-        
-        <div className="mt-6">
-          <Button
-            variant="outline"
-            onClick={() => signIn('google')}
-            className="w-full bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700/50"
-          >
-            Sign in with Google
-          </Button>
-        </div>
-
-        <div className="mt-6 text-center">
-          <p className="text-slate-400">
-            Don't have an account?{' '}
-            <Link href="/auth/signup" className="text-blue-400 hover:text-blue-300 font-medium">
-              Sign up
-            </Link>
-          </p>
-        </div>
-
-        <div className="mt-4 text-center">
-          <Link href="/admin/auth/signin" className="text-xs text-slate-500 hover:text-slate-400">
-            Admin Login
-          </Link>
-        </div>
       </div>
     </div>
   )
