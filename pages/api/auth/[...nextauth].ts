@@ -21,16 +21,17 @@ export const authOptions: NextAuthOptions = {
           // Query user from database
           const { data: user, error } = await supabase
             .from('users')
-            .select('id, email, name, role, password_hash, status')
+            .select('id, email, name, role, password, status')
             .eq('email', credentials.email)
             .single()
 
           if (error || !user) {
+            console.error('User not found:', error)
             return null
           }
 
           // Verify password
-          const isValidPassword = await bcrypt.compare(credentials.password, user.password_hash)
+          const isValidPassword = await bcrypt.compare(credentials.password, user.password)
           
           if (!isValidPassword) {
             return null
