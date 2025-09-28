@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
         _id: `lesson-${lessonSlug}`
       };
 
-      const createdLesson = await sanityClient.create(lesson);
+      const createdLesson = await sanityClient.createOrReplace(lesson);
       sharedLessons.set(lessonTitle, createdLesson._id);
       createdLessons.push(createdLesson);
       
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
         _id: `category-${categorySlug}`
       };
 
-      const createdCategory = await sanityClient.create(category);
+      const createdCategory = await sanityClient.createOrReplace(category);
       createdCategories.push(createdCategory);
       
       // Small delay to prevent rate limiting
@@ -195,7 +195,7 @@ export async function POST(request: NextRequest) {
           _id: `course-${categorySlug}-${courseSlug}`
         };
 
-        const createdCourse = await sanityClient.create(course);
+        const createdCourse = await sanityClient.createOrReplace(course);
         createdCourses.push(createdCourse);
         
         // Small delay to prevent rate limiting
