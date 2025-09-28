@@ -57,7 +57,7 @@ export default function BulkImport() {
       } else {
         setResult({
           success: false,
-          error: `Failed to import curriculum: ${error.message}`
+          error: `Failed to import curriculum: ${error instanceof Error ? error.message : 'Unknown error'}`
         })
       }
     } finally {
