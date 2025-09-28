@@ -15,9 +15,23 @@ export default function BulkImport() {
     setResult(null)
 
     try {
+      // Get admin user from localStorage
+      const adminUser = localStorage.getItem('adminUser')
+      if (!adminUser) {
+        setResult({
+          success: false,
+          error: 'Please login as admin first'
+        })
+        setImporting(false)
+        return
+      }
+
       const response = await fetch('/api/bulk-import', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-admin-user': adminUser
+        }
       })
 
       const data = await response.json()

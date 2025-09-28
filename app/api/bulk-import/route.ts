@@ -19,6 +19,25 @@ function createSlug(text: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if user is admin (simple check for now)
+    const adminUser = request.headers.get('x-admin-user');
+    if (!adminUser) {
+      return NextResponse.json({
+        success: false,
+        error: 'Admin access required'
+      }, { status: 401 });
+    }
+
+    // Check Sanity configuration
+    if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 
+        !process.env.SANITY_API_TOKEN ||
+        process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === 'dummy') {
+      return NextResponse.json({
+        success: false,
+        error: 'Sanity CMS not configured. Please set up SANITY_PROJECT_ID and SANITY_API_TOKEN in environment variables.'
+      }, { status: 500 });
+    }
+
     const sharedLessons = new Map();
     const createdCategories = [];
     const createdCourses = [];
