@@ -66,6 +66,20 @@ export default defineType({
       type: 'boolean',
       description: 'Display this category prominently',
       initialValue: false
+    }),
+    defineField({
+      name: 'name',
+      title: 'Category Name',
+      type: 'string',
+      description: 'Alternative name field for compatibility',
+      validation: Rule => Rule.max(100)
+    }),
+    defineField({
+      name: 'published',
+      title: 'Published',
+      type: 'boolean',
+      description: 'Whether this category is published and visible',
+      initialValue: true
     })
   ],
   orderings: [

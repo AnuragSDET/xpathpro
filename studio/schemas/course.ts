@@ -148,9 +148,21 @@ export default defineType({
         dateFormat: 'YYYY-MM-DD',
         timeFormat: 'HH:mm'
       }
+    }),
+    defineField({
+      name: 'order',
+      title: 'Course Order',
+      type: 'number',
+      description: 'Order of this course within its category',
+      validation: Rule => Rule.min(1)
     })
   ],
   orderings: [
+    {
+      title: 'Course Order',
+      name: 'orderAsc',
+      by: [{field: 'order', direction: 'asc'}]
+    },
     {
       title: 'Published Date, New',
       name: 'publishedAtDesc',

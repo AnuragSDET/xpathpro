@@ -178,6 +178,7 @@ export async function POST(request: NextRequest) {
             _ref: categoryId
           },
           lessons: lessonsWithKeys,
+          order: courseData.order || 999,
           difficulty: (courseData as any).difficulty || 'beginner',
           duration: parseInt((courseData as any).duration || '10'),
           prerequisites: Array.isArray((courseData as any).prerequisites) 
