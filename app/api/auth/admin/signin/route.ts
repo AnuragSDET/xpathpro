@@ -9,12 +9,23 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
+  const { email, password } = await request.json();
+  
+  // Check admin credentials
+  if (email === 'admin@xpath.pro' && password === 'admin123') {
+    return NextResponse.json({
+      ok: true,
+      user: {
+        id: 'admin-1',
+        email: 'admin@xpath.pro',
+        name: 'Admin User',
+        role: 'admin'
+      }
+    });
+  }
   
   return NextResponse.json({
-    message: 'Admin signin POST test',
-    received: body,
-    timestamp: new Date().toISOString(),
-    note: 'Bypassing password check for testing'
-  });
+    ok: false,
+    error: 'Invalid credentials'
+  }, { status: 401 });
 }

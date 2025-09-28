@@ -30,6 +30,9 @@ export default function SignIn() {
         if (result.ok) {
           window.location.replace('/admin')
           return
+        } else {
+          alert('Admin login failed. Please check your credentials.')
+          return
         }
       }
       
