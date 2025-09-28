@@ -39,6 +39,11 @@ export async function POST(request: NextRequest) {
       }, { status: 500 });
     }
 
+    // Clear existing curriculum data
+    await sanityClient.delete({ query: '*[_type == "course"]' });
+    await sanityClient.delete({ query: '*[_type == "category"]' });
+    await sanityClient.delete({ query: '*[_type == "lesson"]' });
+
     const sharedLessons = new Map();
     const createdCategories = [];
     const createdCourses = [];
@@ -75,15 +80,21 @@ export async function POST(request: NextRequest) {
       createdLessons.push(createdLesson);
     }
 
-    // Step 2: Create categories
+    // Step 2: Create categories in order
     for (const categoryData of curriculumData.categories) {
       const categorySlug = createSlug(categoryData.name);
       
       const category = {
         _type: 'category',
+        title: categoryData.name,
         name: categoryData.name,
         description: categoryData.description,
         slug: { current: categorySlug },
+        order: categoryData.order || 999,
+        icon: categoryData.icon || 'code',
+        color: categoryData.color || 'blue',
+        featured: categoryData.featured || false,
+        published: true,
         _id: `category-${categorySlug}`
       };
 
@@ -125,6 +136,15 @@ export async function POST(request: NextRequest) {
             _ref: createdCategory._id
           },
           lessons: courseLessons,
+          order: courseData.order || 999,
+          difficulty: courseData.difficulty || 'beginner',
+          duration: courseData.duration || '10',
+          prerequisites: courseData.prerequisites || '',
+          learningObjectives: courseData.learningObjectives || '',
+          overview: courseData.overview || '',
+          tags: courseData.tags || [],
+          featured: courseData.featured || false,
+          published: true,
           publishedAt: new Date().toISOString(),
           _id: `course-${categorySlug}-${courseSlug}`
         };
