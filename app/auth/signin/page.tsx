@@ -23,14 +23,20 @@ export default function SignIn() {
         redirect: false,
       })
       
+      console.log('SignIn result:', result)
+      
       if (result?.ok) {
+        console.log('Login successful, redirecting...')
         // Check if admin user
         if (email === 'admin@xpath.pro') {
-          window.location.href = '/admin'
+          console.log('Redirecting to admin')
+          window.location.replace('/admin')
         } else {
-          window.location.href = '/dashboard'
+          console.log('Redirecting to dashboard')
+          window.location.replace('/dashboard')
         }
       } else {
+        console.log('Login failed:', result?.error)
         alert('Login failed. Please check your credentials.')
       }
     } catch (error) {
