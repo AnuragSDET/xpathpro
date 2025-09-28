@@ -54,31 +54,8 @@ export async function POST(request: NextRequest) {
       }, { status: 500 });
     }
 
-    // Clear existing curriculum data in correct order (courses -> categories -> lessons)
-    console.log('Clearing existing data...');
-    
-    // Delete courses first (they reference lessons and categories)
-    const existingCourses = await sanityClient.fetch('*[_type == "course"][0...50]._id');
-    if (existingCourses.length > 0) {
-      await sanityClient.delete({ query: `*[_type == "course" && _id in [${existingCourses.map((id: string) => `"${id}"`).join(',')}]]` });
-      console.log(`Deleted ${existingCourses.length} courses`);
-    }
-    
-    // Delete categories second (they might be referenced)
-    const existingCategories = await sanityClient.fetch('*[_type == "category"][0...20]._id');
-    if (existingCategories.length > 0) {
-      await sanityClient.delete({ query: `*[_type == "category" && _id in [${existingCategories.map((id: string) => `"${id}"`).join(',')}]]` });
-      console.log(`Deleted ${existingCategories.length} categories`);
-    }
-    
-    // Delete lessons last (they were referenced by courses)
-    const existingLessons = await sanityClient.fetch('*[_type == "lesson"][0...50]._id');
-    if (existingLessons.length > 0) {
-      await sanityClient.delete({ query: `*[_type == "lesson" && _id in [${existingLessons.map((id: string) => `"${id}"`).join(',')}]]` });
-      console.log(`Deleted ${existingLessons.length} lessons`);
-    }
-    
-    console.log('Cleared existing data');
+    // Skip deletion - use createOrReplace to update existing content
+    console.log('Starting curriculum import (updating existing content)...');
 
     const sharedLessons = new Map();
     const createdCategories = [];
@@ -116,8 +93,8 @@ export async function POST(request: NextRequest) {
       sharedLessons.set(lessonTitle, createdLesson._id);
       createdLessons.push(createdLesson);
       
-      // Small delay to prevent rate limiting
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Minimal delay
+      await new Promise(resolve => setTimeout(resolve, 50));
     }
     console.log(`Created ${createdLessons.length} lessons`);
 
@@ -143,8 +120,8 @@ export async function POST(request: NextRequest) {
       const createdCategory = await sanityClient.createOrReplace(category);
       createdCategories.push(createdCategory);
       
-      // Small delay to prevent rate limiting
-      await new Promise(resolve => setTimeout(resolve, 200));
+      // Minimal delay
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       // Step 3: Create courses for this category
       console.log(`Creating ${categoryData.courses.length} courses for ${categoryData.name}...`);
@@ -198,8 +175,8 @@ export async function POST(request: NextRequest) {
         const createdCourse = await sanityClient.createOrReplace(course);
         createdCourses.push(createdCourse);
         
-        // Small delay to prevent rate limiting
-        await new Promise(resolve => setTimeout(resolve, 150));
+        // Minimal delay
+        await new Promise(resolve => setTimeout(resolve, 75));
       }
     }
 
