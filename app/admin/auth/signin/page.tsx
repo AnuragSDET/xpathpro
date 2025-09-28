@@ -1,6 +1,5 @@
 'use client'
 
-import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -25,13 +24,11 @@ export default function AdminSignIn() {
       const result = await response.json()
       
       if (result?.ok) {
-        console.log('Admin signin: Login successful, result:', result)
         // Set admin user in localStorage for admin layout
         localStorage.setItem('adminUser', JSON.stringify(result.user))
-        console.log('Admin signin: Set localStorage, redirecting to /admin')
-        window.location.replace('/admin')
+        // Force page reload to ensure localStorage is read
+        window.location.href = '/admin'
       } else {
-        console.log('Admin signin: Login failed, result:', result)
         alert('Admin login failed. Please check your credentials.')
       }
     } catch (error) {
@@ -83,4 +80,5 @@ export default function AdminSignIn() {
       </div>
     </div>
   )
-}// Force deployment Sun Sep 28 12:41:56 IST 2025
+}
+// Force deployment Sun Sep 28 12:44:45 IST 2025
