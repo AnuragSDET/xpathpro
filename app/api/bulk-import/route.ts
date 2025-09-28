@@ -54,21 +54,30 @@ export async function POST(request: NextRequest) {
       }, { status: 500 });
     }
 
-    // Clear existing curriculum data (limit to prevent timeout)
+    // Clear existing curriculum data in correct order (courses -> categories -> lessons)
     console.log('Clearing existing data...');
-    const existingLessons = await sanityClient.fetch('*[_type == "lesson"][0...50]._id');
-    const existingCourses = await sanityClient.fetch('*[_type == "course"][0...50]._id');
-    const existingCategories = await sanityClient.fetch('*[_type == "category"][0...20]._id');
     
-    if (existingLessons.length > 0) {
-      await sanityClient.delete({ query: `*[_type == "lesson" && _id in [${existingLessons.map((id: string) => `"${id}"`).join(',')}]]` });
-    }
+    // Delete courses first (they reference lessons and categories)
+    const existingCourses = await sanityClient.fetch('*[_type == "course"][0...50]._id');
     if (existingCourses.length > 0) {
       await sanityClient.delete({ query: `*[_type == "course" && _id in [${existingCourses.map((id: string) => `"${id}"`).join(',')}]]` });
+      console.log(`Deleted ${existingCourses.length} courses`);
     }
+    
+    // Delete categories second (they might be referenced)
+    const existingCategories = await sanityClient.fetch('*[_type == "category"][0...20]._id');
     if (existingCategories.length > 0) {
       await sanityClient.delete({ query: `*[_type == "category" && _id in [${existingCategories.map((id: string) => `"${id}"`).join(',')}]]` });
+      console.log(`Deleted ${existingCategories.length} categories`);
     }
+    
+    // Delete lessons last (they were referenced by courses)
+    const existingLessons = await sanityClient.fetch('*[_type == "lesson"][0...50]._id');
+    if (existingLessons.length > 0) {
+      await sanityClient.delete({ query: `*[_type == "lesson" && _id in [${existingLessons.map((id: string) => `"${id}"`).join(',')}]]` });
+      console.log(`Deleted ${existingLessons.length} lessons`);
+    }
+    
     console.log('Cleared existing data');
 
     const sharedLessons = new Map();
