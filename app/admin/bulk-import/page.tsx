@@ -9,6 +9,60 @@ import curriculumData from '@/data/curriculum'
 export default function BulkImport() {
   const [importing, setImporting] = useState(false)
   const [result, setResult] = useState<any>(null)
+  const [stepImporting, setStepImporting] = useState(false)
+  const [stepResults, setStepResults] = useState<any[]>([])
+  const [currentStep, setCurrentStep] = useState('')
+
+  const handleStepImport = async () => {
+    setStepImporting(true)
+    setStepResults([])
+    setResult(null)
+
+    try {
+      const adminUser = localStorage.getItem('adminUser')
+      if (!adminUser) {
+        setStepResults([{ success: false, message: 'Please login as admin first' }])
+        setStepImporting(false)
+        return
+      }
+
+      const steps = ['lessons', 'categories', ...Array.from({ length: curriculumData.categories.length }, (_, i) => i)]
+      
+      for (const step of steps) {
+        let stepName = ''
+        if (step === 'lessons') stepName = 'Creating Lessons'
+        else if (step === 'categories') stepName = 'Creating Categories'
+        else stepName = `Creating Courses for ${curriculumData.categories[step as number].name}`
+        
+        setCurrentStep(stepName)
+        
+        const response = await fetch('/api/bulk-import-step', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'x-admin-user': adminUser
+          },
+          body: JSON.stringify({ step })
+        })
+
+        const data = await response.json()
+        setStepResults(prev => [...prev, data])
+        
+        if (!data.success) break
+        
+        // Small delay between steps
+        await new Promise(resolve => setTimeout(resolve, 500))
+      }
+    } catch (error) {
+      setStepResults(prev => [...prev, {
+        success: false,
+        message: `Step import failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      }])
+    } finally {
+      setStepImporting(false)
+      setCurrentStep('')
+    }
+  }
 
   const handleImport = async () => {
     setImporting(true)
@@ -133,15 +187,54 @@ export default function BulkImport() {
       {/* Import Button */}
       <Card className="bg-slate-800/50 border-slate-700">
         <CardContent className="pt-6">
-          <Button
-            onClick={handleImport}
-            disabled={importing}
-            className="w-full bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold py-3"
-          >
-            {importing ? 'Importing Curriculum...' : 'Import All Curriculum Data'}
-          </Button>
+          <div className="space-y-4">
+            <Button
+              onClick={handleImport}
+              disabled={importing || stepImporting}
+              className="w-full bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold py-3"
+            >
+              {importing ? 'Importing Curriculum...' : 'Import All Curriculum Data'}
+            </Button>
+            <Button
+              onClick={handleStepImport}
+              disabled={importing || stepImporting}
+              variant="outline"
+              className="w-full border-blue-600 text-blue-600 hover:bg-blue-50 font-bold py-3"
+            >
+              {stepImporting ? `Step Import: ${currentStep}...` : 'Import Step-by-Step (Recommended)'}
+            </Button>
+          </div>
         </CardContent>
       </Card>
+
+      {/* Step Results */}
+      {stepResults.length > 0 && (
+        <Card className="bg-slate-800/50 border-slate-700">
+          <CardHeader>
+            <CardTitle className="text-white">Step-by-Step Import Progress</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {stepResults.map((stepResult, index) => (
+                <div key={index} className={`p-3 rounded-lg border ${
+                  stepResult.success 
+                    ? 'bg-emerald-600/20 border-emerald-500/30 text-emerald-400' 
+                    : 'bg-red-600/20 border-red-500/30 text-red-400'
+                }`}>
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold">
+                      {stepResult.success ? '✅' : '❌'} {stepResult.message}
+                    </span>
+                    {stepResult.count && (
+                      <span className="text-sm opacity-75">({stepResult.count} items)</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Results */}
       {result && (
