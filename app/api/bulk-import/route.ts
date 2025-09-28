@@ -98,9 +98,9 @@ export async function POST(request: NextRequest) {
       });
     });
 
-    // Create lessons in Sanity (batch create)
+    // Create lessons in Sanity (sequential to avoid rate limits)
     console.log(`Creating ${allUniqueLessons.size} lessons...`);
-    const lessonPromises = Array.from(allUniqueLessons).map(async (lessonTitle) => {
+    for (const lessonTitle of Array.from(allUniqueLessons)) {
       const lessonSlug = createSlug(lessonTitle);
       
       const lesson = {
@@ -114,11 +114,11 @@ export async function POST(request: NextRequest) {
 
       const createdLesson = await sanityClient.create(lesson);
       sharedLessons.set(lessonTitle, createdLesson._id);
-      return createdLesson;
-    });
-    
-    const createdLessonsResults = await Promise.all(lessonPromises);
-    createdLessons.push(...createdLessonsResults);
+      createdLessons.push(createdLesson);
+      
+      // Small delay to prevent rate limiting
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
     console.log(`Created ${createdLessons.length} lessons`);
 
     // Step 2: Create categories in order
@@ -142,6 +142,9 @@ export async function POST(request: NextRequest) {
 
       const createdCategory = await sanityClient.create(category);
       createdCategories.push(createdCategory);
+      
+      // Small delay to prevent rate limiting
+      await new Promise(resolve => setTimeout(resolve, 200));
 
       // Step 3: Create courses for this category
       console.log(`Creating ${categoryData.courses.length} courses for ${categoryData.name}...`);
@@ -194,6 +197,9 @@ export async function POST(request: NextRequest) {
 
         const createdCourse = await sanityClient.create(course);
         createdCourses.push(createdCourse);
+        
+        // Small delay to prevent rate limiting
+        await new Promise(resolve => setTimeout(resolve, 150));
       }
     }
 
