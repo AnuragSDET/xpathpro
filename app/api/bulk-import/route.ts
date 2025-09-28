@@ -3,9 +3,9 @@ import { createClient } from '@sanity/client';
 import curriculumData from '@/data/curriculum';
 
 const sanityClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  token: process.env.SANITY_API_TOKEN!,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'dummy',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  token: process.env.SANITY_API_TOKEN || 'dummy',
   useCdn: false,
   apiVersion: '2023-05-03'
 });
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     const createdLessons = [];
 
     // Step 1: Create all unique lessons first (including shared ones)
-    const allUniqueLessons = new Set();
+    const allUniqueLessons = new Set<string>();
     
     curriculumData.categories.forEach(category => {
       category.courses.forEach(course => {
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Create lessons in Sanity
-    for (const lessonTitle of allUniqueLessons) {
+    for (const lessonTitle of Array.from(allUniqueLessons)) {
       const lessonSlug = createSlug(lessonTitle);
       
       const lesson = {
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       for (const courseData of categoryData.courses) {
         const courseSlug = createSlug(courseData.title);
         
-        let courseLessons = [];
+        let courseLessons: Array<{_type: string, _ref: string}> = [];
         
         if (courseData.shared) {
           // Find the original course with lessons
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
             .flatMap(cat => cat.courses)
             .find(c => c.title === courseData.title && c.lessons);
           
-          if (originalCourse) {
+          if (originalCourse && originalCourse.lessons) {
             courseLessons = originalCourse.lessons.map(lessonTitle => ({
               _type: 'reference',
               _ref: sharedLessons.get(lessonTitle)

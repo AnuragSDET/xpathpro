@@ -1,9 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
+
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!url || !key) {
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(url, key);
+}
 
 export async function POST(request: NextRequest) {
   try {
     const { code, planId } = await request.json();
+    const supabase = getSupabaseClient();
 
     // Get coupon details
     const { data: coupon, error } = await supabase

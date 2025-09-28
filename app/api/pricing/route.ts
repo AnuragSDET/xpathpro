@@ -1,8 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
+
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!url || !key) {
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(url, key);
+}
 
 export async function GET() {
   try {
+    const supabase = getSupabaseClient();
     const { data: plans, error } = await supabase
       .from('pricing_plans')
       .select('*')
@@ -20,6 +32,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const { name, description, base_price, current_price, billing_period, features } = await request.json();
+    const supabase = getSupabaseClient();
 
     const { data: plan, error } = await supabase
       .from('pricing_plans')
@@ -45,6 +58,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const { id, ...updates } = await request.json();
+    const supabase = getSupabaseClient();
 
     const { data: plan, error } = await supabase
       .from('pricing_plans')
