@@ -17,26 +17,32 @@ export default function SignIn() {
     setLoading(true)
     
     try {
+      // Use admin endpoint directly for admin login
+      if (email === 'admin@xpath.pro') {
+        const response = await fetch('/api/auth/admin/signin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        })
+        
+        const result = await response.json()
+        
+        if (result.ok) {
+          window.location.replace('/admin')
+          return
+        }
+      }
+      
+      // Fallback to NextAuth for other users
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
       })
       
-      console.log('SignIn result:', result)
-      
       if (result?.ok) {
-        console.log('Login successful, redirecting...')
-        // Check if admin user
-        if (email === 'admin@xpath.pro') {
-          console.log('Redirecting to admin')
-          window.location.replace('/admin')
-        } else {
-          console.log('Redirecting to dashboard')
-          window.location.replace('/dashboard')
-        }
+        window.location.replace('/dashboard')
       } else {
-        console.log('Login failed:', result?.error)
         alert('Login failed. Please check your credentials.')
       }
     } catch (error) {
