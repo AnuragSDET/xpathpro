@@ -1,12 +1,16 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { usePricing } from '@/lib/pricing';
 
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const { plans, loading: pricingLoading } = usePricing();
+  
+  const mentorshipPrice = plans.find(plan => plan.name.includes('Mentorship'))?.current_price || 1299;
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -110,7 +114,7 @@ export default function Home() {
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
-                <span>Mentorship: <span className="text-purple-400 font-bold">$1,299/month</span></span>
+                <span>Mentorship: <span className="text-purple-400 font-bold">${mentorshipPrice}/month</span></span>
               </div>
             </div>
           </div>
@@ -344,7 +348,7 @@ export default function Home() {
                   
                   <div className="text-center">
                     <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-2">
-                      $1,299/month
+                      ${mentorshipPrice}/month
                     </div>
                     <div className="text-sm text-gray-400">
                       🔥 4-month transformation program
@@ -435,7 +439,7 @@ export default function Home() {
 
                 <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 my-12">
                   <p className="text-2xl text-white mb-6">
-                    For just <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 font-black text-3xl">$1,299/month</span>, you'll get everything you need to succeed:
+                    For just <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 font-black text-3xl">${mentorshipPrice}/month</span>, you'll get everything you need to succeed:
                   </p>
                   
                   <div className="grid md:grid-cols-2 gap-6 text-left">

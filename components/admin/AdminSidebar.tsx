@@ -13,7 +13,8 @@ import {
   FolderOpen,
   GraduationCap,
   LogOut,
-  Zap
+  Zap,
+  DollarSign
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -24,6 +25,7 @@ const navigation = [
   { name: 'Lessons', href: '/admin/lessons', icon: GraduationCap },
   { name: 'Users', href: '/admin/users', icon: Users },
   { name: 'Mentorship', href: '/admin/mentorship', icon: Users },
+  { name: 'Pricing', href: '/admin/pricing', icon: DollarSign },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
   { name: 'Layout', href: '/admin/layout', icon: Palette },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
