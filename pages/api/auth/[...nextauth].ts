@@ -1,8 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { supabase } from '../../../lib/supabase'
-import bcrypt from 'bcryptjs'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -27,36 +25,9 @@ export const authOptions: NextAuthOptions = {
           }
         }
 
-        try {
-          // Query regular users from database
-          const { data: user, error } = await supabase
-            .from('users')
-            .select('id, email, name, role, password, status')
-            .eq('email', credentials.email)
-            .single()
-
-          if (error || !user) {
-            return null
-          }
-
-          // For regular users, verify password if they have one
-          if (user.password) {
-            const isValidPassword = await bcrypt.compare(credentials.password, user.password)
-            if (!isValidPassword) {
-              return null
-            }
-          }
-
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role
-          }
-        } catch (error) {
-          console.error('Auth error:', error)
-          return null
-        }
+        // For now, only admin login is supported
+        // Regular user authentication can be added later
+        return null
       }
     }),
     GoogleProvider({

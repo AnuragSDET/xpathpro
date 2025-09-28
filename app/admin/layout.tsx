@@ -21,14 +21,33 @@ export default function AdminLayout({
       return
     }
 
-    // Check for admin session
-    const adminUser = localStorage.getItem('adminUser')
-    if (adminUser) {
-      setIsAuthenticated(true)
-    } else {
-      router.push('/admin/auth/signin')
+    const checkAuth = async () => {
+      // Check localStorage first
+      const adminUser = localStorage.getItem('adminUser')
+      if (adminUser) {
+        setIsAuthenticated(true)
+        setLoading(false)
+        return
+      }
+
+      // Fallback to NextAuth session
+      try {
+        const response = await fetch('/api/auth/session')
+        const session = await response.json()
+        if (session?.user?.email === 'admin@xpath.pro') {
+          setIsAuthenticated(true)
+          // Set localStorage for future requests
+          localStorage.setItem('adminUser', JSON.stringify(session.user))
+        } else {
+          router.push('/admin/auth/signin')
+        }
+      } catch (error) {
+        router.push('/admin/auth/signin')
+      }
+      setLoading(false)
     }
-    setLoading(false)
+
+    checkAuth()
   }, [pathname, router])
 
   if (loading) {

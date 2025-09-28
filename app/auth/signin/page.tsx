@@ -26,6 +26,12 @@ export default function SignIn() {
       if (result?.ok) {
         // Check if admin user
         if (email === 'admin@xpath.pro') {
+          // Set admin user in localStorage for admin layout
+          localStorage.setItem('adminUser', JSON.stringify({
+            email: 'admin@xpath.pro',
+            name: 'Admin User',
+            role: 'admin'
+          }))
           window.location.replace('/admin')
         } else {
           window.location.replace('/dashboard')
