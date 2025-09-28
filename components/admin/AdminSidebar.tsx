@@ -14,12 +14,14 @@ import {
   GraduationCap,
   LogOut,
   Zap,
-  DollarSign
+  DollarSign,
+  Upload
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { name: 'Bulk Import', href: '/admin/bulk-import', icon: Upload },
   { name: 'Courses', href: '/admin/courses', icon: BookOpen },
   { name: 'Categories', href: '/admin/categories', icon: FolderOpen },
   { name: 'Lessons', href: '/admin/lessons', icon: GraduationCap },
