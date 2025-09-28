@@ -137,7 +137,7 @@ export async function POST(request: NextRequest) {
           _type: 'course',
           title: courseData.title,
           description: courseData.description,
-          slug: { current: courseSlug },
+          slug: { current: `${categorySlug}-${courseSlug}` },
           category: {
             _type: 'reference',
             _ref: categoryId
@@ -145,10 +145,16 @@ export async function POST(request: NextRequest) {
           lessons: courseLessons,
           order: courseData.order || 999,
           difficulty: (courseData as any).difficulty || 'beginner',
-          duration: (courseData as any).duration || '10',
-          prerequisites: (courseData as any).prerequisites || '',
-          learningObjectives: (courseData as any).learningObjectives || '',
-          overview: (courseData as any).overview || '',
+          duration: parseInt((courseData as any).duration || '10'),
+          prerequisites: Array.isArray((courseData as any).prerequisites) 
+            ? (courseData as any).prerequisites 
+            : [(courseData as any).prerequisites || 'No prerequisites'],
+          learningObjectives: Array.isArray((courseData as any).learningObjectives) 
+            ? (courseData as any).learningObjectives 
+            : [(courseData as any).learningObjectives || 'Complete the course successfully'],
+          overview: Array.isArray((courseData as any).overview) 
+            ? (courseData as any).overview 
+            : [(courseData as any).overview || 'Comprehensive course content'],
           tags: (courseData as any).tags || [],
           featured: (courseData as any).featured || false,
           published: true,

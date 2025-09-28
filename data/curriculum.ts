@@ -14,9 +14,9 @@ const curriculumData = {
           order: 1,
           difficulty: "beginner",
           duration: "40",
-          prerequisites: "Basic programming knowledge",
-          learningObjectives: "Understand Java syntax, OOP concepts, exception handling, and collections framework",
-          overview: "Comprehensive Java programming course covering all fundamentals needed for test automation",
+          prerequisites: ["Basic programming knowledge", "Computer fundamentals"],
+          learningObjectives: ["Understand Java syntax and variables", "Master OOP concepts", "Handle exceptions properly", "Use collections framework effectively"],
+          overview: ["Comprehensive Java programming course covering all fundamentals needed for test automation", "Hands-on coding exercises and projects"],
           tags: ["java", "programming", "fundamentals", "oop"],
           featured: true,
           lessons: [
