@@ -25,7 +25,9 @@ export default function AdminSignIn() {
       const result = await response.json()
       
       if (result?.ok) {
-        window.location.href = '/admin'
+        // Set admin user in localStorage for admin layout
+        localStorage.setItem('adminUser', JSON.stringify(result.user))
+        window.location.replace('/admin')
       } else {
         alert('Admin login failed. Please check your credentials.')
       }
