@@ -24,7 +24,12 @@ export default function SignIn() {
       })
       
       if (result?.ok) {
-        window.location.href = '/dashboard'
+        // Check if admin user
+        if (email === 'admin@xpath.pro') {
+          window.location.href = '/admin'
+        } else {
+          window.location.href = '/dashboard'
+        }
       } else {
         alert('Login failed. Please check your credentials.')
       }
