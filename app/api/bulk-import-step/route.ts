@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Format overview as objects for rich text
-        let overviewBlocks = [];
+        let overviewBlocks: any[] = [];
         const overviewData = Array.isArray((courseData as any).overview) 
           ? (courseData as any).overview 
           : [(courseData as any).overview || 'Comprehensive course content'];
