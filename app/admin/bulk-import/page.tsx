@@ -26,12 +26,12 @@ export default function BulkImport() {
         return
       }
 
-      const steps = ['lessons', 'categories', ...Array.from({ length: curriculumData.categories.length }, (_, i) => i)]
+      const steps = ['categories', 'lessons', ...Array.from({ length: curriculumData.categories.length }, (_, i) => i)]
       
       for (const step of steps) {
         let stepName = ''
-        if (step === 'lessons') stepName = 'Creating Lessons'
-        else if (step === 'categories') stepName = 'Creating Categories'
+        if (step === 'categories') stepName = 'Creating Categories'
+        else if (step === 'lessons') stepName = 'Creating Lessons'
         else stepName = `Creating Courses for ${curriculumData.categories[step as number].name}`
         
         setCurrentStep(stepName)
