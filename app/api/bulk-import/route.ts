@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     
     curriculumData.categories.forEach(category => {
       category.courses.forEach(course => {
-        if (course.lessons && !course.shared) {
+        if (course.lessons && !(course as any).shared) {
           course.lessons.forEach(lessonTitle => {
             allUniqueLessons.add(lessonTitle);
           });
@@ -107,20 +107,20 @@ export async function POST(request: NextRequest) {
         
         let courseLessons: Array<{_type: string, _ref: string}> = [];
         
-        if (courseData.shared) {
+        if ((courseData as any).shared) {
           // Find the original course with lessons
           const originalCourse = curriculumData.categories
-            .flatMap(cat => cat.courses)
-            .find(c => c.title === courseData.title && c.lessons);
+            .flatMap(cat => cat.courses as any[])
+            .find((c: any) => c.title === courseData.title && c.lessons);
           
           if (originalCourse && originalCourse.lessons) {
-            courseLessons = originalCourse.lessons.map(lessonTitle => ({
+            courseLessons = originalCourse.lessons.map((lessonTitle: string) => ({
               _type: 'reference',
               _ref: sharedLessons.get(lessonTitle)
             }));
           }
         } else if (courseData.lessons) {
-          courseLessons = courseData.lessons.map(lessonTitle => ({
+          courseLessons = courseData.lessons.map((lessonTitle: string) => ({
             _type: 'reference',
             _ref: sharedLessons.get(lessonTitle)
           }));
@@ -137,13 +137,13 @@ export async function POST(request: NextRequest) {
           },
           lessons: courseLessons,
           order: courseData.order || 999,
-          difficulty: courseData.difficulty || 'beginner',
-          duration: courseData.duration || '10',
-          prerequisites: courseData.prerequisites || '',
-          learningObjectives: courseData.learningObjectives || '',
-          overview: courseData.overview || '',
-          tags: courseData.tags || [],
-          featured: courseData.featured || false,
+          difficulty: (courseData as any).difficulty || 'beginner',
+          duration: (courseData as any).duration || '10',
+          prerequisites: (courseData as any).prerequisites || '',
+          learningObjectives: (courseData as any).learningObjectives || '',
+          overview: (courseData as any).overview || '',
+          tags: (courseData as any).tags || [],
+          featured: (courseData as any).featured || false,
           published: true,
           publishedAt: new Date().toISOString(),
           _id: `course-${categorySlug}-${courseSlug}`
