@@ -25,10 +25,13 @@ export default function AdminSignIn() {
       const result = await response.json()
       
       if (result?.ok) {
+        console.log('Admin signin: Login successful, result:', result)
         // Set admin user in localStorage for admin layout
         localStorage.setItem('adminUser', JSON.stringify(result.user))
+        console.log('Admin signin: Set localStorage, redirecting to /admin')
         window.location.replace('/admin')
       } else {
+        console.log('Admin signin: Login failed, result:', result)
         alert('Admin login failed. Please check your credentials.')
       }
     } catch (error) {

@@ -22,26 +22,37 @@ export default function AdminLayout({
     }
 
     const checkAuth = async () => {
+      console.log('Admin layout: Checking authentication...')
+      
       // Check localStorage first
       const adminUser = localStorage.getItem('adminUser')
+      console.log('Admin layout: localStorage adminUser:', adminUser)
+      
       if (adminUser) {
+        console.log('Admin layout: Found admin user in localStorage, authenticating...')
         setIsAuthenticated(true)
         setLoading(false)
         return
       }
 
+      console.log('Admin layout: No localStorage, checking NextAuth session...')
       // Fallback to NextAuth session
       try {
         const response = await fetch('/api/auth/session')
         const session = await response.json()
+        console.log('Admin layout: NextAuth session:', session)
+        
         if (session?.user?.email === 'admin@xpath.pro') {
+          console.log('Admin layout: Found admin in NextAuth session')
           setIsAuthenticated(true)
           // Set localStorage for future requests
           localStorage.setItem('adminUser', JSON.stringify(session.user))
         } else {
+          console.log('Admin layout: No admin session, redirecting to signin')
           router.push('/admin/auth/signin')
         }
       } catch (error) {
+        console.log('Admin layout: Error checking session:', error)
         router.push('/admin/auth/signin')
       }
       setLoading(false)
