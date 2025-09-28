@@ -17,16 +17,6 @@ export default function SignIn() {
     setLoading(true)
     
     try {
-      // Direct admin login check
-      if (email === 'admin@xpath.pro' && password === 'admin123') {
-        window.location.replace('/admin')
-        return
-      } else if (email === 'admin@xpath.pro') {
-        alert('Admin login failed. Please check your credentials.')
-        return
-      }
-      
-      // Fallback to NextAuth for other users
       const result = await signIn('credentials', {
         email,
         password,
@@ -34,7 +24,12 @@ export default function SignIn() {
       })
       
       if (result?.ok) {
-        window.location.replace('/dashboard')
+        // Check if admin user
+        if (email === 'admin@xpath.pro') {
+          window.location.replace('/admin')
+        } else {
+          window.location.replace('/dashboard')
+        }
       } else {
         alert('Login failed. Please check your credentials.')
       }
