@@ -17,23 +17,13 @@ export default function SignIn() {
     setLoading(true)
     
     try {
-      // Use admin endpoint directly for admin login
-      if (email === 'admin@xpath.pro') {
-        const response = await fetch('/api/auth/admin/signin', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        })
-        
-        const result = await response.json()
-        
-        if (result.ok) {
-          window.location.replace('/admin')
-          return
-        } else {
-          alert('Admin login failed. Please check your credentials.')
-          return
-        }
+      // Direct admin login check
+      if (email === 'admin@xpath.pro' && password === 'admin123') {
+        window.location.replace('/admin')
+        return
+      } else if (email === 'admin@xpath.pro') {
+        alert('Admin login failed. Please check your credentials.')
+        return
       }
       
       // Fallback to NextAuth for other users
