@@ -31,18 +31,45 @@ export async function POST(request: NextRequest) {
     // Check Sanity configuration
     const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.SANITY_API_PROJECT_ID;
     const token = process.env.SANITY_API_WRITE_TOKEN || process.env.SANITY_API_READ_TOKEN;
+    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || process.env.SANITY_API_DATASET || 'production';
+    
+    console.log('Sanity Config:', { projectId: projectId?.substring(0, 8) + '...', hasToken: !!token, dataset });
     
     if (!projectId || !token || projectId === 'dummy') {
       return NextResponse.json({
         success: false,
-        error: 'Sanity CMS not configured. Please check SANITY_API_PROJECT_ID and SANITY_API_WRITE_TOKEN environment variables.'
+        error: `Sanity CMS not configured. ProjectId: ${!!projectId}, Token: ${!!token}`
       }, { status: 500 });
     }
 
-    // Clear existing curriculum data
-    await sanityClient.delete({ query: '*[_type == "course"]' });
-    await sanityClient.delete({ query: '*[_type == "category"]' });
-    await sanityClient.delete({ query: '*[_type == "lesson"]' });
+    // Test Sanity connection
+    try {
+      await sanityClient.fetch('*[_type == "lesson"][0]');
+      console.log('Sanity connection test successful');
+    } catch (testError) {
+      console.error('Sanity connection test failed:', testError);
+      return NextResponse.json({
+        success: false,
+        error: `Sanity connection failed: ${testError instanceof Error ? testError.message : 'Unknown error'}`
+      }, { status: 500 });
+    }
+
+    // Clear existing curriculum data (limit to prevent timeout)
+    console.log('Clearing existing data...');
+    const existingLessons = await sanityClient.fetch('*[_type == "lesson"][0...50]._id');
+    const existingCourses = await sanityClient.fetch('*[_type == "course"][0...50]._id');
+    const existingCategories = await sanityClient.fetch('*[_type == "category"][0...20]._id');
+    
+    if (existingLessons.length > 0) {
+      await sanityClient.delete({ query: `*[_type == "lesson" && _id in [${existingLessons.map((id: string) => `"${id}"`).join(',')}]]` });
+    }
+    if (existingCourses.length > 0) {
+      await sanityClient.delete({ query: `*[_type == "course" && _id in [${existingCourses.map((id: string) => `"${id}"`).join(',')}]]` });
+    }
+    if (existingCategories.length > 0) {
+      await sanityClient.delete({ query: `*[_type == "category" && _id in [${existingCategories.map((id: string) => `"${id}"`).join(',')}]]` });
+    }
+    console.log('Cleared existing data');
 
     const sharedLessons = new Map();
     const createdCategories = [];
@@ -62,25 +89,31 @@ export async function POST(request: NextRequest) {
       });
     });
 
-    // Create lessons in Sanity
-    for (const lessonTitle of Array.from(allUniqueLessons)) {
+    // Create lessons in Sanity (batch create)
+    console.log(`Creating ${allUniqueLessons.size} lessons...`);
+    const lessonPromises = Array.from(allUniqueLessons).map(async (lessonTitle) => {
       const lessonSlug = createSlug(lessonTitle);
       
       const lesson = {
         _type: 'lesson',
         title: lessonTitle,
         slug: { current: lessonSlug },
-        content: `# ${lessonTitle}\n\nThis lesson covers the fundamentals of ${lessonTitle.toLowerCase()}.\n\n## Learning Objectives\n- Understand key concepts\n- Apply practical skills\n- Complete hands-on exercises\n\n## Content\nDetailed content will be added here.`,
+        content: `# ${lessonTitle}\n\nThis lesson covers the fundamentals of ${lessonTitle.toLowerCase()}.`,
         publishedAt: new Date().toISOString(),
         _id: `lesson-${lessonSlug}`
       };
 
       const createdLesson = await sanityClient.create(lesson);
       sharedLessons.set(lessonTitle, createdLesson._id);
-      createdLessons.push(createdLesson);
-    }
+      return createdLesson;
+    });
+    
+    const createdLessonsResults = await Promise.all(lessonPromises);
+    createdLessons.push(...createdLessonsResults);
+    console.log(`Created ${createdLessons.length} lessons`);
 
     // Step 2: Create categories in order
+    console.log(`Creating ${curriculumData.categories.length} categories...`);
     for (const categoryData of curriculumData.categories) {
       const categorySlug = createSlug(categoryData.name);
       
@@ -102,6 +135,7 @@ export async function POST(request: NextRequest) {
       createdCategories.push(createdCategory);
 
       // Step 3: Create courses for this category
+      console.log(`Creating ${categoryData.courses.length} courses for ${categoryData.name}...`);
       for (const courseData of categoryData.courses) {
         const courseSlug = createSlug(courseData.title);
         
