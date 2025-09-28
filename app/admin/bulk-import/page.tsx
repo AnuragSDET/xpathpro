@@ -109,10 +109,10 @@ export default function BulkImport() {
                   {category.courses.map((course, courseIndex) => (
                     <Badge 
                       key={courseIndex} 
-                      variant={course.shared ? "secondary" : "default"}
-                      className={course.shared ? "bg-yellow-600/20 text-yellow-400" : ""}
+                      variant={(course as any).shared ? "secondary" : "default"}
+                      className={(course as any).shared ? "bg-yellow-600/20 text-yellow-400" : ""}
                     >
-                      {course.title} {course.shared && "(Shared)"}
+                      {course.title} {(course as any).shared && "(Shared)"}
                     </Badge>
                   ))}
                 </div>
