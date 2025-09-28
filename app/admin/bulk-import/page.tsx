@@ -49,7 +49,7 @@ export default function BulkImport() {
       const data = await response.json()
       setResult(data)
     } catch (error) {
-      if (error.name === 'AbortError') {
+      if (error instanceof Error && error.name === 'AbortError') {
         setResult({
           success: false,
           error: 'Import timed out. This might be due to Sanity API issues. Please check your Sanity configuration.'
