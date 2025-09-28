@@ -15,7 +15,7 @@ const curriculumData = {
           difficulty: "beginner",
           duration: "40",
           prerequisites: ["Basic programming knowledge", "Computer fundamentals"],
-          learningObjectives: ["Understand Java syntax and variables", "Master OOP concepts", "Handle exceptions properly", "Use collections framework effectively"],
+          learningObjectives: ["Understand Java syntax and variables", "Master OOP concepts", "Handle exceptions properly", "Use collections framework effectively", "Build real-world applications"],
           overview: ["Comprehensive Java programming course covering all fundamentals needed for test automation", "Hands-on coding exercises and projects"],
           tags: ["java", "programming", "fundamentals", "oop"],
           featured: true,
@@ -35,7 +35,7 @@ const curriculumData = {
           difficulty: "intermediate",
           duration: 35,
           prerequisites: ["Java Programming knowledge", "Basic web development understanding"],
-          learningObjectives: ["Master WebDriver API", "Understand element locators", "Implement synchronization strategies", "Apply Page Object Model pattern"],
+          learningObjectives: ["Master WebDriver API", "Understand element locators", "Implement synchronization strategies", "Apply Page Object Model pattern", "Create robust test suites"],
           overview: ["Learn to automate web applications using Selenium WebDriver with best practices", "Build robust automation frameworks"],
           tags: ["selenium", "webdriver", "automation", "testing"],
           lessons: [
@@ -54,7 +54,7 @@ const curriculumData = {
           difficulty: "intermediate",
           duration: 25,
           prerequisites: ["Java and Selenium knowledge", "Basic testing concepts"],
-          learningObjectives: ["Master TestNG annotations", "Use data providers effectively", "Implement parallel execution", "Generate comprehensive reports"],
+          learningObjectives: ["Master TestNG annotations", "Use data providers effectively", "Implement parallel execution", "Generate comprehensive reports", "Optimize test performance"],
           overview: ["Advanced testing framework for organizing and executing automated tests", "Learn best practices for test organization"],
           tags: ["testng", "framework", "testing", "annotations"],
           lessons: [
@@ -73,7 +73,7 @@ const curriculumData = {
           difficulty: "beginner",
           duration: 15,
           prerequisites: ["Basic Java knowledge", "Command line basics"],
-          learningObjectives: ["Understand Maven project structure", "Master dependency management", "Learn build lifecycle phases", "Configure plugins effectively"],
+          learningObjectives: ["Understand Maven project structure", "Master dependency management", "Learn build lifecycle phases", "Configure plugins effectively", "Automate project builds"],
           overview: ["Learn to manage Java projects and dependencies using Maven build tool", "Automate build processes"],
           tags: ["maven", "build", "dependency", "management"],
           lessons: [
@@ -91,7 +91,7 @@ const curriculumData = {
           difficulty: "beginner",
           duration: 20,
           prerequisites: ["Basic command line knowledge", "Text editor familiarity"],
-          learningObjectives: ["Master Git commands", "Understand branching strategies", "Learn merging techniques", "Implement collaboration workflows"],
+          learningObjectives: ["Master Git commands", "Understand branching strategies", "Learn merging techniques", "Implement collaboration workflows", "Resolve merge conflicts"],
           overview: ["Essential version control skills for managing code and collaborating with teams", "Best practices for code management"],
           tags: ["git", "version-control", "collaboration", "github"],
           lessons: [
@@ -109,7 +109,7 @@ const curriculumData = {
           difficulty: "intermediate",
           duration: 30,
           prerequisites: ["Git and Maven knowledge", "Basic DevOps concepts"],
-          learningObjectives: ["Setup CI/CD pipelines", "Automate builds and tests", "Integrate with version control", "Deploy applications automatically"],
+          learningObjectives: ["Setup CI/CD pipelines", "Automate builds and tests", "Integrate with version control", "Deploy applications automatically", "Monitor deployment health"],
           overview: ["Learn to automate build, test, and deployment processes using Jenkins", "Implement DevOps best practices"],
           tags: ["jenkins", "ci-cd", "automation", "devops"],
           lessons: [
