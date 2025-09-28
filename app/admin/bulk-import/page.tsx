@@ -26,21 +26,40 @@ export default function BulkImport() {
         return
       }
 
+      // Add timeout to prevent hanging
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 second timeout
+
       const response = await fetch('/api/bulk-import', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
           'x-admin-user': adminUser
-        }
+        },
+        signal: controller.signal
       })
+
+      clearTimeout(timeoutId)
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(`HTTP ${response.status}: ${errorText}`)
+      }
 
       const data = await response.json()
       setResult(data)
     } catch (error) {
-      setResult({
-        success: false,
-        error: 'Failed to import curriculum'
-      })
+      if (error.name === 'AbortError') {
+        setResult({
+          success: false,
+          error: 'Import timed out. This might be due to Sanity API issues. Please check your Sanity configuration.'
+        })
+      } else {
+        setResult({
+          success: false,
+          error: `Failed to import curriculum: ${error.message}`
+        })
+      }
     } finally {
       setImporting(false)
     }
