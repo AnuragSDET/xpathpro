@@ -85,7 +85,7 @@ const TestimonialCard = ({ testimonial, isHovered, onHover, onLeave }: {
 );
 
 export default function TestimonialsSection() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   
   const firstRow = testimonials.slice(0, 10);
   const secondRow = testimonials.slice(10, 20);
