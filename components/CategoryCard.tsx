@@ -58,11 +58,13 @@ export default function CategoryCard({ category }: { category: any }) {
     <div className="shrink-0" style={{perspective: '1000px'}}>
       <Link href={`/courses/${category.slug.current}`}>
         <div 
-          className="p-4 md:p-6 flex flex-col rounded-[16px] bg-[#1F2121] transition-all duration-200 ease-out cursor-pointer" 
+          className="p-4 md:p-6 flex flex-col rounded-[16px] transition-all duration-200 ease-out cursor-pointer" 
           style={{
             width: '335px',
             transformStyle: 'preserve-3d',
-            boxShadow: 'rgba(0, 0, 0, 0.01) 0px 520px 146px 0px, rgba(0, 0, 0, 0.04) 0px 333px 133px 0px, rgba(0, 0, 0, 0.26) 0px 83px 83px 0px, rgba(0, 0, 0, 0.29) 0px 21px 46px 0px',
+            background: 'linear-gradient(145deg, #2a2d31, #1a1d21)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            boxShadow: 'rgba(0, 0, 0, 0.01) 0px 520px 146px 0px, rgba(0, 0, 0, 0.04) 0px 333px 133px 0px, rgba(0, 0, 0, 0.26) 0px 83px 83px 0px, rgba(0, 0, 0, 0.29) 0px 21px 46px 0px, inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.5)',
             transform: transform || 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
             transformOrigin: '50% 50% 0px',
           }}
@@ -73,7 +75,7 @@ export default function CategoryCard({ category }: { category: any }) {
 
           {/* Main Content Area */}
           <div className="mx-4 flex-1 mt-4">
-            <div className="relative w-full bg-black rounded-[16px] p-6 overflow-hidden" style={{aspectRatio: '3 / 4', boxShadow: 'rgba(0, 0, 0, 0.05) 0px 5px 6px 0px'}}>
+            <div className="relative w-full rounded-[16px] p-6 overflow-hidden" style={{aspectRatio: '3 / 4', background: 'linear-gradient(145deg, #1a1d21, #0f1114)', border: '1px solid rgba(255, 255, 255, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.05) 0px 5px 6px 0px, inset 0 1px 0 rgba(255, 255, 255, 0.05), inset 0 -1px 0 rgba(0, 0, 0, 0.8)'}}>
               {/* Background Pattern */}
               <div className={`absolute inset-0 bg-gradient-to-br ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} opacity-5`} />
               <div className="absolute top-0 right-0 w-20 h-20 rounded-full bg-white opacity-5 -translate-y-10 translate-x-10" />
@@ -84,11 +86,10 @@ export default function CategoryCard({ category }: { category: any }) {
                 <div className="text-center mb-6">
                   <div className="text-5xl mb-3">
                     {category.icon === 'code' && '💻'}
-                    {category.icon === 'api' && '🔌'}
-                    {category.icon === 'mobile' && '📱'}
-                    {category.icon === 'database' && '🗄️'}
-                    {category.icon === 'performance' && '⚡'}
-                    {category.icon === 'security' && '🔒'}
+                    {category.icon === 'server' && '🔌'}
+                    {category.icon === 'test-tube' && '📱'}
+                    {category.icon === 'bug' && '⚡'}
+                    {category.icon === 'shield' && '🔒'}
                   </div>
                   <h3 className="text-white text-xl font-bold mb-2">{category.title}</h3>
                   <div className={`inline-block px-3 py-1 bg-gradient-to-r ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} text-white text-xs rounded-full font-bold mb-3`}>
