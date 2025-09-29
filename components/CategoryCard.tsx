@@ -25,11 +25,11 @@ export default function CategoryCard({ category }: { category: any }) {
     const y = e.clientY - rect.top
     const centerX = rect.width / 2
     const centerY = rect.height / 2
-    const rotateX = (y - centerY) / 10
-    const rotateY = (centerX - x) / 10
+    const rotateX = (y - centerY) / 8
+    const rotateY = (centerX - x) / 8
 
-    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`)
-    setGlowOpacity(0.3)
+    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`)
+    setGlowOpacity(0.2)
   }
 
   const handleMouseLeave = () => {
@@ -41,7 +41,7 @@ export default function CategoryCard({ category }: { category: any }) {
     <div className="shrink-0" style={{perspective: '1000px'}}>
       <Link href={`/courses/${category.slug.current}`}>
         <div 
-          className="p-4 md:p-6 flex flex-col rounded-[16px] bg-[#1F2121] transition-all duration-300 cursor-pointer" 
+          className="p-4 md:p-6 flex flex-col rounded-[16px] bg-[#1F2121] transition-all duration-200 ease-out cursor-pointer" 
           style={{
             width: '335px',
             transformStyle: 'preserve-3d',
@@ -62,8 +62,13 @@ export default function CategoryCard({ category }: { category: any }) {
               {category.icon === 'performance' && '⚡'}
               {category.icon === 'security' && '🔒'}
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" color="currentColor" className="text-white" fill="currentColor" fillRule="evenodd">
-              <path d="M5.00226 5.710185C0.612577 10.215135 0.782 17.46045 5.22972 21.90795L6.481905 23.16015C6.601665 23.28 6.795615 23.28 6.915375 23.16015L8.793945 21.28155C8.913705 21.16185 8.913705 20.96775 8.793945 20.8482L7.42119 19.4751C3.690195 15.74415 3.65811 9.727305 7.34925 6.035955C10.71483 2.670375 16.0131 2.40102 19.75005 5.20743C19.89945 5.31963 19.91085 5.540355 19.7787 5.67258C19.66995 5.781315 19.4985 5.79357 19.37445 5.702625C16.29255 3.44289 12.064695 3.59229 9.424635 6.23256C6.491505 9.16569 6.629655 14.05935 9.73344 17.16285L11.106195 18.53595C11.225955 18.65565 11.420115 18.65565 11.539875 18.53595L13.418445 16.65735C13.538205 16.5375 13.538205 16.3434 13.418445 16.2237L12.04548 14.85087C9.96519 12.77058 10.04184 9.321015 12.21675 7.14609C14.02257 5.34027 16.70655 4.98201 18.7566 6.10278C18.9477 6.20742 18.98265 6.4686 18.8286 6.622695C18.73215 6.71916 18.585 6.74778 18.4611 6.68994C17.1153 6.05925 15.46275 6.29919 14.352825 7.413405C12.929595 8.84217 12.99969 11.18058 14.42559 12.606465L15.73065 13.911585C15.8502 14.031135 16.04445 14.031135 16.16415 13.911585L18.04275 12.032805C18.16245 11.913045 18.16245 11.719095 18.04275 11.599335L16.7097 10.266015C16.0938 9.65025 16.0209 8.64801 16.5954 7.99383C17.22525 7.27668 18.3183 7.250325 18.9822 7.91433L19.3761 8.30814C19.99185 8.92392 20.994 8.99688 21.64845 8.422185C22.36545 7.792515 22.3917 6.69954 21.72795 6.035535L21.2943 5.60208C16.7892 1.096925 9.46224 1.132893 5.00226 5.710185Z"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" className="text-white" fill="currentColor">
+              <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" opacity="0.8"/>
+              <circle cx="12" cy="12" r="2" fill="currentColor"/>
+              <path d="M12 1C12.55 1 13 1.45 13 2V4C13 4.55 12.55 5 12 5S11 4.55 11 4V2C11 1.45 11.45 1 12 1Z" opacity="0.6"/>
+              <path d="M12 19C12.55 19 13 19.45 13 20V22C13 22.55 12.55 23 12 23S11 22.55 11 22V20C11 19.45 11.45 19 12 19Z" opacity="0.6"/>
+              <path d="M22 11C22.55 11 23 11.45 23 12S22.55 13 22 13H20C19.45 13 19 12.55 19 12S19.45 11 20 11H22Z" opacity="0.6"/>
+              <path d="M5 12C5 11.45 4.55 11 4 11H2C1.45 11 1 11.45 1 12S1.45 13 2 13H4C4.55 13 5 12.55 5 12Z" opacity="0.6"/>
             </svg>
           </div>
 
@@ -118,7 +123,7 @@ export default function CategoryCard({ category }: { category: any }) {
 
           {/* Glow Overlay Effect */}
           <div 
-            className="pointer-events-none absolute inset-0 rounded-[16px] transition-opacity duration-300" 
+            className="pointer-events-none absolute inset-0 rounded-[16px] transition-opacity duration-200" 
             style={{
               mixBlendMode: 'overlay',
               background: 'radial-gradient(circle, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.75) 20%, rgba(255, 255, 255, 0) 80%)',
