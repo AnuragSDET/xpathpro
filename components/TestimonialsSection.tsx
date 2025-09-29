@@ -10,8 +10,6 @@ interface Testimonial {
 }
 
 const testimonials: Testimonial[] = [
-  { id: 1, name: "Priya Sharma", text: "Joining xPath.pro changed my life. I switched from teaching to tech with no prior coding. The mentorship and job support were truly exceptional!", gender: "female" },
-  { id: 2, name: "Alex Martinez", text: "As an accountant, I never imagined working in IT. The step-by-step guidance made learning automation easy and effective. Highly recommended!", gender: "male" },
   { id: 3, name: "John Kim", text: "The personalized attention and hands-on training gave me the confidence to ace interviews and land my first SDET job within three months.", gender: "male" },
   { id: 4, name: "Riya Gupta", text: "The mentors make even complex topics feel simple. I now work as a QA Automation Engineer at a leading fintech startup. Thank you, xPath.pro!", gender: "female" },
   { id: 5, name: "Daniel Wu", text: "I had zero tech experience but was hired as an SDET before the program even ended. The job application support is a game-changer!", gender: "male" },
@@ -87,8 +85,8 @@ const TestimonialCard = ({ testimonial, isHovered, onHover, onLeave }: {
 export default function TestimonialsSection() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   
-  const firstRow = testimonials.slice(0, 10);
-  const secondRow = testimonials.slice(10, 20);
+  const firstRow = testimonials.slice(0, 9);
+  const secondRow = testimonials.slice(9, 18);
 
   return (
     <section className="py-20 overflow-hidden">
