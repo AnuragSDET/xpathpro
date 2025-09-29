@@ -166,8 +166,8 @@ export default function CategoryCard({ category }: { category: any }) {
 
           {/* Footer */}
           <div className="p-4 mt-4 flex shrink-0 items-center justify-between font-mono text-white">
-            <div className="text-xs">Start Learning</div>
             <div className="text-xs opacity-50">#{category.slug.current.toUpperCase()}</div>
+            <div className="text-lg font-bold">&gt;</div>
           </div>
 
           {/* Dynamic Colored Glow Effect */}
