@@ -118,11 +118,47 @@ export default function CategoryCard({ category }: { category: any }) {
                 </div>
                 
                 {/* Key Features */}
-                <div className="space-y-3 mb-6">
-                  <div className="text-sm text-gray-300">100% Free Content</div>
-                  <div className="text-sm text-gray-300">Hands-on Projects</div>
-                  <div className="text-sm text-gray-300">Industry Standards</div>
-                  <div className="text-sm text-gray-300">Career Ready Skills</div>
+                <div className="space-y-2 mb-4 px-2">
+                  {category.icon === 'code' && (
+                    <>
+                      <div className="text-xs text-gray-300">• Selenium WebDriver</div>
+                      <div className="text-xs text-gray-300">• Java Programming</div>
+                      <div className="text-xs text-gray-300">• TestNG Framework</div>
+                      <div className="text-xs text-gray-300">• Page Object Model</div>
+                    </>
+                  )}
+                  {category.icon === 'server' && (
+                    <>
+                      <div className="text-xs text-gray-300">• REST API Testing</div>
+                      <div className="text-xs text-gray-300">• Postman & RestAssured</div>
+                      <div className="text-xs text-gray-300">• JSON/XML Validation</div>
+                      <div className="text-xs text-gray-300">• API Authentication</div>
+                    </>
+                  )}
+                  {category.icon === 'test-tube' && (
+                    <>
+                      <div className="text-xs text-gray-300">• Appium Framework</div>
+                      <div className="text-xs text-gray-300">• Android & iOS Testing</div>
+                      <div className="text-xs text-gray-300">• Mobile Gestures</div>
+                      <div className="text-xs text-gray-300">• Device Automation</div>
+                    </>
+                  )}
+                  {category.icon === 'bug' && (
+                    <>
+                      <div className="text-xs text-gray-300">• JMeter Load Testing</div>
+                      <div className="text-xs text-gray-300">• Performance Metrics</div>
+                      <div className="text-xs text-gray-300">• Stress Testing</div>
+                      <div className="text-xs text-gray-300">• Report Analysis</div>
+                    </>
+                  )}
+                  {category.icon === 'shield' && (
+                    <>
+                      <div className="text-xs text-gray-300">• OWASP Top 10</div>
+                      <div className="text-xs text-gray-300">• Burp Suite Testing</div>
+                      <div className="text-xs text-gray-300">• Vulnerability Scans</div>
+                      <div className="text-xs text-gray-300">• Security Reports</div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
