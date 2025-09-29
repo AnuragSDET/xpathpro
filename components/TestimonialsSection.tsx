@@ -34,9 +34,11 @@ const testimonials: Testimonial[] = [
 
 const getAvatarUrl = (name: string, gender: 'male' | 'female') => {
   const seed = name.replace(/\s+/g, '').toLowerCase();
-  const style = gender === 'female' ? 'avataaars-neutral' : 'avataaars';
-  const hairOptions = gender === 'female' ? '&hair=longHairStraight,longHairCurly,longHairBob&hairColor=brown,black,blonde' : '&hair=shortHairShortFlat,shortHairShortRound&hairColor=brown,black';
-  return `https://api.dicebear.com/7.x/${style}/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9&radius=50${hairOptions}`;
+  if (gender === 'female') {
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9&radius=50&hair=longHairStraight,longHairCurly,longHairBob&facialHair=blank&accessories=blank`;
+  } else {
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9&radius=50&hair=shortHairShortFlat,shortHairShortRound&facialHair=blank,beardMedium&accessories=blank`;
+  }
 };
 
 const TestimonialCard = ({ testimonial, isHovered, onHover, onLeave }: {
@@ -46,7 +48,7 @@ const TestimonialCard = ({ testimonial, isHovered, onHover, onLeave }: {
   onLeave: () => void;
 }) => (
   <div
-    className={`relative flex-shrink-0 w-80 h-48 bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl transition-all duration-500 ${
+    className={`relative flex-shrink-0 w-80 h-52 bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl transition-all duration-500 ${
       isHovered ? 'scale-105 shadow-cyan-500/25' : ''
     }`}
     onMouseEnter={onHover}
@@ -58,23 +60,23 @@ const TestimonialCard = ({ testimonial, isHovered, onHover, onLeave }: {
     }`} />
     
     <div className="relative z-10 h-full flex flex-col">
-      {/* Quote */}
-      <div className="flex-1">
-        <div className="text-cyan-400 text-xl mb-2">"</div>
-        <p className="text-gray-300 text-sm leading-relaxed h-20 overflow-hidden">
+      {/* Quote Section */}
+      <div className="flex-1 mb-4">
+        <div className="text-cyan-400 text-xl mb-3">"</div>
+        <p className="text-gray-300 text-sm leading-relaxed line-clamp-4">
           {testimonial.text}
         </p>
       </div>
       
-      {/* Avatar and Signature - Fixed at bottom */}
-      <div className="flex items-center justify-between mt-4 h-10">
+      {/* Bottom Section with Avatar and Signature */}
+      <div className="flex items-center justify-between pt-3 border-t border-white/10">
         <img
           src={getAvatarUrl(testimonial.name, testimonial.gender)}
           alt={testimonial.name}
-          className="w-10 h-10 rounded-full border-2 border-white/20 flex-shrink-0"
+          className="w-12 h-12 rounded-full border-2 border-white/20"
         />
         <div 
-          className="text-white/80 font-signature text-base transform rotate-[-2deg] flex-shrink-0"
+          className="text-white/80 font-signature text-lg transform rotate-[-2deg]"
           style={{ fontFamily: 'Dancing Script, cursive' }}
         >
           {testimonial.name}
