@@ -52,28 +52,10 @@ export default function CategoryCard({ category }: { category: any }) {
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
-          {/* Header */}
-          <div className="p-4 mb-4 flex shrink-0 items-center justify-between">
-            <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} flex items-center justify-center text-sm`}>
-              {category.icon === 'code' && '💻'}
-              {category.icon === 'api' && '🔌'}
-              {category.icon === 'mobile' && '📱'}
-              {category.icon === 'database' && '🗄️'}
-              {category.icon === 'performance' && '⚡'}
-              {category.icon === 'security' && '🔒'}
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" className="text-white" fill="currentColor">
-              <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" opacity="0.8"/>
-              <circle cx="12" cy="12" r="2" fill="currentColor"/>
-              <path d="M12 1C12.55 1 13 1.45 13 2V4C13 4.55 12.55 5 12 5S11 4.55 11 4V2C11 1.45 11.45 1 12 1Z" opacity="0.6"/>
-              <path d="M12 19C12.55 19 13 19.45 13 20V22C13 22.55 12.55 23 12 23S11 22.55 11 22V20C11 19.45 11.45 19 12 19Z" opacity="0.6"/>
-              <path d="M22 11C22.55 11 23 11.45 23 12S22.55 13 22 13H20C19.45 13 19 12.55 19 12S19.45 11 20 11H22Z" opacity="0.6"/>
-              <path d="M5 12C5 11.45 4.55 11 4 11H2C1.45 11 1 11.45 1 12S1.45 13 2 13H4C4.55 13 5 12.55 5 12Z" opacity="0.6"/>
-            </svg>
-          </div>
+
 
           {/* Main Content Area */}
-          <div className="mx-4 flex-1">
+          <div className="mx-4 flex-1 mt-4">
             <div className="relative w-full bg-black rounded-[16px] p-6 overflow-hidden" style={{aspectRatio: '3 / 4', boxShadow: 'rgba(0, 0, 0, 0.05) 0px 5px 6px 0px'}}>
               {/* Background Pattern */}
               <div className={`absolute inset-0 bg-gradient-to-br ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} opacity-5`} />
@@ -99,32 +81,10 @@ export default function CategoryCard({ category }: { category: any }) {
                 
                 {/* Key Features */}
                 <div className="space-y-3 mb-6">
-                  <div className="flex items-center text-sm">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3" />
-                    <span className="text-gray-300">100% Free Content</span>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full mr-3" />
-                    <span className="text-gray-300">Hands-on Projects</span>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <div className="w-2 h-2 bg-purple-400 rounded-full mr-3" />
-                    <span className="text-gray-300">Industry Standards</span>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mr-3" />
-                    <span className="text-gray-300">Career Ready Skills</span>
-                  </div>
-                </div>
-                
-                {/* CTA */}
-                <div className="text-center">
-                  <div className={`inline-flex items-center px-4 py-2 bg-gradient-to-r ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} text-white text-sm rounded-lg font-semibold`}>
-                    <span>Start Learning</span>
-                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
+                  <div className="text-sm text-gray-300">100% Free Content</div>
+                  <div className="text-sm text-gray-300">Hands-on Projects</div>
+                  <div className="text-sm text-gray-300">Industry Standards</div>
+                  <div className="text-sm text-gray-300">Career Ready Skills</div>
                 </div>
               </div>
             </div>
@@ -132,7 +92,7 @@ export default function CategoryCard({ category }: { category: any }) {
 
           {/* Footer */}
           <div className="p-4 mt-4 flex shrink-0 items-center justify-between font-mono text-white">
-            <div className="text-xs">{category.title}</div>
+            <div className="text-xs">Start Learning</div>
             <div className="text-xs opacity-50">#{category.slug.current.toUpperCase()}</div>
           </div>
 
