@@ -74,43 +74,58 @@ export default function CategoryCard({ category }: { category: any }) {
 
           {/* Main Content Area */}
           <div className="mx-4 flex-1">
-            <div className="relative w-full bg-black rounded-[16px] p-6" style={{aspectRatio: '3 / 4', boxShadow: 'rgba(0, 0, 0, 0.05) 0px 5px 6px 0px'}}>
-              {/* Category Icon */}
-              <div className="text-center mb-4">
-                <div className="text-4xl mb-2">
-                  {category.icon === 'code' && '💻'}
-                  {category.icon === 'api' && '🔌'}
-                  {category.icon === 'mobile' && '📱'}
-                  {category.icon === 'database' && '🗄️'}
-                  {category.icon === 'performance' && '⚡'}
-                  {category.icon === 'security' && '🔒'}
-                </div>
-                <h3 className="text-white text-lg font-bold mb-2">{category.title}</h3>
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2">{category.description}</p>
-              </div>
+            <div className="relative w-full bg-black rounded-[16px] p-6 overflow-hidden" style={{aspectRatio: '3 / 4', boxShadow: 'rgba(0, 0, 0, 0.05) 0px 5px 6px 0px'}}>
+              {/* Background Pattern */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} opacity-5`} />
+              <div className="absolute top-0 right-0 w-20 h-20 rounded-full bg-white opacity-5 -translate-y-10 translate-x-10" />
+              <div className="absolute bottom-0 left-0 w-16 h-16 rounded-full bg-white opacity-5 translate-y-8 -translate-x-8" />
               
-              {/* Stats */}
-              <div className="space-y-2">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-400">Courses:</span>
-                  <span className="text-white font-semibold">{category.courseCount}</span>
+              <div className="relative z-10">
+                {/* Category Header */}
+                <div className="text-center mb-6">
+                  <div className="text-5xl mb-3">
+                    {category.icon === 'code' && '💻'}
+                    {category.icon === 'api' && '🔌'}
+                    {category.icon === 'mobile' && '📱'}
+                    {category.icon === 'database' && '🗄️'}
+                    {category.icon === 'performance' && '⚡'}
+                    {category.icon === 'security' && '🔒'}
+                  </div>
+                  <h3 className="text-white text-xl font-bold mb-2">{category.title}</h3>
+                  <div className={`inline-block px-3 py-1 bg-gradient-to-r ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} text-white text-xs rounded-full font-bold mb-3`}>
+                    {category.courseCount} Courses
+                  </div>
                 </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-400">Level:</span>
-                  <span className="text-green-400 font-semibold">All Levels</span>
+                
+                {/* Key Features */}
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center text-sm">
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3" />
+                    <span className="text-gray-300">100% Free Content</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full mr-3" />
+                    <span className="text-gray-300">Hands-on Projects</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <div className="w-2 h-2 bg-purple-400 rounded-full mr-3" />
+                    <span className="text-gray-300">Industry Standards</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full mr-3" />
+                    <span className="text-gray-300">Career Ready Skills</span>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-400">Price:</span>
-                  <span className="text-emerald-400 font-bold">FREE</span>
+                
+                {/* CTA */}
+                <div className="text-center">
+                  <div className={`inline-flex items-center px-4 py-2 bg-gradient-to-r ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} text-white text-sm rounded-lg font-semibold`}>
+                    <span>Start Learning</span>
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-              
-              {/* Progress Bar */}
-              <div className="mt-4">
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div className={`bg-gradient-to-r ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} h-2 rounded-full`} style={{width: '0%'}}></div>
-                </div>
-                <p className="text-xs text-gray-500 mt-1">Ready to start</p>
               </div>
             </div>
           </div>
