@@ -121,7 +121,7 @@ export default function Home() {
 
           {/* Revolutionary CTA */}
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-20">
-            <button className="group relative px-12 py-6 bg-gradient-to-r from-emerald-500 via-green-600 to-teal-600 text-white font-black text-xl rounded-2xl shadow-2xl hover:shadow-emerald-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
+            <a href="/courses" className="group relative px-12 py-6 bg-gradient-to-r from-emerald-500 via-green-600 to-teal-600 text-white font-black text-xl rounded-2xl shadow-2xl hover:shadow-emerald-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-green-700 to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-white/30 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 skew-x-12" />
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 via-green-500 to-teal-600 opacity-0 group-hover:opacity-50 blur transition-opacity duration-500" />
@@ -132,20 +132,20 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
-            </button>
+            </a>
             
-            <button className="group relative px-12 py-6 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 text-white font-black text-xl rounded-2xl shadow-2xl hover:shadow-purple-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
+            <a href="/mentorship" className="group relative px-12 py-6 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 text-white font-black text-xl rounded-2xl shadow-2xl hover:shadow-purple-500/25 transform hover:scale-110 transition-all duration-500 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-white/30 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 skew-x-12" />
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-0 group-hover:opacity-50 blur transition-opacity duration-500" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 via-pink-500 to-red-600 opacity-0 group-hover:opacity-50 blur transition-opacity duration-500" />
               <span className="relative z-10 flex items-center">
-                <span className="mr-3">👨🏫</span>
-                GET 1-ON-1 MENTOR
+                <span className="mr-3">🚀</span>
+                GET MENTORSHIP
                 <svg className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
-            </button>
+            </a>
           </div>
 
           {/* Interactive Stats Grid */}
