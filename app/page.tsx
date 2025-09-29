@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { usePricing } from '@/lib/pricing';
+import TestimonialsSection from '@/components/TestimonialsSection';
 
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -409,6 +410,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+      
       {/* Career Transformation Section */}
       <section className="relative py-32 px-4">
         <div className="max-w-5xl mx-auto">
