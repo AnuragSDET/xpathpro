@@ -83,7 +83,7 @@ export default function CategoryCard({ category }: { category: any }) {
               
               <div className="relative z-10">
                 {/* Category Header */}
-                <div className="text-center mb-6">
+                <div className="text-center">
                   <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
                     {category.icon === 'code' && (
                       <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -111,58 +111,54 @@ export default function CategoryCard({ category }: { category: any }) {
                       </svg>
                     )}
                   </div>
-                  <div className="h-14 flex items-center justify-center">
-                    <h3 className="text-white text-xl font-bold">{category.title}</h3>
-                  </div>
-                  <div className={`inline-block px-3 py-1 bg-gradient-to-r ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} text-white text-xs rounded-full font-bold mb-3`}>
+                  <h3 className="text-white text-xl font-bold mb-2 h-14 flex items-center justify-center">{category.title}</h3>
+                  <div className={`inline-block px-3 py-1 bg-gradient-to-r ${colorMap[category.color] || 'from-blue-500 to-cyan-500'} text-white text-xs rounded-full font-bold mb-6`}>
                     {category.courseCount} Courses
                   </div>
                 </div>
                 
-                {/* Key Features - Fixed Position */}
-                <div className="absolute bottom-16 left-8 right-8">
-                  <div className="space-y-2 px-2">
-                    {category.icon === 'code' && (
-                      <>
-                        <div className="text-xs text-gray-300">• Selenium WebDriver</div>
-                        <div className="text-xs text-gray-300">• Java Programming</div>
-                        <div className="text-xs text-gray-300">• TestNG Framework</div>
-                        <div className="text-xs text-gray-300">• Page Object Model</div>
-                      </>
-                    )}
-                    {category.icon === 'server' && (
-                      <>
-                        <div className="text-xs text-gray-300">• REST API Testing</div>
-                        <div className="text-xs text-gray-300">• Postman & RestAssured</div>
-                        <div className="text-xs text-gray-300">• JSON/XML Validation</div>
-                        <div className="text-xs text-gray-300">• API Authentication</div>
-                      </>
-                    )}
-                    {category.icon === 'test-tube' && (
-                      <>
-                        <div className="text-xs text-gray-300">• Appium Framework</div>
-                        <div className="text-xs text-gray-300">• Android & iOS Testing</div>
-                        <div className="text-xs text-gray-300">• Mobile Gestures</div>
-                        <div className="text-xs text-gray-300">• Device Automation</div>
-                      </>
-                    )}
-                    {category.icon === 'bug' && (
-                      <>
-                        <div className="text-xs text-gray-300">• JMeter Load Testing</div>
-                        <div className="text-xs text-gray-300">• Performance Metrics</div>
-                        <div className="text-xs text-gray-300">• Stress Testing</div>
-                        <div className="text-xs text-gray-300">• Report Analysis</div>
-                      </>
-                    )}
-                    {category.icon === 'shield' && (
-                      <>
-                        <div className="text-xs text-gray-300">• OWASP Top 10</div>
-                        <div className="text-xs text-gray-300">• Burp Suite Testing</div>
-                        <div className="text-xs text-gray-300">• Vulnerability Scans</div>
-                        <div className="text-xs text-gray-300">• Security Reports</div>
-                      </>
-                    )}
-                  </div>
+                {/* Key Features */}
+                <div className="space-y-2 px-2">
+                  {category.icon === 'code' && (
+                    <>
+                      <div className="text-xs text-gray-300">• Selenium WebDriver</div>
+                      <div className="text-xs text-gray-300">• Java Programming</div>
+                      <div className="text-xs text-gray-300">• TestNG Framework</div>
+                      <div className="text-xs text-gray-300">• Page Object Model</div>
+                    </>
+                  )}
+                  {category.icon === 'server' && (
+                    <>
+                      <div className="text-xs text-gray-300">• REST API Testing</div>
+                      <div className="text-xs text-gray-300">• Postman & RestAssured</div>
+                      <div className="text-xs text-gray-300">• JSON/XML Validation</div>
+                      <div className="text-xs text-gray-300">• API Authentication</div>
+                    </>
+                  )}
+                  {category.icon === 'test-tube' && (
+                    <>
+                      <div className="text-xs text-gray-300">• Appium Framework</div>
+                      <div className="text-xs text-gray-300">• Android & iOS Testing</div>
+                      <div className="text-xs text-gray-300">• Mobile Gestures</div>
+                      <div className="text-xs text-gray-300">• Device Automation</div>
+                    </>
+                  )}
+                  {category.icon === 'bug' && (
+                    <>
+                      <div className="text-xs text-gray-300">• JMeter Load Testing</div>
+                      <div className="text-xs text-gray-300">• Performance Metrics</div>
+                      <div className="text-xs text-gray-300">• Stress Testing</div>
+                      <div className="text-xs text-gray-300">• Report Analysis</div>
+                    </>
+                  )}
+                  {category.icon === 'shield' && (
+                    <>
+                      <div className="text-xs text-gray-300">• OWASP Top 10</div>
+                      <div className="text-xs text-gray-300">• Burp Suite Testing</div>
+                      <div className="text-xs text-gray-300">• Vulnerability Scans</div>
+                      <div className="text-xs text-gray-300">• Security Reports</div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
