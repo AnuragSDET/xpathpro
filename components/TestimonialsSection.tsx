@@ -44,7 +44,7 @@ const TestimonialCard = ({ testimonial, isHovered, onHover, onLeave }: {
   onLeave: () => void;
 }) => (
   <div
-    className={`relative flex-shrink-0 w-80 h-64 bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl transition-all duration-500 ${
+    className={`relative flex-shrink-0 w-80 h-48 bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl transition-all duration-500 ${
       isHovered ? 'scale-105 shadow-cyan-500/25' : ''
     }`}
     onMouseEnter={onHover}
@@ -56,25 +56,23 @@ const TestimonialCard = ({ testimonial, isHovered, onHover, onLeave }: {
     }`} />
     
     <div className="relative z-10 h-full flex flex-col">
-      {/* Avatar and quote */}
-      <div className="flex items-start space-x-4 mb-4">
+      {/* Quote */}
+      <div className="mb-4">
+        <div className="text-cyan-400 text-xl mb-2">"</div>
+        <p className="text-gray-300 text-sm leading-relaxed line-clamp-4">
+          {testimonial.text}
+        </p>
+      </div>
+      
+      {/* Avatar and Signature */}
+      <div className="mt-auto flex items-center justify-between">
         <img
           src={getAvatarUrl(testimonial.name, testimonial.gender)}
           alt={testimonial.name}
-          className="w-12 h-12 rounded-full border-2 border-white/20"
+          className="w-10 h-10 rounded-full border-2 border-white/20"
         />
-        <div className="flex-1">
-          <div className="text-cyan-400 text-2xl mb-2">"</div>
-          <p className="text-gray-300 text-sm leading-relaxed line-clamp-6">
-            {testimonial.text}
-          </p>
-        </div>
-      </div>
-      
-      {/* Signature */}
-      <div className="mt-auto flex justify-end">
         <div 
-          className="text-white/80 font-signature text-lg transform rotate-[-2deg]"
+          className="text-white/80 font-signature text-base transform rotate-[-2deg]"
           style={{ fontFamily: 'Dancing Script, cursive' }}
         >
           {testimonial.name}
