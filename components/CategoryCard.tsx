@@ -14,9 +14,21 @@ const colorMap: Record<string, string> = {
   indigo: 'from-indigo-500 to-purple-500',
 }
 
+const glowColorMap: Record<string, string> = {
+  blue: 'rgba(59, 130, 246, 0.6)',
+  green: 'rgba(34, 197, 94, 0.6)',
+  purple: 'rgba(147, 51, 234, 0.6)',
+  orange: 'rgba(249, 115, 22, 0.6)',
+  red: 'rgba(239, 68, 68, 0.6)',
+  teal: 'rgba(20, 184, 166, 0.6)',
+  pink: 'rgba(236, 72, 153, 0.6)',
+  indigo: 'rgba(99, 102, 241, 0.6)',
+}
+
 export default function CategoryCard({ category }: { category: any }) {
   const [transform, setTransform] = useState('')
   const [glowOpacity, setGlowOpacity] = useState(0)
+  const [glowPosition, setGlowPosition] = useState({ x: 50, y: 50 })
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget
@@ -28,13 +40,18 @@ export default function CategoryCard({ category }: { category: any }) {
     const rotateX = (y - centerY) / 8
     const rotateY = (centerX - x) / 8
 
+    const glowX = (x / rect.width) * 100
+    const glowY = (y / rect.height) * 100
+
     setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`)
-    setGlowOpacity(0.2)
+    setGlowOpacity(0.4)
+    setGlowPosition({ x: glowX, y: glowY })
   }
 
   const handleMouseLeave = () => {
     setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)')
     setGlowOpacity(0)
+    setGlowPosition({ x: 50, y: 50 })
   }
 
   return (
@@ -96,13 +113,20 @@ export default function CategoryCard({ category }: { category: any }) {
             <div className="text-xs opacity-50">#{category.slug.current.toUpperCase()}</div>
           </div>
 
-          {/* Glow Overlay Effect */}
+          {/* Dynamic Colored Glow Effect */}
           <div 
-            className="pointer-events-none absolute inset-0 rounded-[16px] transition-opacity duration-200" 
+            className="pointer-events-none absolute inset-0 rounded-[16px] transition-all duration-200" 
             style={{
-              mixBlendMode: 'overlay',
-              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.75) 20%, rgba(255, 255, 255, 0) 80%)',
+              background: `radial-gradient(circle at ${glowPosition.x}% ${glowPosition.y}%, ${glowColorMap[category.color] || 'rgba(59, 130, 246, 0.6)'} 0%, transparent 50%)`,
               opacity: glowOpacity
+            }}
+          />
+          {/* Additional Glow Layer */}
+          <div 
+            className="pointer-events-none absolute -inset-2 rounded-[20px] transition-all duration-200 blur-md" 
+            style={{
+              background: `radial-gradient(circle at ${glowPosition.x}% ${glowPosition.y}%, ${glowColorMap[category.color] || 'rgba(59, 130, 246, 0.6)'} 0%, transparent 70%)`,
+              opacity: glowOpacity * 0.5
             }}
           />
         </div>
