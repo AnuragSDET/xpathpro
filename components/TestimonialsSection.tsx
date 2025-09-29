@@ -34,7 +34,9 @@ const testimonials: Testimonial[] = [
 
 const getAvatarUrl = (name: string, gender: 'male' | 'female') => {
   const seed = name.replace(/\s+/g, '').toLowerCase();
-  return `https://api.dicebear.com/7.x/${gender === 'female' ? 'avataaars' : 'avataaars'}/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9&radius=50`;
+  const style = gender === 'female' ? 'avataaars-neutral' : 'avataaars';
+  const hairOptions = gender === 'female' ? '&hair=longHairStraight,longHairCurly,longHairBob&hairColor=brown,black,blonde' : '&hair=shortHairShortFlat,shortHairShortRound&hairColor=brown,black';
+  return `https://api.dicebear.com/7.x/${style}/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9&radius=50${hairOptions}`;
 };
 
 const TestimonialCard = ({ testimonial, isHovered, onHover, onLeave }: {
@@ -57,22 +59,22 @@ const TestimonialCard = ({ testimonial, isHovered, onHover, onLeave }: {
     
     <div className="relative z-10 h-full flex flex-col">
       {/* Quote */}
-      <div className="mb-4">
+      <div className="flex-1">
         <div className="text-cyan-400 text-xl mb-2">"</div>
-        <p className="text-gray-300 text-sm leading-relaxed line-clamp-4">
+        <p className="text-gray-300 text-sm leading-relaxed h-20 overflow-hidden">
           {testimonial.text}
         </p>
       </div>
       
-      {/* Avatar and Signature */}
-      <div className="mt-auto flex items-center justify-between">
+      {/* Avatar and Signature - Fixed at bottom */}
+      <div className="flex items-center justify-between mt-4 h-10">
         <img
           src={getAvatarUrl(testimonial.name, testimonial.gender)}
           alt={testimonial.name}
-          className="w-10 h-10 rounded-full border-2 border-white/20"
+          className="w-10 h-10 rounded-full border-2 border-white/20 flex-shrink-0"
         />
         <div 
-          className="text-white/80 font-signature text-base transform rotate-[-2deg]"
+          className="text-white/80 font-signature text-base transform rotate-[-2deg] flex-shrink-0"
           style={{ fontFamily: 'Dancing Script, cursive' }}
         >
           {testimonial.name}
